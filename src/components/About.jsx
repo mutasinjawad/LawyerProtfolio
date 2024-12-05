@@ -50,3 +50,6 @@ const About = () => {
 };
 
 export default About;
+
+
+// Path: src/components/Contact.jsx
