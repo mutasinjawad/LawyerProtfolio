@@ -53,3 +53,4 @@ export default About;
 
 
 // Path: src/components/Contact.jsx
+// Compare this snippet from src/components/Contact.jsx:
