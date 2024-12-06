@@ -29,9 +29,9 @@ const HeroMeetings = () => {
 
   return (
     <>
-      <div className='relative flex flex-col items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]'>
+      <div className='relative flex flex-col items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]' id="meeting">
         <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Meetings</h1>
-        <div className="flex lg:flex-row flex-col justify-center items-center w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-16">
+        <div className="flex lg:flex-row flex-col justify-center items-center w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
           {meetings.map((meeting) => (
             <div key={meeting.id} className="lg:h-[38vh] h-[23vh] lg:w-[30vh] w-full bg-white rounded-3xl hover:bg-primary-100 hover:shadow cursor-pointer transition-all duration-300 ease-in-out">
               <div className="lg:p-10 p-6 lg:h-[30vh] h-[18vh]" style={{

@@ -3,6 +3,7 @@ import HeroMeetings from "./HeroMeetings"
 import HeroCase from "./HeroCase"
 import HeroBlog from "./HeroBlog"
 import Contact from "./Contact"
+import Sample from "./Smaple"
 
 const Hero = () => {
     return (
@@ -11,7 +12,7 @@ const Hero = () => {
         <HeroMeetings />
         <HeroCase />
         {/* <HeroBlog /> */}
-        {/* <Contact /> */}
+        <Contact />
         {/* <Sample /> */}
       </div>
     )

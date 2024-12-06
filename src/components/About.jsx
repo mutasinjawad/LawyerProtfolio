@@ -8,15 +8,15 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const About = () => {
   return (
-    <div className="flex flex-col-reverse lg:flex-row items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]">
+    <div className="flex flex-col-reverse lg:flex-row items-center justify-between lg:mx-36 mx-8 lg:my-16 my-14 lg:h-[70vh]" id="about">
         <div className="hidden lg:flex flex-col h-full justify-center items-center space-y-10 lg:w-1/12">
-            <a href="https://www.facebook.com/muhtasin.jawad.1" target="_blank" rel="noopener noreferrer" className=' text-xl text-black hover:text-primary transition duration-300 ease-in-out cursor-pointer'>
+            <a href="https://www.facebook.com/muhtasin.jawad.1" target="_blank" rel="noopener noreferrer" className='text-xl text-black hover:text-[#505050] transition duration-300 ease-in-out cursor-pointer'>
                 <FontAwesomeIcon icon={faFacebook} size='2xl'/>
             </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className='text-xl text-black hover:text-primary transition duration-300 ease-in-out cursor-pointer'>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className='text-xl text-black hover:text-[#505050] transition duration-300 ease-in-out cursor-pointer'>
                 <FontAwesomeIcon icon={faInstagram} size="2xl"/>
             </a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className='text-xl text-black hover:text-primary transition duration-300 ease-in-out cursor-pointer'>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className='text-xl text-black hover:text-[#505050] transition duration-300 ease-in-out cursor-pointer'>
                 <FontAwesomeIcon icon={faLinkedin} size="2xl"/>
             </a>
         </div>
