@@ -4,9 +4,13 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 import { Link } from 'react-scroll'
 
-function Navbar() {
+function Navbar({ navActive }) {
     const [mobileDrawer, setMobileDrawer] = useState(false)
-    const toggleMobileDrawer = () => {setMobileDrawer(!mobileDrawer)}
+    const toggleMobileDrawer = () => {
+        const mobileDraweState = !mobileDrawer
+        setMobileDrawer(mobileDraweState)
+        navActive(mobileDraweState)
+    };
     return (
         <>
         <nav className={`lg:sticky fixed lg:w-full z-40 top-0 right-0 py-8 lg:bg-whiteBg bg-black lg:bg-opacity-100 bg-opacity-0${mobileDrawer ? "" : ""} lg:border-b border-neutral-200 transition duration-75 ease-in-out`}>
@@ -14,22 +18,34 @@ function Navbar() {
                 <div className="flex items-center justify-end">
                     <ul className="hidden lg:flex justify-center space-x-14 font-pmedium text-[20px] text-black cursor-pointer">
                         <li key="about">
-                            <Link to="about" smooth={true} offset={-150} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'>About</Link>
+                            <Link to="about" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                                spy={true}
+                                activeClass="border-b-4 border-black transition-all duration-100">About</Link>
                         </li>
                         <li key="meeting">
-                            <Link to="meeting" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'>Meeting</Link>
+                            <Link to="meeting" smooth={true} offset={-280} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                                spy={true}
+                                activeClass="border-b-4 border-black transition-all duration-100">Meeting</Link>
                         </li>
                         <li key="case">
-                            <Link to="case" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'>Case</Link>
+                            <Link to="case" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                                spy={true}
+                                activeClass="border-b-4 border-black transition-all duration-100">Case</Link>
                         </li>
                         <li key="blog">
-                            <Link to="blog" smooth={true} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'>Blog</Link>
+                            <Link to="blog" smooth={true} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                                spy={true}
+                                activeClass="border-b-4 border-black transition-all duration-100">Blog</Link>
                         </li>
                         <li key="live">
-                            <Link to="live" smooth={true} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'>Live</Link>
+                            <Link to="live" smooth={true} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                                spy={true}
+                                activeClass="border-b-4 border-black transition-all duration-100">Live</Link>
                         </li>
                         <li key="contact">
-                            <Link to="contact" smooth={true} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'>Contact</Link>
+                            <Link to="contact" smooth={true} offset={-250} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                                spy={true}
+                                activeClass="border-b-4 border-black transition-all duration-100">Contact</Link>
                         </li>
                     </ul>
                 </div>
@@ -53,7 +69,7 @@ function Navbar() {
                     animate={{ opacity: 1, x: "0" }}
                     exit={{ opacity:0, x: "100%" }}
                     transition={{ duration: 0.2 }}
-                    className="fixed flex items-center justify-end top-0 right-0 w-[32vh] h-screen bg-black z-30"
+                    className={`fixed flex items-center justify-end ${mobileDrawer? "overflow-hidden" : ""} top-0 right-0 w-[32vh] h-screen bg-black z-30`}
                 >
                     <ul className="flex flex-col items-end space-y-10 pr-12 font-pregular text-white">
                         <li key="about">

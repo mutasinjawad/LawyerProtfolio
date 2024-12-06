@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Button from './Button'
+import { Element } from "react-scroll";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 
@@ -29,7 +30,7 @@ const HeroMeetings = () => {
 
   return (
     <>
-      <div className='relative flex flex-col items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]' id="meeting">
+      <Element className='relative flex flex-col items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]' name="meeting">
         <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Meetings</h1>
         <div className="flex lg:flex-row flex-col justify-center items-center w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
           {meetings.map((meeting) => (
@@ -54,7 +55,7 @@ const HeroMeetings = () => {
         <div className="">
           <Button text="See More" icon={faArrowRight} route="#" classStyle="ml-6"/>
         </div>
-      </div>
+      </Element>
       {expand && (
         <div
           className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"

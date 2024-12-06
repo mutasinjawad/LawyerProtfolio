@@ -1,4 +1,5 @@
 import React from 'react'
+import { Element } from "react-scroll";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPhone, faEnvelope, faLocationDot, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons'
@@ -14,7 +15,7 @@ const Contact = () => {
     };
 
   return (
-    <div className="flex flex-col items-center justify-between lg:m-36 mx-12 lg:h-[70vh]" id="contact">
+    <Element className="flex flex-col items-center justify-between lg:m-36 mx-12 lg:h-[70vh]" name="contact">
         <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Contact Me</h1>
         <div className="flex lg:flex-row flex-col justify-center items-start w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
             <div className='flex flex-col items-center justify-center space-y-6 lg:w-auto w-full lg:h-[49vh]'>
@@ -85,7 +86,7 @@ const Contact = () => {
                 </form>
             </div>
         </div>
-    </div>
+    </Element>
   )
 }
 

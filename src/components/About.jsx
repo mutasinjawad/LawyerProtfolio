@@ -1,6 +1,6 @@
 import React from 'react';
 import Lawyer from '../assets/images/lawyer.jpg';
-import law from '../assets/images/law.jpg';
+import { Element } from "react-scroll";
 import Button from './Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons'
@@ -8,7 +8,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const About = () => {
   return (
-    <div className="flex flex-col-reverse lg:flex-row items-center justify-between lg:mx-36 mx-8 lg:my-16 my-14 lg:h-[70vh]" id="about">
+    <Element className="flex flex-col-reverse lg:flex-row items-center justify-between lg:mx-36 mx-8 lg:my-16 my-14 lg:h-[70vh]" name="about">
         <div className="hidden lg:flex flex-col h-full justify-center items-center space-y-10 lg:w-1/12">
             <a href="https://www.facebook.com/muhtasin.jawad.1" target="_blank" rel="noopener noreferrer" className='text-xl text-black hover:text-[#505050] transition duration-300 ease-in-out cursor-pointer'>
                 <FontAwesomeIcon icon={faFacebook} size='2xl'/>
@@ -51,7 +51,7 @@ const About = () => {
                 />
             </div>
         </div>
-    </div>
+    </Element>
   );
 };
 
