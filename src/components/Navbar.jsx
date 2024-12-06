@@ -8,7 +8,7 @@ function Navbar() {
     const toggleMobileDrawer = () => {setMobileDrawer(!mobileDrawer)}
     return (
         <>
-        <nav className={`sticky w-full z-40 top-0 py-8 bg-whiteBg lg:border-b border-neutral-200`}>
+        <nav className={`sticky w-full z-40 top-0 py-8 bg-whiteBg lg:bg-opacity-100 bg-opacity-0 lg:border-b border-neutral-200`}>
             <div className="px-4 lg:mx-36 flex justify-end">
                 <div className="flex items-center justify-end">
                     <ul className="hidden lg:flex justify-center space-x-14 font-pmedium text-[20px]">
