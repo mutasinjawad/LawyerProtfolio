@@ -7,6 +7,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { div } from 'motion/react-client'
 
 function Navbar() {
+
+    const titles = {
+        "/meetings": "Meetings",
+        "/cases": "Cases",
+      };
+
     const [mobileDrawer, setMobileDrawer] = useState(false)
     const [navActive, setNavActive] = useState(false)
     const toggleMobileDrawer = () => {
@@ -32,15 +38,19 @@ function Navbar() {
 
     if (isExtendedPage) {
         return (
-            <div className='sticky z-40 left-4 p-6 flex justify-start'>
-                <button className="sticky flex items-center justify-center font-psemibold p-1 text-black lg:text-xl text-base outline-none hover:text-secondary lg:gap-6 hover:gap-2 hover:cursor transition-all duration-200 ease-in-out"
+            <div className='fixed z-40 top-0 p-6 flex items-center w-full bg-white'>
+                <button className="stickey left-0 flex items-center justify-start lg:w-28 font-psemibold p-1 text-black lg:text-xl text-base outline-none hover:text-secondary lg:gap-6 hover:gap-2 hover:cursor transition-all duration-200 ease-in-out"
                     onClick={() => navigate(-1)}>
                         <ChevronLeft className='lg:w-6 lg:h-6 w-5 h-5' strokeWidth={3}/>
                         <span
+                        className='hidden lg:block'
                         >
                         Back
                         </span>
                 </button>
+                <div className='fixed left-1/2 transform -translate-x-1/2 font-pmedium text-black lg:text-2xl text-xl outline-none'>
+                    <h1>{titles[location.pathname]}</h1>
+                </div>
             </div>
         );
     }
@@ -50,36 +60,36 @@ function Navbar() {
         <nav className={`lg:sticky fixed lg:w-full z-40 top-0 right-0 py-8 lg:bg-whiteBg bg-black lg:bg-opacity-100 bg-opacity-0${mobileDrawer ? "" : ""} lg:border-b border-neutral-200 transition duration-75 ease-in-out`}>
             <div className="relative px-4 lg:mx-36 flex justify-end">
                 <div className="flex items-center justify-end">
-                    <ul className="hidden lg:flex justify-center space-x-14 font-pmedium text-[20px] text-black cursor-pointer">
+                    <ul className="hidden lg:flex items-center justify-center space-x-14 font-pmedium text-[18px] text-black cursor-pointer">
                         <li key="about">
-                            <Link to="about" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
+                            <Link to="about" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
-                                activeClass="border-b-4 border-black transition-all duration-100">About</Link>
+                                activeClass="border-b-4 border-secondary transition duration-100">About</Link>
                         </li>
                         <li key="meeting">
-                            <Link to="meeting" smooth={true} offset={-280} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
+                            <Link to="meeting" smooth={true} offset={-280} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
-                                activeClass="border-b-4 border-black transition-all duration-100">Meeting</Link>
+                                activeClass="border-b-4 border-secondary transition duration-100">Meeting</Link>
                         </li>
                         <li key="case">
-                            <Link to="case" smooth={true} offset={-200} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
+                            <Link to="case" smooth={true} offset={-200} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
-                                activeClass="border-b-4 border-black transition-all duration-100">Case</Link>
+                                activeClass="border-b-4 border-secondary transition duration-100">Case</Link>
                         </li>
                         <li key="blog">
-                            <Link to="blog" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
+                            <Link to="blog" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
-                                activeClass="border-b-4 border-black transition-all duration-100">Blog</Link>
+                                activeClass="border-b-4 border-secondary transition duration-100">Blog</Link>
                         </li>
                         <li key="live">
-                            <Link to="live" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
+                            <Link to="live" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
-                                activeClass="border-b-4 border-black transition-all duration-100">Live</Link>
+                                activeClass="border-b-4 border-secondary transition duration-100">Live</Link>
                         </li>
                         <li key="contact">
-                            <Link to="contact" smooth={true} offset={-250} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
+                            <Link to="contact" smooth={true} offset={-250} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
-                                activeClass="border-b-4 border-black transition-all duration-100">Contact</Link>
+                                activeClass="border-b-4 border-secondary transition duration-100">Contact</Link>
                         </li>
                     </ul>
                 </div>

@@ -42,15 +42,15 @@ const HeroMeetings = () => {
         <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Meetings</h1>
         <div className="flex lg:flex-row flex-col justify-center items-center w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
           {meetings.map((meeting) => (
-            <div key={meeting.id} className="lg:h-[38vh] h-[23vh] lg:w-[30vh] w-full bg-white rounded-3xl hover:bg-primary-100 hover:shadow cursor-pointer transition-all duration-300 ease-in-out">
-              <div className="lg:p-10 p-6 lg:h-[30vh] h-[18vh]" style={{
+            <div key={meeting.id} className="flex flex-col items-start justify-between lg:h-[38vh] h-[23vh] lg:w-[30vh] w-full bg-white rounded-3xl hover:bg-primary-100 hover:shadow cursor-pointer transition-all duration-300 ease-in-out">
+              <div className="lg:p-5 p-4 lg:h-[30vh] h-[18vh]" style={{
                 overflow:"hidden"
               }}>
-                <h3 className="font-pmedium lg:text-[20px] text-[18px]">{meeting.title}</h3>
+                <h3 className="font-pmedium lg:text-[20px] text-[18px] text-black">{meeting.title}</h3>
                 <p className="font-pregular text-gray-500 lg:text-[18px] text-[15px]">{meeting.date}</p>
                 <p className="font-pregular pt-10 lg:text-[18px] text-[15px]">{meeting.description}</p>
               </div>
-              <button className="flex items-center justify-start text-neutral-400 hover:text-neutral-600 lg:mt-[20px] lg:ml-[40px] ml-6 py-2 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
+              <button className="flex items-center justify-start text-neutral-400 hover:text-neutral-600 lg:p-5 p-4 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
               onClick={() => toggleExpand(meeting)}
               >
                 <h1 className="font-pregular">Expand</h1>
@@ -60,8 +60,8 @@ const HeroMeetings = () => {
           ))  
           }
         </div>
-        <div onClick={handleSeeMore} >
-          <Button text="See More" Icon={ArrowRight} classstyle="ml-2 lg:w-6 lg:h-6 w-4 h-4"/>
+        <div>
+          <Button text="See More" Icon={ArrowRight} onClick={handleSeeMore} classstyle="ml-2 lg:w-6 lg:h-6 w-4 h-4"/>
         </div>
       </Element>
       {expand && (
@@ -70,12 +70,12 @@ const HeroMeetings = () => {
           onClick={toggleExpand}
         >
           <div
-            className="bg-white rounded-3xl lg:p-8 p-4 w-[80%] h-[80vh] shadow-lg"
+            className="bg-white rounded-3xl lg:p-5 p-4 w-[88%] lg:h-[80vh] h-[88vh] shadow-lg overflow-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between">
-              <h2 className="lg:text-2xl text-[18px] font-pbold">{meetingId.title}</h2>
-              <button className="text-primary hover:text-modernRed transition duration-300 ease-in-out" onClick={toggleExpand}>
+              <h2 className="font-pbold lg:text-[25px] text-[18px] text-black">{meetingId.title}</h2>
+              <button className="text-black hover:text-modernRed transition duration-300 ease-in-out" onClick={toggleExpand}>
                 <X size={30}/>
               </button>
             </div>
