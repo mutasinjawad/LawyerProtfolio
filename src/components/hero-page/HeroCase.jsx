@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '../Button'
 import { Element } from "react-scroll";
+import { useNavigate } from "react-router-dom";
 import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -53,6 +54,12 @@ const HeroCase = () => {
     }
   ]
 
+  const navigate = useNavigate();
+
+  const handleSeeMore = () => {
+    navigate("cases");
+  };
+
   return (
     <>
       <Element className='relative flex flex-col items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]' name="case">
@@ -78,7 +85,7 @@ const HeroCase = () => {
           }
         </div>
         <div className="">
-          <Button text="See More" icon={faArrowRight} route="#" classStyle="ml-6"/>
+          <Button text="See More" icon={faArrowRight} onClick={handleSeeMore} classStyle="ml-6"/>
         </div>
       </Element>
       {expand && (

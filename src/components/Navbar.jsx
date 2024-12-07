@@ -1,16 +1,47 @@
 import React from 'react'
-import { Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { Menu, X, ChevronLeft } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 import { Link } from 'react-scroll'
+import { useLocation, useNavigate } from "react-router-dom";
 
-function Navbar({ navActive }) {
+function Navbar() {
     const [mobileDrawer, setMobileDrawer] = useState(false)
+    const [navActive, setNavActive] = useState(false)
     const toggleMobileDrawer = () => {
         const mobileDraweState = !mobileDrawer
         setMobileDrawer(mobileDraweState)
-        navActive(mobileDraweState)
+        setNavActive(mobileDraweState)
     };
+
+    useEffect(() => {
+        if (navActive) {
+          document.body.classList.add("overflow-hidden");
+        } else {
+          document.body.classList.remove("overflow-hidden");
+        }
+      }, [navActive]);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const extendedPages = ["/meetings", "/cases"];
+
+    const isExtendedPage = extendedPages.includes(location.pathname);
+
+    if (isExtendedPage) {
+        return (
+            <button className="sticky z-40 left-0 p-4 flex items-center font-psemibold text-black text-xl">
+                <ChevronLeft size={30}/>
+                <span
+                  onClick={() => navigate(-1)}
+                >
+                Back
+                </span>
+            </button>
+        );
+    }
+
     return (
         <>
         <nav className={`lg:sticky fixed lg:w-full z-40 top-0 right-0 py-8 lg:bg-whiteBg bg-black lg:bg-opacity-100 bg-opacity-0${mobileDrawer ? "" : ""} lg:border-b border-neutral-200 transition duration-75 ease-in-out`}>
@@ -69,7 +100,7 @@ function Navbar({ navActive }) {
                     animate={{ opacity: 1, x: "0" }}
                     exit={{ opacity:0, x: "100%" }}
                     transition={{ duration: 0.2 }}
-                    className={`fixed flex items-center justify-end ${mobileDrawer? "overflow-hidden" : ""} top-0 right-0 w-[32vh] h-screen bg-black z-30`}
+                    className={`fixed flex items-center justify-end top-0 right-0 w-[32vh] h-screen bg-black z-30`}
                 >
                     <ul className="flex flex-col items-end space-y-10 pr-12 font-pregular text-white">
                         <li key="about">
