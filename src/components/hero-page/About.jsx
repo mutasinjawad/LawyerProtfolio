@@ -1,7 +1,7 @@
 import React from 'react';
-import Lawyer from '../assets/images/lawyer.jpg';
-import { Element } from "react-scroll";
-import Button from './Button';
+import Lawyer from '../../assets/images/lawyer.jpg';
+import { Element, Link } from "react-scroll";
+import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -29,7 +29,9 @@ const About = () => {
             currently act as the legal representative for two Bangladeshi banks in India. I am also dedicated to public interest law, 
             filing cases in the Supreme Court of Bangladesh.
             </p>
-            <Button text="Contact Me" icon={faPaperPlane} route="#" classStyle="ml-6"/>
+            <Link to="contact" smooth={true} offset={-200} duration={500} >
+                <Button text="Contact Me" icon={faPaperPlane} route="#" classStyle="ml-6"/>
+            </Link>
         </div>
         <div className="flex relative justify-center items-center lg:w-auto w-full">
             <div className="lg:hidden absolute left-6 flex flex-col justify-start space-y-7">

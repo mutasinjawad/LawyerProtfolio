@@ -18,32 +18,32 @@ function Navbar({ navActive }) {
                 <div className="flex items-center justify-end">
                     <ul className="hidden lg:flex justify-center space-x-14 font-pmedium text-[20px] text-black cursor-pointer">
                         <li key="about">
-                            <Link to="about" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                            <Link to="about" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-black transition-all duration-100">About</Link>
                         </li>
                         <li key="meeting">
-                            <Link to="meeting" smooth={true} offset={-280} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                            <Link to="meeting" smooth={true} offset={-280} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-black transition-all duration-100">Meeting</Link>
                         </li>
                         <li key="case">
-                            <Link to="case" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                            <Link to="case" smooth={true} offset={-200} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-black transition-all duration-100">Case</Link>
                         </li>
                         <li key="blog">
-                            <Link to="blog" smooth={true} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                            <Link to="blog" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-black transition-all duration-100">Blog</Link>
                         </li>
                         <li key="live">
-                            <Link to="live" smooth={true} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                            <Link to="live" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-black transition-all duration-100">Live</Link>
                         </li>
                         <li key="contact">
-                            <Link to="contact" smooth={true} offset={-250} duration={500} className='outline-none hover:border-b-4 border-modernRed transition-all duration-100'
+                            <Link to="contact" smooth={true} offset={-250} duration={500} className='outline-none hover:border-b-4 hover:border-modernRed transition-all duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-black transition-all duration-100">Contact</Link>
                         </li>

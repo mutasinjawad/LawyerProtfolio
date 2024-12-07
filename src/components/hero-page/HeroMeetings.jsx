@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Button from './Button'
+import Button from '../Button'
 import { Element } from "react-scroll";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
