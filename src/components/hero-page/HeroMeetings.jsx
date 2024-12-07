@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import Button from '../Button'
 import { useNavigate } from "react-router-dom";
 import { Element } from "react-scroll";
+import Button from '../Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { ChevronRight, ArrowRight, X } from 'lucide-react';
 
 const HeroMeetings = () => {
 
@@ -49,18 +50,18 @@ const HeroMeetings = () => {
                 <p className="font-pregular text-gray-500 lg:text-[18px] text-[15px]">{meeting.date}</p>
                 <p className="font-pregular pt-10 lg:text-[18px] text-[15px]">{meeting.description}</p>
               </div>
-              <button className="flex items-center justify-start text-neutral-400 hover:text-neutral-500 lg:mt-[20px] lg:ml-[40px] ml-6 py-2 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
+              <button className="flex items-center justify-start text-neutral-400 hover:text-neutral-600 lg:mt-[20px] lg:ml-[40px] ml-6 py-2 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
               onClick={() => toggleExpand(meeting)}
               >
                 <h1 className="font-pregular">Expand</h1>
-                <FontAwesomeIcon icon={faArrowRight}/>
+                <ChevronRight/>
               </button>
             </div>
           ))  
           }
         </div>
-        <div className="">
-          <Button text="See More" icon={faArrowRight} onClick={handleSeeMore} classStyle="ml-6"/>
+        <div onClick={handleSeeMore} >
+          <Button text="See More" Icon={ArrowRight} classstyle="ml-2 lg:w-6 lg:h-6 w-4 h-4"/>
         </div>
       </Element>
       {expand && (
@@ -75,7 +76,7 @@ const HeroMeetings = () => {
             <div className="flex items-center justify-between">
               <h2 className="lg:text-2xl text-[18px] font-pbold">{meetingId.title}</h2>
               <button className="text-primary hover:text-modernRed transition duration-300 ease-in-out" onClick={toggleExpand}>
-                <FontAwesomeIcon icon={faXmark} size="2xl"/>
+                <X size={30}/>
               </button>
             </div>
             <div>

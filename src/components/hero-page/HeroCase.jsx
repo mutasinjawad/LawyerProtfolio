@@ -1,9 +1,10 @@
 import React from 'react'
-import Button from '../Button'
+import { useState, useEffect, useRef } from 'react'
 import { Element } from "react-scroll";
 import { useNavigate } from "react-router-dom";
+import Button from '../Button'
+import { ArrowRight, ChevronRight, X } from 'lucide-react';
 import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useState, useEffect, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const HeroCase = () => {
@@ -78,14 +79,14 @@ const HeroCase = () => {
               onClick={() => toggleExpand(cass)}
               >
                 <h1 className="font-pregular">Expand</h1>
-                <FontAwesomeIcon icon={faArrowRight}/>
+                <ChevronRight/>
               </button>
             </div>
           ))  
           }
         </div>
         <div className="">
-          <Button text="See More" icon={faArrowRight} onClick={handleSeeMore} classStyle="ml-6"/>
+          <Button text="See More" Icon={ArrowRight} onClick={handleSeeMore} classstyle="ml-2 lg:w-6 lg:h-6 w-4 h-4"/>
         </div>
       </Element>
       {expand && (
@@ -100,7 +101,7 @@ const HeroCase = () => {
             <div className="flex items-center justify-between">
               <h2 className="lg:text-2xl text-[18px] font-pbold">{cass.title}</h2>
               <button className="text-primary hover:text-modernRed transition duration-300 ease-in-out" onClick={toggleExpand}>
-                <FontAwesomeIcon icon={faXmark} size="2xl"/>
+                <X size={30}/>
               </button>
             </div>
             <div>

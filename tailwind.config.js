@@ -8,7 +8,7 @@ export default {
           DEFAULT: "#8873ef",
           100: "#F1F5F9"
         },
-        secondary: "#193256",
+        secondary: "#404030",
         modernRed: "#E0115F",
         black:
           {DEFAULT: "#202020"},

@@ -181,7 +181,7 @@ const HeroBlog = () => {
                     </Swiper>
                 </div>
                 <div className="">
-                    <Button text="See More" icon={faArrowRight} route="#" classStyle="ml-6"/>
+                    <Button text="See More" Icon={faArrowRight} route="#" classStyle="ml-6"/>
                 </div>
             </div>
             {expand && (

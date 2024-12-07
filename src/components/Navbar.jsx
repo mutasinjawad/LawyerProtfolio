@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 import { Link } from 'react-scroll'
 import { useLocation, useNavigate } from "react-router-dom";
+import { div } from 'motion/react-client'
 
 function Navbar() {
     const [mobileDrawer, setMobileDrawer] = useState(false)
@@ -31,14 +32,16 @@ function Navbar() {
 
     if (isExtendedPage) {
         return (
-            <button className="sticky z-40 left-0 p-4 flex items-center font-psemibold text-black text-xl">
-                <ChevronLeft size={30}/>
-                <span
-                  onClick={() => navigate(-1)}
-                >
-                Back
-                </span>
-            </button>
+            <div className='sticky z-40 left-4 p-6 flex justify-start'>
+                <button className="sticky flex items-center justify-center font-psemibold p-1 text-black lg:text-xl text-base outline-none hover:text-secondary lg:gap-6 hover:gap-2 hover:cursor transition-all duration-200 ease-in-out"
+                    onClick={() => navigate(-1)}>
+                        <ChevronLeft className='lg:w-6 lg:h-6 w-5 h-5' strokeWidth={3}/>
+                        <span
+                        >
+                        Back
+                        </span>
+                </button>
+            </div>
         );
     }
 

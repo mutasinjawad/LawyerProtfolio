@@ -3,6 +3,7 @@ import { Element } from "react-scroll";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPhone, faEnvelope, faLocationDot, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import { Facebook, Instagram, Linkedin, Send } from 'lucide-react';
 import Button from '../Button'
 
 const Contact = () => {
@@ -70,16 +71,16 @@ const Contact = () => {
                         <textarea placeholder='Message' className="w-full h-[20vh] bg-whiteBg border-2 border-neutral-300 rounded-3xl font-pextralight text-lg focus:border-[#505050] focus:outline-none resize-none px-6 py-2"/>
                     </div>
                     <div className="flex justify-between">
-                        <Button text="Send" icon={faPaperPlane} route="#" classStyle="ml-6"/>
+                        <Button text="Send" Icon={Send} route="#" classstyle="ml-3 lg:w-6 lg:h-6 w-4 h-4"/>
                         <div className='flex items-center justify-center gap-x-6 mr-2'>
-                            <a href="https://www.facebook.com/muhtasin.jawad.1" target="_blank" rel="noopener noreferrer" className='lg:text-[40px] text-3xl text-black hover:text-[#505050] transition duration-300 ease-in-out cursor-pointer'>
-                                <FontAwesomeIcon icon={faFacebook}/>
+                            <a href="https://www.facebook.com/muhtasin.jawad.1" target="_blank" rel="noopener noreferrer" className='flex items-center justify-center bg-black lg:w-12 lg:h-12 w-8 h-8 rounded-full hover:bg-secondary transition duration-300 ease-in-out cursor-pointer outline-none'>
+                                <Facebook className='lg:text-white lg:w-8 lg:h-8 text-white w-4 h-4' strokeWidth={1.5}/>
                             </a>
-                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className='lg:text-[40px] text-3xl text-black hover:text-[#505050] transition duration-300 ease-in-out cursor-pointer'>
-                                <FontAwesomeIcon icon={faInstagram}/>
+                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className='flex items-center justify-center bg-black lg:w-12 lg:h-12 w-8 h-8 rounded-full hover:bg-secondary transition duration-300 ease-in-out cursor-pointer outline-none'>
+                                <Instagram className='lg:text-white lg:w-8 lg:h-8 text-white w-4 h-4' strokeWidth={1.75}/>
                             </a>
-                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className='lg:text-[40px] text-3xl text-black hover:text-[#505050] transition duration-300 ease-in-out cursor-pointer'>
-                                <FontAwesomeIcon icon={faLinkedin}/>
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className='flex items-center justify-center bg-black lg:w-12 lg:h-12 w-8 h-8 rounded-full hover:bg-secondary transition duration-300 ease-in-out cursor-pointer outline-none'>
+                                <Linkedin className='lg:text-white lg:w-8 lg:h-8 text-white w-4 h-4' strokeWidth={1.5}/>
                             </a>
                         </div>
                     </div>
