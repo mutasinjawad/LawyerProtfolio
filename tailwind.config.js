@@ -6,7 +6,7 @@ export default {
       colors: {
         primary: {
           DEFAULT: "#8873ef",
-          100: "#F1F5F9"
+          100: "#FFFFF8"
         },
         secondary: "#404030",
         modernRed: "#E0115F",

@@ -11,7 +11,7 @@ const Hero = () => {
         <About />
         <HeroMeetings />
         <HeroCase />
-        {/* <HeroBlog /> */}
+        <HeroBlog />
         <Contact />
         {/* <Sample /> */}
       </div>

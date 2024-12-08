@@ -19,21 +19,21 @@ const Contact = () => {
         <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Contact Me</h1>
         <div className="flex lg:flex-row flex-col justify-center items-start w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
             <div className='flex flex-col items-center justify-between space-y-6 w-full lg:h-[50vh]'>
-                <div className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:bg-primary-100 hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
+                <div className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
                 onClick={() => copyToClipboard('biplab_poddar@hotmail.com')}
                 >
                     <Mail />
                     <h1 className="font-pregular lg:text-lg text-base text-black mt-4">Email</h1>
                     <span className="font-pregular lg:text-base text-sm text-neutral-500 text-center">biplab_poddar@hotmail.com</span>
                 </div>
-                <div className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:bg-primary-100 hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
+                <div className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
                 onClick={() => copyToClipboard('+8801700587914')}
                 >
                     <Phone/>
                     <h1 className="font-pregular lg:text-lg text-base text-black mt-4">Phone</h1>
                     <span className="font-pregular lg:text-base text-sm text-neutral-500 text-center">+8801700587914</span>
                 </div>
-                <a href="https://maps.app.goo.gl/a6DnJt5z7ypdGFbSA" target="_blank" rel="noopener noreferrer" className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:bg-primary-100 hover:shadow cursor-pointer transition-all duration-300 ease-in-out'>
+                <a href="https://maps.app.goo.gl/a6DnJt5z7ypdGFbSA" target="_blank" rel="noopener noreferrer" className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'>
                     <MapPin/>
                     <h1 className="font-pregular lg:text-lg text-base text-black mt-4">Location</h1>
                     <span className="font-pregular lg:text-base text-sm text-neutral-500 text-center">109, Annex Extenstion Building, Supreme Court Bar Association</span>

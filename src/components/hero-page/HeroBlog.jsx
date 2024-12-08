@@ -1,8 +1,10 @@
 import React from 'react'
 import Button from '../Button'
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { ArrowRight, ChevronRight, X } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
@@ -115,15 +117,21 @@ const HeroBlog = () => {
       }
     }, [expand]);
 
+    const navigate = useNavigate();
+
+    const handleSeeMore = () => {
+      navigate("blogs");
+    };  
+
     return (
         <>
             <div className='relative flex flex-col items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]' id="blog">
                 <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Blogs</h1>
-                <div className="flex lg:flex-row flex-col justify-center items-center lg:w-full w-[10vh] lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-16">
-                <Swiper
+                <div className="flex lg:flex-row flex-col justify-center items-center w-full overflow-hidden lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-16">
+                    <Swiper
                     breakpoints={{
                         320: {
-                        slidesPerView: 1, // 1 slide on small screens
+                        slidesPerView: 2, // 1 slide on small screens
                         spaceBetween: 10,
                         },
                         640: {
@@ -138,22 +146,26 @@ const HeroBlog = () => {
                         slidesPerView: 4, // 4 slides on extra-large screens
                         spaceBetween: 25,
                         },
+                        1536: {
+                        slidesPerView: 5, // 5 slides on 4k screens
+                        spaceBetween: 30,
+                        },
                     }}
                     centeredSlides={false} // Center active slide if needed
                     pagination={{
                         clickable: true, // Enable pagination dots
                     }}
                     modules={[Pagination]}
-                    className="mySwiper"
+                    className="custom-swiper w-full"
                     >
                     {blogs.map((blog) => (
-                        <SwiperSlide key={blog.id} className="pb-14 z-0">
+                        <SwiperSlide key={blog.id} className="w-full max-w-sm pb-14 z-0">
                         <div
                             key={blog.id}
-                            className="lg:h-[38vh] h-[23vh] lg:w-[30vh] w-full bg-white rounded-3xl hover:bg-primary-100 hover:shadow cursor-pointer transition-all duration-300 ease-in-out"
+                            className="flex flex-col items-start justify-between bg-white rounded-3xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out"
                         >
                             <div
-                            className="lg:p-10 p-6 lg:h-[30vh] h-[18vh]"
+                            className="lg:p-5 p-4 lg:h-[30vh] h-[18vh]"
                             style={{
                                 overflow: "hidden",
                             }}
@@ -169,11 +181,11 @@ const HeroBlog = () => {
                             </p>
                             </div>
                             <button
-                            className="flex items-center justify-start text-neutral-400 hover:text-neutral-500 lg:mt-[20px] lg:ml-[40px] ml-6 py-2 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
+                            className="flex items-center justify-start text-neutral-400 hover:text-neutral-600 lg:p-5 p-4 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
                             onClick={() => toggleExpand(blog)}
                             >
                             <h1 className="font-pregular">Expand</h1>
-                            <FontAwesomeIcon icon={faArrowRight} />
+                            <ChevronRight />
                             </button>
                         </div>
                         </SwiperSlide>
@@ -181,7 +193,7 @@ const HeroBlog = () => {
                     </Swiper>
                 </div>
                 <div className="">
-                    <Button text="See More" Icon={faArrowRight} route="#" classStyle="ml-6"/>
+                    <Button text="See More" Icon={ArrowRight} route="#" onClick={handleSeeMore} classStyle="ml-6"/>
                 </div>
             </div>
             {expand && (

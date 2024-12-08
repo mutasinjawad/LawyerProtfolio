@@ -11,6 +11,7 @@ function Navbar() {
     const titles = {
         "/meetings": "Meetings",
         "/cases": "Cases",
+        "/blogs": "Blogs",
       };
 
     const [mobileDrawer, setMobileDrawer] = useState(false)
@@ -32,7 +33,7 @@ function Navbar() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const extendedPages = ["/meetings", "/cases"];
+    const extendedPages = ["/meetings", "/cases", "/blogs"];
 
     const isExtendedPage = extendedPages.includes(location.pathname);
 

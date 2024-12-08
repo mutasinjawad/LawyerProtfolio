@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar"
 import Hero from "./components/hero-page/Hero"
 import Meeting from "./components/Meeting"
 import Case from "./components/Case"
+import Blog from "./components/Blog"
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
           <Route index element={<Hero />} />
           <Route path="meetings" element={<Meeting />} />
           <Route path="cases" element={<Case />} />
+          <Route path="blogs" element={<Blog />} />
         </Routes>
       </div>
     </BrowserRouter>
