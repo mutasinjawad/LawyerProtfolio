@@ -6,8 +6,9 @@ import { Facebook, Instagram, Linkedin, Send } from 'lucide-react';
 
 const About = () => {
 
-    const [iconSize, setIconSize] = useState(24); // Default size
+    const [iconSize, setIconSize] = useState(24); // Icon size
 
+    // Update icon size
     const updateIconSize = () => {
         const width = window.innerWidth;
 
@@ -23,6 +24,7 @@ const About = () => {
         }
     };
 
+    // Event listener for icon size
     useEffect(() => {
         updateIconSize(); // Set initially
         window.addEventListener('resize', updateIconSize);
