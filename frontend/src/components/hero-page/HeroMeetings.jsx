@@ -8,8 +8,8 @@ const HeroMeetings = () => {
 
   // State variables
   const [meetings, setMeetings] = useState([]); // Store meetings
-  const [expand, setExpand] = useState(false);  // Expand state
   const [meetingId, setMeetingId] = useState(null); // Store meeting id for expanded meeting
+  const [expand, setExpand] = useState(false);  // Expand state
   const [itemsToShow, setItemsToShow] = useState(meetings.length); // Default to all items
   const [iconSize, setIconSize] = useState(24); // Icon size
   const navigate = useNavigate(); // Navigation
@@ -75,7 +75,7 @@ const HeroMeetings = () => {
     fetchMeetings();
   }, []);
 
-  // Event listener for overflow
+  // Event listener for scroll
   useEffect(() => {
     if (expand) {
       document.body.classList.add("overflow-hidden");
