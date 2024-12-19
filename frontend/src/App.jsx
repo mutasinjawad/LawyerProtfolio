@@ -8,15 +8,6 @@ import Blog from "./components/Blog"
 
 export default function App() {
 
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/api/data')
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error:', error));
-  }, []);
-
   return (
     <BrowserRouter>
       <div >

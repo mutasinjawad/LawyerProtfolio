@@ -28,6 +28,7 @@ async function run() {
     const meetingCollection = client.db("meetingDB").collection("meeting");
     const casesCollection = client.db("meetingDB").collection("case");
     const blogsCollection = client.db("meetingDB").collection("blog");
+    const contactCollection = client.db("meetingDB").collection("message"); // New collection for storing contact messages
 
     
     app.get('/meetings', async (req, res) => {
@@ -70,6 +71,32 @@ async function run() {
   
       const results = await cursor.toArray();
       res.status(200).json(results);
+    });
+
+    // POST method to handle contact form submission
+    app.post('/contact', async (req, res) => {
+      const { name, email, message } = req.body;
+      
+      if (!name || !email || !message) {
+        return res.status(400).json({ message: "Name, email, and message are required." });
+      }
+
+      const contactMessage = {
+        name: name,
+        email: email,
+        message: message,
+        time: new Date() // Capture the current time
+      };
+      
+      
+      try {
+        // Insert the contact form message into the database
+        const result = await contactCollection.insertOne(contactMessage);
+        res.status(201).json({ message: "Contact message stored successfully.", result });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to store contact message." });
+      }
     });
     
     
