@@ -1,14 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Element, Link } from "react-scroll";
 import Lawyer from '../../assets/images/lawyer.jpg';
 import Button from '../Button';
 import { Facebook, Instagram, Linkedin, Send } from 'lucide-react';
 
 const About = () => {
-  return (
+
+    const [iconSize, setIconSize] = useState(24); // Default size
+
+    const updateIconSize = () => {
+        const width = window.innerWidth;
+
+        if (width >= 1280) {
+            // XL screens
+            setIconSize(20);
+        } else if (width >= 1024) {
+            // LG screens
+            setIconSize(16);
+        } else {
+            // Small screens
+            setIconSize(14);
+        }
+    };
+
+    useEffect(() => {
+        updateIconSize(); // Set initially
+        window.addEventListener('resize', updateIconSize);
+
+        return () => {
+          window.removeEventListener('resize', updateIconSize); // Cleanup
+        };
+    }, []);
+
+return (
     // Start of the About component
     <Element className="flex items-center justify-center" name="about">
-        <div className='flex flex-col-reverse lg:flex-row items-center justify-between w-[180vh] lg:mx-36 mx-8 lg:my-16 my-14 lg:h-[70vh]'>
+        <div className='flex flex-col-reverse lg:flex-row items-center justify-between w-[180vh] lg:mx-36 mx-8 lg:my-10 my-14 lg:h-[70vh]'>
 
             {/* Social Media Platforms in Large View */}
             <div className="hidden lg:flex flex-col h-full justify-center items-center space-y-10 lg:w-1/12 ">
@@ -34,7 +61,7 @@ const About = () => {
                 filing cases in the Supreme Court of Bangladesh.
                 </p>
                 <Link to="contact" smooth={true} offset={-200} duration={500} >
-                    <Button text="Contact Me" Icon={Send} route="#" classstyle="ml-3 lg:w-6 lg:h-6 w-4 h-4"/>
+                    <Button text="Contact Me" Icon={Send} route="#" iconSize={iconSize}/>
                 </Link>
             </div>
 
