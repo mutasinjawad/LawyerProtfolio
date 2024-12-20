@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { ChevronRight, X, ChevronsDown } from 'lucide-react';
-import Button from './Button';
+import Button from '../components/Button';
 
 const Meeting = () => {
   

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Element } from "react-scroll";
-import Button from '../Button'
+import Button from '../../components/Button'
 import { ChevronRight, ArrowRight, X } from 'lucide-react';
 
 const HeroMeetings = () => {

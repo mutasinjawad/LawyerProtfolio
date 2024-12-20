@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router"
 import { useEffect, useState } from "react"
-import Navbar from "./components/Navbar"
-import Hero from "./components/hero-page/Hero"
-import Meeting from "./components/Meeting"
-import Case from "./components/Case"
-import Blog from "./components/Blog"
+import Navbar from "./pages/Navbar"
+import Hero from "./pages/hero-page/Hero"
+import Meeting from "./pages/Meeting"
+import Case from "./pages/Case"
+import Blog from "./pages/Blog"
 
 export default function App() {
 

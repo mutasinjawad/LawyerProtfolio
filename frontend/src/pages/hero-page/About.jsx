@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Element, Link } from "react-scroll";
 import Lawyer from '../../assets/images/lawyer.jpg';
-import Button from '../Button';
+import Button from '../../components/Button';
 import { Facebook, Instagram, Linkedin, Send } from 'lucide-react';
 
 const About = () => {

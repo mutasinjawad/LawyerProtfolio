@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Element } from "react-scroll";
 import { useNavigate } from "react-router-dom";
-import Button from '../Button'
+import Button from '../../components/Button'
 import { ArrowRight, ChevronRight, X } from 'lucide-react';
 
 const HeroCase = () => {
