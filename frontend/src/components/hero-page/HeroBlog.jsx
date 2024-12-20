@@ -1,9 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '../Button'
-import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { ArrowRight, ChevronRight, X } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -13,34 +10,62 @@ import { Pagination } from 'swiper/modules';
 
 const HeroBlog = () => {
 
-    const [blogs, setBlogs] = useState([])
+    // State variables
+    const [blogs, setBlogs] = useState([])  // Store blogs
+    const [blogId, setBlogId] = useState(null)  // Store blog id for expanded blog
+    const [expand, setExpand] = useState(false) // Expand state
+    const [iconSize, setIconSize] = useState(24); // Icon size
+    const navigate = useNavigate(); // Navigation
+    
+    // Toggle expand
+    const toggleExpand = (id) => {
+        setBlogId(id);
+        setExpand(!expand)
+    }
+    
+    // Update icon size
+    const updateIconSize = () => {
+        const width = window.innerWidth;
+        
+        if (width >= 1280) {
+            // XL screens
+            setIconSize(24);
+        } else if (width >= 1024) {
+            // LG screens
+            setIconSize(21);
+        } else {
+            // Small screens
+            setIconSize(18);
+      }
+    };
 
+    // Update card numbers
+    const updateItemsToShow = () => {
+        const width = window.innerWidth;
+
+        if (width >= 1280) {
+            // XL screens
+            setItemsToShow(4);
+        } else if (width >= 1024) {
+            // LG screens
+            setItemsToShow(3);
+        } else {
+            // Small screens
+            setItemsToShow(blogs.length);
+        }
+    };
+
+    // Format date
     const fomratDate = (date) => {
         const options = { year: 'numeric', month: 'short', day: '2-digit' };
         return new Date(date).toLocaleDateString('en-US', options);
     }
-
-    const [expand, setExpand] = useState(false)
-    const [blog, setBlog] = useState(null)
-    const toggleExpand = (id) => {
-      setBlog(id);
-      setExpand(!expand)
-    }
-  
-    useEffect(() => {
-      if (expand) {
-        document.body.classList.add("overflow-hidden");
-      } else {
-        document.body.classList.remove("overflow-hidden");
-      }
-    }, [expand]);
-
-    const navigate = useNavigate();
-
+    
+    // Navigate to blogs page
     const handleSeeMore = () => {   
       navigate("blogs");
     };  
-
+    
     // Fetch blogs from backend
     useEffect(() => {
       const fetchBlogs = async () => {
@@ -53,11 +78,35 @@ const HeroBlog = () => {
       fetchBlogs();
     }, []);
 
+    // Event listener for scroll
+    useEffect(() => {
+        if (expand) {
+            document.body.classList.add("overflow-hidden");
+        } else {
+            document.body.classList.remove("overflow-hidden");
+        }
+    }, [expand]);
+
+    // Event listener for icon size
+    useEffect(() => {
+        updateIconSize(); // Set initially
+        window.addEventListener('resize', updateIconSize);
+        
+        return () => {
+          window.removeEventListener('resize', updateIconSize); // Cleanup
+        };
+    }, []);
+
     return (
         <>
-            <div className='relative flex flex-col items-center justify-between lg:m-36 mx-12 mb-16 lg:h-[70vh]' id="blog">
-                <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Blogs</h1>
-                <div className="flex lg:flex-row flex-col justify-center items-center w-full overflow-hidden lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-16">
+            {/* Blogs Component Start */}
+            <div className='relative flex flex-col items-center justify-between xl:m-16 xl:mb-36 lg:mb-24 mb-20 lg:m-8 mx-10 xl:h-[70vh] lg:h-[62vh]' id="blog">
+                
+                {/* Blog Title */}
+                <h1 className="font-psemibold xl:text-[60px] lg:text-[45px] text-[34px] text-black">Blogs</h1>
+
+                {/* Blog Swiper */}
+                <div className="flex lg:flex-row flex-col justify-center items-center w-full xl:gap-16 lg:gap-10 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
                     <Swiper
                     breakpoints={{
                         320: {
@@ -136,16 +185,16 @@ const HeroBlog = () => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="flex items-center justify-between">
-                            <h2 className="lg:text-2xl text-[18px] font-pbold">{blog.title}</h2>
+                            <h2 className="lg:text-2xl text-[18px] font-pbold">{blogId.title}</h2>
                             <button className="text-black hover:text-modernRed transition duration-300 ease-in-out" onClick={toggleExpand}>
                                 <X />
                             </button>
                         </div>
                         <div>
-                            <p className="font-pregular text-gray-600 lg:text-[18px] text-[15px]">{fomratDate(blog.date)}</p>
+                            <p className="font-pregular text-gray-600 lg:text-[18px] text-[15px]">{fomratDate(blogId.date)}</p>
                             <div className='flex flex-col gap-y-2 pt-10'>
                                 <h1 className='font-plight text-2xl text-gray-400'>Description:</h1>
-                                <p className="font-pregular">{blog.description}</p>
+                                <p className="font-pregular">{blogId.description}</p>
                             </div>
                         </div>
                     </div>

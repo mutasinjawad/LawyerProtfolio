@@ -15,6 +15,25 @@ const Contact = () => {
     const [status, setStatus] = useState('');
     const [statusColor, setStatusColor] = useState('');
 
+    const [iconSize, setIconSize] = useState(24); // Icon size
+
+    // Update icon size
+    const updateIconSize = () => {
+        const width = window.innerWidth;
+
+        if (width >= 1280) {
+            // XL screens
+            setIconSize(20);
+        } else if (width >= 1024) {
+            // LG screens
+            setIconSize(16);
+        } else {
+            // Small screens
+            setIconSize(14);
+        }
+    };
+
+    // Copy to clipboard
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text)
             .then(() => {
@@ -22,6 +41,7 @@ const Contact = () => {
             });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -64,39 +84,67 @@ const Contact = () => {
         }
     };
 
-  return (
-    <Element className="flex flex-col items-center justify-between lg:m-36 mx-12 lg:h-[70vh]" name="contact">
-        <h1 className="font-psemibold lg:text-[60px] text-[34px] text-black">Contact Me</h1>
-        <div className="flex lg:flex-row flex-col justify-center items-start w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
-            <div className='flex flex-col items-center justify-between space-y-6 w-full lg:h-[50vh]'>
-                <div className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
+    // Event listener for icon size
+    useEffect(() => {
+        updateIconSize(); // Set initially
+        window.addEventListener('resize', updateIconSize);
+        
+        return () => {
+            window.removeEventListener('resize', updateIconSize); // Cleanup
+        };
+    }, []);
+
+return (
+
+    // Contact Component Start
+    <Element className="relative flex flex-col items-center justify-between xl:m-16 xl:mb-36 lg:mb-24 mb-0 lg:m-8 mx-10 xl:h-[65vh] lg:h-[62vh]" name="contact">
+
+        {/* Contact Title */}
+        <h1 className="font-psemibold xl:text-[60px] lg:text-[45px] text-[34px] text-black">Contact Me</h1>
+
+        {/* Contact Box */}
+        <div className="flex lg:flex-row flex-col justify-center items-start w-full lg:gap-16 gap-6 lg:mb-0 mb-8 lg:mt-14 mt-8">
+            
+            {/* Icon Box */}
+            <div className='flex flex-col items-center space-y-4 lg:w-2/5 w-full lg:h-full'>
+
+                {/* Email */}
+                <div className='flex flex-col items-center justify-center lg:p-6 p-4 w-full h-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
                     onClick={() => {    
                         window.open(
                             'https://mail.google.com/mail/?view=cm&fs=1&to=biplab_poddar@hotmail.com', '_blank'
                         );
                     }}
                 >
-                    <Mail />
-                    <h1 className="font-pregular lg:text-lg text-base text-black mt-4">Email</h1>
-                    <span className="font-pregular lg:text-base text-sm text-neutral-500 text-center">biplab_poddar@hotmail.com</span>
+                    <Mail size={iconSize}/>
+                    <h1 className="font-pmedium xl:text-base text-sm text-black xl:mt-4 mt-2">Email</h1>
+                    <span className="font-pregular text-gray-500 xl:text-sm text-[12px] text-center">biplab_poddar@hotmail.com</span>
                 </div>
-                <div className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
+
+                {/* Phone */}
+                <div className='flex flex-col items-center justify-center lg:p-6 p-4 w-full h-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'
                 onClick={() => copyToClipboard('+8801700587914')}
                 >
-                    <Phone/>
-                    <h1 className="font-pregular lg:text-lg text-base text-black mt-4">Phone</h1>
-                    <span className="font-pregular lg:text-base text-sm text-neutral-500 text-center">+8801700587914</span>
+                    <Phone size={iconSize}/>
+                    <h1 className="font-pmedium xl:text-base text-sm text-black xl:mt-4 mt-2">Phone</h1>
+                    <span className="font-pregular text-gray-500 xl:text-sm text-[12px] text-center">+8801700587914</span>
                 </div>
-                <a href="https://maps.app.goo.gl/a6DnJt5z7ypdGFbSA" target="_blank" rel="noopener noreferrer" className='flex flex-col items-center justify-center lg:p-8 p-4 h-[20vh] w-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'>
-                    <MapPin/>
-                    <h1 className="font-pregular lg:text-lg text-base text-black mt-4">Location</h1>
-                    <span className="font-pregular lg:text-base text-sm text-neutral-500 text-center">109, Annex Extenstion Building, Supreme Court Bar Association</span>
+
+                {/* Location */}
+                <a href="https://maps.app.goo.gl/a6DnJt5z7ypdGFbSA" target="_blank" rel="noopener noreferrer" className='flex flex-col items-center justify-center lg:p-6 p-4 w-full h-full text-black bg-white lg:rounded-3xl rounded-2xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out'>
+                    <MapPin size={iconSize}/>
+                    <h1 className="font-pmedium xl:text-base text-sm text-black xl:mt-4 mt-2">Location</h1>
+                    <span className="font-pregular text-gray-500 xl:text-sm text-[12px] text-center">109, Annex Extenstion Building, Supreme Court Bar Association</span>
                 </a>
             </div>
-            <div className='w-full lg:h-[50vh] lg:mt-0 mt-12'>
-                <form onSubmit={handleSubmit} className='flex flex-col lg:space-y-[3vh] space-y-[2vh]'>
+
+            {/* Form Box */}
+            <div className='w-full lg:h-full lg:mt-0 mt-12'>
+                <form onSubmit={handleSubmit} className='flex flex-col lg:h-full md:justify-between space-y-3'>
+
+                    {/* Name */}
                     <div className="relative">
-                        <label htmlFor="name" className="absolute -top-3 left-1 transfrom translate-x-1/4 px-2 text-sm bg-whiteBg font-plight text-neutral-400">
+                        <label htmlFor="name" className="absolute lg:-top-3 -top-2 left-1 transfrom translate-x-1/4 px-2 lg:text-sm text-[11px] bg-whiteBg font-plight text-neutral-400">
                             Name
                         </label>
                         <input
@@ -105,11 +153,13 @@ const Contact = () => {
                             type="text"
                             placeholder="Enter your name"
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full lg:h-[9vh] h-[6vh] bg-whiteBg border-2 border-neutral-300 lg:rounded-3xl rounded-2xl font-pregular lg:text-lg text-base focus:border-[#404030] focus:outline-none px-6 py-3"
+                            className="w-full xl:h-[8vh] lg:h-[9vh] bg-whiteBg border-2 border-neutral-300 lg:rounded-2xl rounded-xl font-pregular xl:text-lg text-sm focus:border-[#404030] focus:outline-none lg:px-6 px-3 lg:py-3 py-2 xl:mb-4"
                         />
                     </div>
+
+                    {/* Email */}
                     <div className="relative">
-                        <label htmlFor="email" className="absolute -top-3 left-1 transfrom translate-x-1/4 px-2 text-sm bg-whiteBg font-plight text-neutral-400">
+                        <label htmlFor="email" className="absolute lg:-top-3 -top-2 left-1 transfrom translate-x-1/4 px-2 lg:text-sm text-[11px] bg-whiteBg font-plight text-neutral-400">
                             Email
                         </label>
                         <input
@@ -118,11 +168,13 @@ const Contact = () => {
                             type="text"
                             placeholder="Enter your email"
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full lg:h-[9vh] h-[6vh] bg-whiteBg border-2 border-neutral-300 lg:rounded-3xl rounded-2xl font-pregular lg:text-lg text-base focus:border-[#404030] focus:outline-none px-6 py-3"
+                            className="w-full xl:h-[8vh] lg:h-[9vh] bg-whiteBg border-2 border-neutral-300 lg:rounded-2xl rounded-xl font-pregular xl:text-lg text-sm focus:border-[#404030] focus:outline-none lg:px-6 px-3 lg:py-3 py-2 xl:mb-4"
                         />
                     </div>
+
+                    {/* Message */}
                     <div className="relative">
-                        <label htmlFor="message" className="absolute -top-3 left-1 transfrom translate-x-1/4 px-2 text-sm bg-whiteBg font-plight text-neutral-400">
+                        <label htmlFor="message" className="absolute lg:-top-3 -top-2 left-1 transfrom translate-x-1/4 px-2 lg:text-sm text-[11px] bg-whiteBg font-plight text-neutral-400">
                             Message
                         </label>
                         <textarea 
@@ -130,12 +182,18 @@ const Contact = () => {
                             value={message}
                             placeholder="Write your message"
                             onChange={(e) => setMessage(e.target.value)}
-                            className="w-full h-[24vh] bg-whiteBg border-2 border-neutral-300 lg:rounded-3xl rounded-2xl font-pregular lg:text-lg text-base focus:border-[#404030] focus:outline-none resize-none px-6 py-3"
+                            className="w-full xl:h-[25vh] lg:h-[23vh] h-[30vh] bg-whiteBg border-2 border-neutral-300 lg:rounded-2xl rounded-xl font-pregular xl:text-lg text-sm focus:border-[#404030] focus:outline-none resize-none lg:px-6 px-3 lg:py-3 py-2 xl:mb-2"
                         />
                     </div>
+
+                    {/* Send Button & Social Media */}
                     <div className="flex justify-between items-center">
-                        <Button text="Send" Icon={Send} route="#" classstyle="ml-3 lg:w-6 lg:h-6 w-4 h-4"/>
+
+                        {/* Send Button */}
+                        <Button text="Send" Icon={Send} route="#" iconSize={iconSize}/>
                         {status && <p className={`text-center mt-4 font-pregular text-${statusColor}-700 text-lg`}>{status}</p>}
+
+                        {/* Social Media */}
                         <div className='flex items-center justify-center gap-x-6 mr-2'>
                             <a href="https://www.facebook.com/muhtasin.jawad.1" target="_blank" rel="noopener noreferrer" className='flex items-center justify-center bg-black lg:w-12 lg:h-12 w-10 h-10 rounded-full hover:bg-secondary transition duration-300 ease-in-out cursor-pointer outline-none'>
                                 <Facebook className='text-white' strokeWidth={1.5}/>

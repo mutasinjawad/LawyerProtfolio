@@ -107,7 +107,7 @@ const HeroMeetings = () => {
   return (
     <>
       {/* Meeting Component Start */}
-      <Element className='relative flex flex-col items-center justify-between xl:m-16 lg:m-8 mx-10 mb-16 xl:h-[70vh] lg:h-[62vh]' name="meeting">
+      <Element className='relative flex flex-col items-center justify-between xl:m-16 xl:mb-36 lg:mb-24 mb-20 lg:m-8 mx-10 xl:h-[70vh] lg:h-[62vh]' name="meeting">
 
         {/* Meeting Title */}
         <h1 className="font-psemibold xl:text-[60px] lg:text-[45px] text-[34px] text-black">Meetings</h1>
@@ -121,7 +121,7 @@ const HeroMeetings = () => {
               }}>
                 <h3 className="font-pmedium xl:text-base text-sm text-black">{meeting.title}</h3>
                 <p className="font-pregular text-gray-500 xl:text-sm text-[11px]">{fomratDate(meeting.date)}</p>
-                <p className="font-pregular pt-10 xl:text-sm text-[11px]">{meeting.description}</p>
+                <p className="font-pregular lg:pt-10 pt-4 xl:text-sm text-[11px]">{meeting.description}</p>
               </div>
 
               {/* Expand Button */}
@@ -162,7 +162,7 @@ const HeroMeetings = () => {
             </div>
             <div>
               <p className="font-pregular text-gray-600 xl:text-lg text-sm">{fomratDate(meetingId.date)}</p>
-              <p className="font-pregular pt-10 xl:text-lg text-sm">{meetingId.description}</p>
+              <p className="font-pregular lg:pt-10 pt-6 xl:text-lg text-sm">{meetingId.description}</p>
             </div>
           </div>
         </div>

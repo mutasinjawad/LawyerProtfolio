@@ -49,7 +49,7 @@ const HeroCase = () => {
       setItemsToShow(3);
     } else {
       // Small screens
-      setItemsToShow(meetings.length);
+      setItemsToShow(cases.length);
     }
   };
 
@@ -108,7 +108,7 @@ const HeroCase = () => {
   return (
     <>
       {/* Cases Component Start */}
-      <Element className='relative flex flex-col items-center justify-between xl:m-16 lg:m-8 mx-10 mb-16 xl:h-[70vh] lg:h-[62vh]' name="case">
+      <Element className='relative flex flex-col items-center justify-between xl:m-16 xl:mb-36 lg:mb-24 mb-20 lg:m-8 mx-10 xl:h-[70vh] lg:h-[62vh]' name="case">
 
         {/* Case Title */}
         <h1 className="font-psemibold xl:text-[60px] lg:text-[45px] text-[34px] text-black">Cases</h1>
@@ -122,7 +122,7 @@ const HeroCase = () => {
               }}>
                 <h3 className="font-pmedium xl:text-base text-sm text-black">{cass.title}</h3>
                 <p className="font-pregular text-gray-500 xl:text-sm text-[11px]">{fomratDate(cass.date)}</p>
-                <p className="font-pregular pt-10 xl:text-sm text-[11px]">{cass.summary}</p>
+                <p className="font-pregular lg:pt-10 pt-4 xl:text-sm text-[11px]">{cass.summary}</p>
               </div>
               
               {/* Expand Button */}
