@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, act } from 'react';
 import { format } from 'date-fns';
 import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2 } from 'lucide-react';
 import { UpdateMeetingForm } from '../../components/UpdateMeeting';
+import { CreateMeetingForm } from '../../components/CreateMeeting';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('meetings');
@@ -9,46 +10,56 @@ export default function AdminDashboard() {
   const [cases, setCases] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [currentItem, setCurrentItem] = useState({ type: '', id: '' });
 
-  useEffect(() => {
-    fetchData();
-  }, [activeTab]);
-
+  // Fetch data based on the active tab
   const fetchData = async () => {
     const endpoint = `http://localhost:5000/${activeTab}`;
     const response = await fetch(endpoint);
     const data = await response.json();
-
+    
     if (activeTab === 'meetings') setMeetings(data);
     if (activeTab === 'cases') setCases(data);
     if (activeTab === 'blogs') setBlogs(data);
   };
-
-  const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this item?')) return;
-
-    const endpoint = `http://localhost:5000/meetings/${id}`;
-    const response = await fetch(endpoint, { method: 'DELETE' });
-
-    if (response.ok) {
-      fetchData();
-    }
+    
+  // Handle add
+  const handleAdd = (newMeeting) => {
+    setMeetings((prevMeetings) => [newMeeting, ...prevMeetings]);
+    setIsAdding(false);
   };
 
+  // Handle edit
   const handleEdit = (type, id) => {
     setCurrentItem({ type, id });
     setIsEditing(!isEditing);
   };
 
-  useEffect(() => {
-    if (isEditing) {
-      document.body.classList.add("overflow-hidden");
+  // Handle delete
+  const handleDelete = async (id) => {
+    if (!confirm('Are you sure you want to delete this item?')) return;
+    
+    const endpoint = `http://localhost:5000/meetings/${id}`;
+    const response = await fetch(endpoint, { method: 'DELETE' });
+    
+    if (response.ok) {
+      // Remove the deleted item from the respective state
+      if (activeTab === 'meetings') {
+        setMeetings((prevMeetings) => prevMeetings.filter((meeting) => meeting._id !== id));
+      }
+      if (activeTab === 'cases') {
+        setCases((prevCases) => prevCases.filter((caseItem) => caseItem.id !== id));
+      }
+      if (activeTab === 'blogs') {
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
+      }
     } else {
-      document.body.classList.remove("overflow-hidden");
+      console.error('Failed to delete the item');
     }
-  }, [isEditing]);
-
+  };
+  
+  // Handle update
   const handleUpdate = (updatedMeeting) => {
     setMeetings((prevMeetings) =>
       prevMeetings.map((meeting) =>
@@ -57,6 +68,29 @@ export default function AdminDashboard() {
     );
     setIsEditing(false);
   };
+
+  // Fetch data on initial render annd when the active tab changes
+  useEffect(() => {
+    fetchData();
+  }, [activeTab]);
+
+  // Prevent scrolling when editing
+  useEffect(() => {
+    if (isEditing) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isEditing]);
+
+  // Prevent scrolling when adding
+  useEffect(() => {
+    if (isAdding) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isAdding]);
 
   return (
 
@@ -86,10 +120,14 @@ export default function AdminDashboard() {
                 ))}
               </nav>
             </div>
+
+            {/* Content */}
             <div className="p-6">
+
+              {/* Add new button */}
               <button
                 onClick={() => {
-                  setIsEditing(false);
+                  setIsAdding(true);
                   setCurrentItem(null);
                 }}
                 className="mb-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
@@ -115,13 +153,13 @@ export default function AdminDashboard() {
                         </div>
                         <div className="flex space-x-2">
                           <button
-                            onClick={() => handleEdit("meeting", meeting.id)}
+                            onClick={() => handleEdit("meeting", meeting._id)}
                             className="p-2 text-blue-600 hover:text-blue-800"
                           >
                             <Edit className="h-5 w-5" />
                           </button>
                           <button
-                            onClick={() => handleDelete(meeting.id)}
+                            onClick={() => handleDelete(meeting._id)}
                             className="p-2 text-red-600 hover:text-red-800"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -203,9 +241,13 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Tab for Editing */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
         >
+
+          {/* Meeting Editing */}
           {currentItem.type === 'meeting' && (
             <UpdateMeetingForm
               currentItem={currentItem}
@@ -213,8 +255,26 @@ export default function AdminDashboard() {
               onCancel={() => setIsEditing(false)}
             />
           )}
+
+          {/* Case Editing */}
           {currentItem.type === 'case' && <p>Editing Cases Section</p>}
+          
+          {/* Blog Editing */}
           {currentItem.type === 'blog' && <p>Editing Blogs Section</p>}
+        </div>
+      )}
+
+      {/* Tab for Adding */}
+      {isAdding && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
+
+          {/* Add Meeting */}
+          {activeTab === 'meetings' && (
+          <CreateMeetingForm
+            onAdd={handleAdd}
+            onCancel={() => setIsAdding(false)}
+          />
+          )}
         </div>
       )}
     </>

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
+
+  // State variables to store the meeting details
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // Fetch the meeting details when the component mounts
   useEffect(() => {
     const fetchMeeting = async () => {
       try {
@@ -29,6 +32,7 @@ export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
     }
   }, [currentItem]);
 
+  // Update the meeting details
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -58,13 +62,19 @@ export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
     }
   };
 
+  // Show a loading message while fetching the meeting details
   if (loading) {
     return <p>Loading meeting details...</p>;
   }
 
   return (
+    // Update meeting form
     <div className="bg-white p-6 rounded-md w-[120vh] mx-[20px]">
+
+      {/* Title */}
       <h2 className="text-lg font-semibold mb-4">Update Meeting</h2>
+
+      {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700" htmlFor="title">
@@ -91,6 +101,8 @@ export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
             required
           ></textarea>
         </div>
+
+        {/* Buttons */}
         <div className="flex justify-end space-x-4">
           <button
             type="button"
