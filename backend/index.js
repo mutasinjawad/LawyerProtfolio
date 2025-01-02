@@ -284,6 +284,33 @@ async function run() {
       res.status(200).json(results);
     });
 
+    // Get by ID
+    app.get('/blogs/:id', async (req, res) => {
+      const { id } = req.params;
+    
+      try {
+        // Convert the string ID to a MongoDB ObjectId
+        const objectId = new ObjectId(id);
+    
+        const blogs = await blogsCollection.findOne({ _id: objectId });
+    
+        if (!blogs) {
+          return res.status(404).json({ message: "Blog not found" });
+        }
+    
+        res.status(200).json(blogs);
+      } catch (error) {
+        console.error("Error fetching blog by ID:", error);
+    
+        // Handle invalid ObjectId format
+        if (error instanceof TypeError) {
+          return res.status(400).json({ message: "Invalid blog ID format" });
+        }
+    
+        res.status(500).json({ message: "Failed to fetch blog" });
+      }
+    });
+
     // Add
     app.post('/blogs', async (req, res) => {
       const { title, description } = req.body;
@@ -300,13 +327,62 @@ async function run() {
 
       try {
         await blogsCollection.insertOne(newBlog);
-        res.status(201).json({ message: "Blog added successfully.", newBlog });
+        res.status(201).json(newBlog);
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to add blog." });
       }
     });
 
+    // Update
+    app.put('/blogs/:id', async (req, res) => {
+      const { id } = req.params;
+      const { title, description } = req.body;
+
+      if (!title || !description) {
+        return res.status(400).json({ message: "Both title and description are required." });
+      }
+
+      try {
+        const result = await blogsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: { title, description } }
+        );
+
+        if (result.matchedCount === 0) {
+          return res.status(404).json({ message: "Blog not found." });
+        }
+
+        const updatedBlog = await blogsCollection.findOne({ _id: new ObjectId(id) });
+
+        res.status(200).json(updatedBlog);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to update blog." });
+      }
+    });
+
+    // Delete
+    app.delete('/blogs/:id', async (req, res) => {
+      const { id } = req.params;
+
+      try {
+        const result = await blogsCollection.deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).json({ message: "Blog not found." });
+        }
+
+        res.status(200).json({ message: "Blog deleted successfully." });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to delete blog." });
+      }
+    });
+    
+
+
+    // ============== CONTACT FORM ==============
     // POST method to handle contact form submission
     app.post('/contact', async (req, res) => {
       const { name, email, message } = req.body;
@@ -332,7 +408,6 @@ async function run() {
         res.status(500).json({ message: "Failed to store contact message." });
       }
     });
-    
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

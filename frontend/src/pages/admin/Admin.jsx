@@ -1,11 +1,14 @@
 import { useState, useEffect, act } from 'react';
 import { format } from 'date-fns';
 import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2 } from 'lucide-react';
+
 import { CreateMeetingForm } from '../../components/CreateForm/CreateMeeting';
 import { CreateCaseForm } from '../../components/CreateForm/CreateCase';
+import { CreateBlogForm } from '../../components/CreateForm/CreateBlog';
+
 import { UpdateMeetingForm } from '../../components/UpdateForm/UpdateMeeting';
 import { UpdateCaseForm } from '../../components/UpdateForm/UpdateCase';
-import { CreateBlogForm } from '../../components/CreateForm/CreateBlog';
+import { UpdateBlogForm } from '../../components/UpdateForm/UpdateBlog';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('meetings');
@@ -41,7 +44,6 @@ export default function AdminDashboard() {
 
       if (response.ok) {
         const addedContent = await response.json();
-
         if (activeTab === "meetings") {
           setMeetings((prevContents) => [addedContent, ...prevContents]);
         }
@@ -96,7 +98,11 @@ export default function AdminDashboard() {
           ); 
         }
           if (activeTab === "blogs") {
-            setBlogs((prevContents) => [updatedContent, ...prevContents]);
+            setBlogs((prevContents) => 
+              prevContents.map((blog) =>
+                blog._id === updatedContent._id ? updatedContent : blog
+              )
+            );
           }
         } else {
           console.error("Failed to update content");
@@ -124,7 +130,7 @@ export default function AdminDashboard() {
         setCases((prevCases) => prevCases.filter((caseItem) => caseItem._id !== id));
       }
       if (activeTab === 'blogs') {
-        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
       }
     } else {
       console.error('Failed to delete the item');
@@ -339,7 +345,13 @@ export default function AdminDashboard() {
           )}
           
           {/* Blog Editing */}
-          {currentItem.type === 'blog' && <p>Editing Blogs Section</p>}
+          {currentItem.type === 'blog' && (
+            <UpdateBlogForm
+              currentItem={currentItem}
+              onUpdate={handleUpdate}
+              onCancel={() => setIsEditing(false)}
+            />
+          )}
         </div>
       )}
 
