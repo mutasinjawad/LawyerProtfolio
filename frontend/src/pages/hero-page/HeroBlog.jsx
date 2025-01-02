@@ -138,36 +138,39 @@ const HeroBlog = () => {
                     className="custom-swiper w-full"
                     >
                     {blogs.map((blog) => (
-                        <SwiperSlide key={blog.id} className="w-full max-w-sm pb-14 z-0">
-                        <div
-                            key={blog.id}
-                            className="flex flex-col items-start justify-between bg-white rounded-3xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out"
-                        >
+                        <SwiperSlide key={blog.id} className="w-full max-w-xs pb-14 z-0">
                             <div
-                            className="lg:p-5 p-4 lg:h-[30vh] h-[18vh]"
-                            style={{
-                                overflow: "hidden",
-                            }}
+                            key={blog.id}
+                            className="flex flex-col bg-white rounded-3xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out"
                             >
-                            <h3 className="font-pmedium lg:text-[20px] text-[18px]">
-                                {blog.title}
-                            </h3>
-                            <p className="font-pregular text-gray-500 lg:text-[18px] text-[15px]">
-                                {fomratDate(blog.date)}
-                            </p>
-                            <p className="font-pregular pt-10 lg:text-[18px] text-[15px]">
-                                {blog.description}
-                            </p>
+                                {/* Blog Content */}
+                                <div
+                                    className="lg:p-5 p-4 lg:h-[30vh] h-[18vh]"
+                                    style={{
+                                    overflow: "hidden",
+                                    }}
+                                >
+                                    <h3 className="font-pmedium xl:text-base text-sm text-black">
+                                    {blog.title}
+                                    </h3>
+                                    <p className="font-pregular text-gray-500 xl:text-sm text-[11px]">
+                                    {fomratDate(blog.date)}
+                                    </p>
+                                    <p className="font-pregular lg:pt-10 pt-4 xl:text-sm text-[11px]">
+                                    {blog.description}
+                                    </p>
+                                </div>
+                                {/* Expand Button */}
+                                <button
+                                className="flex items-center justify-start text-neutral-400 hover:text-neutral-600 lg:p-5 p-4 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
+                                onClick={() => toggleExpand(blog)}
+                                >
+                                    <h1 className="font-pregular xl:text-base text-sm">Expand</h1>
+                                    <ChevronRight />
+                                </button>
                             </div>
-                            <button
-                            className="flex items-center justify-start text-neutral-400 hover:text-neutral-600 lg:p-5 p-4 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
-                            onClick={() => toggleExpand(blog)}
-                            >
-                            <h1 className="font-pregular">Expand</h1>
-                            <ChevronRight />
-                            </button>
-                        </div>
                         </SwiperSlide>
+                      
                     ))}
                     </Swiper>
                 </div>
