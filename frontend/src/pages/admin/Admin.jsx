@@ -2,7 +2,9 @@ import { useState, useEffect, act } from 'react';
 import { format } from 'date-fns';
 import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2 } from 'lucide-react';
 import { CreateMeetingForm } from '../../components/CreateForm/CreateMeeting';
+import { CreateCaseForm } from '../../components/CreateForm/CreateCase';
 import { UpdateMeetingForm } from '../../components/UpdateForm/UpdateMeeting';
+import { UpdateCaseForm } from '../../components/UpdateForm/UpdateCase';
 import { CreateBlogForm } from '../../components/CreateForm/CreateBlog';
 
 export default function AdminDashboard() {
@@ -27,8 +29,8 @@ export default function AdminDashboard() {
     
   // Handle add
   const handleAdd = async (newContent) => {
+
     try {
-      console.log('Adding new content', newContent);
       const response = await fetch(`http://localhost:5000/${activeTab}`, {
         method: "POST",
         headers: {
@@ -66,14 +68,14 @@ export default function AdminDashboard() {
   };
 
   // Handle update
-  const handleUpdate = async (updatedMeeting) => {
+  const handleUpdate = async (updatedContent) => {
     try {
-      const response = await fetch(`http://localhost:5000/meetings/${updatedMeeting.id}`, {
+      const response = await fetch(`http://localhost:5000/${activeTab}/${updatedContent.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedMeeting),
+        body: JSON.stringify(updatedContent),
       });
       
       if (response.ok) {
@@ -83,18 +85,22 @@ export default function AdminDashboard() {
           setMeetings((prevContents) =>
             prevContents.map((meeting) =>
               meeting._id === updatedContent._id ? updatedContent : meeting
-        )
-      );          
-    }
-    if (activeTab === "cases") {
-      setCases((prevContents) => [updatedContent, ...prevContents]);
-    }
-    if (activeTab === "blogs") {
-      setBlogs((prevContents) => [updatedContent, ...prevContents]);
-    }
-  } else {
-    console.error("Failed to update content");
-  }
+            )
+          );          
+        }
+        if (activeTab === "cases") {
+          setCases((prevContents) =>
+            prevContents.map((cases) =>
+              cases._id === updatedContent._id ? updatedContent : cases
+            )
+          ); 
+        }
+          if (activeTab === "blogs") {
+            setBlogs((prevContents) => [updatedContent, ...prevContents]);
+          }
+        } else {
+          console.error("Failed to update content");
+        }
 } catch (error) {
   console.error("Error while updating the meeting:", error);
 } finally {
@@ -106,7 +112,7 @@ export default function AdminDashboard() {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
     
-    const endpoint = `http://localhost:5000/meetings/${id}`;
+    const endpoint = `http://localhost:5000/${activeTab}/${id}`;
     const response = await fetch(endpoint, { method: 'DELETE' });
     
     if (response.ok) {
@@ -115,7 +121,7 @@ export default function AdminDashboard() {
         setMeetings((prevMeetings) => prevMeetings.filter((meeting) => meeting._id !== id));
       }
       if (activeTab === 'cases') {
-        setCases((prevCases) => prevCases.filter((caseItem) => caseItem.id !== id));
+        setCases((prevCases) => prevCases.filter((caseItem) => caseItem._id !== id));
       }
       if (activeTab === 'blogs') {
         setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
@@ -193,6 +199,7 @@ export default function AdminDashboard() {
                 Add New
               </button>
               <div className="grid grid-cols-1 gap-6">
+
                 {/* Meetings List */}
                 {activeTab === 'meetings' && (
                   <div>
@@ -230,6 +237,7 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 )}
+
                 {/* Cases List */}
                 {activeTab === 'cases' && (
                     <div>
@@ -247,12 +255,16 @@ export default function AdminDashboard() {
                             <p className="text-gray-600 mt-2">{`Outcome: ${cases.outcome}`}</p>
                           </div>
                           <div className="flex space-x-2">
+
+                            {/* Edit Button */}
                             <button
                               onClick={() => handleEdit('case', cases._id)}
                               className="p-2 text-blue-600 hover:text-blue-800"
                             >
                               <Edit className="h-5 w-5" />
                             </button>
+
+                            {/* Delete Button */}
                             <button
                               onClick={() => handleDelete(cases._id)}
                               className="p-2 text-red-600 hover:text-red-800"
@@ -318,7 +330,13 @@ export default function AdminDashboard() {
           )}
 
           {/* Case Editing */}
-          {currentItem.type === 'case' && <p>Editing Cases Section</p>}
+          {currentItem.type === 'case' && (
+            <UpdateCaseForm
+              currentItem={currentItem}
+              onUpdate={handleUpdate}
+              onCancel={() => setIsEditing(false)}  
+            />
+          )}
           
           {/* Blog Editing */}
           {currentItem.type === 'blog' && <p>Editing Blogs Section</p>}
@@ -335,6 +353,14 @@ export default function AdminDashboard() {
             onAdd={handleAdd}
             onCancel={() => setIsAdding(false)}
           />
+          )}
+
+          {/* Add Case */}
+          {activeTab === 'cases' && (
+            <CreateCaseForm
+              onAdd={handleAdd}
+              onCancel={() => setIsAdding(false)}
+            />
           )}
 
           {/* Add Blog */}

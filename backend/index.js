@@ -59,7 +59,7 @@ async function run() {
 
     // Get by ID
     app.get('/meetings/:id', async (req, res) => {
-      const { id } = req.params; // Get the ID from the URL params
+      const { id } = req.params;
     
       try {
         // Convert the string ID to a MongoDB ObjectId
@@ -168,6 +168,103 @@ async function run() {
   
       const results = await cursor.toArray();
       res.status(200).json(results);
+    });
+
+    // Get by ID
+    app.get('/cases/:id', async (req, res) => {
+      const { id } = req.params;
+    
+      try {
+        // Convert the string ID to a MongoDB ObjectId
+        const objectId = new ObjectId(id);
+    
+        const cases = await casesCollection.findOne({ _id: objectId });
+    
+        if (!cases) {
+          return res.status(404).json({ message: "Case not found" });
+        }
+    
+        res.status(200).json(cases);
+      } catch (error) {
+        console.error("Error fetching case by ID:", error);
+    
+        // Handle invalid ObjectId format
+        if (error instanceof TypeError) {
+          return res.status(400).json({ message: "Invalid case ID format" });
+        }
+    
+        res.status(500).json({ message: "Failed to fetch case" });
+      }
+    });
+
+    // Add
+    app.post('/cases', async (req, res) => {
+      const {title, summary, outcome} = req.body;
+
+      if (!title || !summary || !outcome){
+        return res.status(400).json({ message: "All the fields are required." });
+      }
+
+      const newCase = {
+        title,
+        summary,
+        outcome,
+        date: new Date()
+      };
+
+      try{
+        await casesCollection.insertOne(newCase);
+        res.status(201).json(newCase);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Faile to add case." })
+      }
+    })
+
+    // Update
+    app.put('/cases/:id', async (req, res) => {
+      const { id } = req.params;
+      const { title, summary, outcome } = req.body;
+
+      if (!title || !summary || !outcome) {
+        return res.status(400).json({ message: "All the fields are required." });
+      }
+
+      try {
+        const result = await casesCollection.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: { title, summary, outcome } }
+        );
+
+        if (result.matchedCount === 0) {
+          return res.status(404).json({ message: "Case not found." });
+        }
+
+        const updatedCase = await casesCollection.findOne({ _id: new ObjectId(id) });
+
+        res.status(200).json(updatedCase);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to update case." });
+      }
+    });
+
+    // Delete
+    app.delete('/cases/:id', async (req, res) => {
+      const { id } = req.params;
+
+      try {
+        const result = await casesCollection.deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).json({ message: "Case not found." });
+        }
+
+        res.status(200).json({ message: "Case deleted successfully." });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to delete case." });
+      }
     });
 
     // ============== BLOGS ==============
