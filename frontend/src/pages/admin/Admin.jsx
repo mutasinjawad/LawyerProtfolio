@@ -1,6 +1,6 @@
 import { useState, useEffect, act } from 'react';
 import { format } from 'date-fns';
-import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2 } from 'lucide-react';
+import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2, Mails } from 'lucide-react';
 
 import { CreateMeetingForm } from '../../components/CreateForm/CreateMeeting';
 import { CreateCaseForm } from '../../components/CreateForm/CreateCase';
@@ -12,9 +12,12 @@ import { UpdateBlogForm } from '../../components/UpdateForm/UpdateBlog';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('meetings');
+  
   const [meetings, setMeetings] = useState([]);
   const [cases, setCases] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [messages, setMessages] = useState([]);
+
   const [isEditing, setIsEditing] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [currentItem, setCurrentItem] = useState({ type: '', id: '' });
@@ -28,6 +31,7 @@ export default function AdminDashboard() {
     if (activeTab === 'meetings') setMeetings(data);
     if (activeTab === 'cases') setCases(data);
     if (activeTab === 'blogs') setBlogs(data);
+    if (activeTab === 'messages') setMessages(data);
   };
     
   // Handle add
@@ -132,6 +136,9 @@ export default function AdminDashboard() {
       if (activeTab === 'blogs') {
         setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
       }
+      if (activeTab === 'messages') {
+        setMessages((prevMessages) => prevMessages.filter((message) => message._id !== id));
+      }
     } else {
       console.error('Failed to delete the item');
     }
@@ -170,7 +177,7 @@ export default function AdminDashboard() {
             <div className="border-b border-gray-200">
               <nav className="-mb-px flex">
                 {/* Tabs */}
-                {['meetings', 'cases', 'blogs'].map((tab) => (
+                {['meetings', 'cases', 'blogs', 'messages'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -178,12 +185,15 @@ export default function AdminDashboard() {
                       activeTab === tab
                         ? 'border-indigo-500 text-indigo-600'
                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    } flex-1 py-4 px-1 text-center border-b-2 font-medium`}
+                    } flex-1 py-4 px-1 text-center border-b-2 lg:text-lg text-base font-medium`}
                   >
-                    {tab === 'meetings' && <Calendar className="inline-block h-5 w-5 mr-2" />}
-                    {tab === 'cases' && <Briefcase className="inline-block h-5 w-5 mr-2" />}
-                    {tab === 'blogs' && <BookOpen className="inline-block h-5 w-5 mr-2" />}
-                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    <div className="flex flex-col items-center justify-center space-y-1 lg:flex-row lg:space-y-0 lg:space-x-2">
+                      {tab === 'meetings' && <Calendar className="h-5 w-5" />}
+                      {tab === 'cases' && <Briefcase className="h-5 w-5" />}
+                      {tab === 'blogs' && <BookOpen className="h-5 w-5" />}
+                      {tab === 'messages' && <Mails className="h-5 w-5" />}
+                      <span className="text-sm lg:text-base">{tab.charAt(0).toUpperCase() + tab.slice(1)}</span>
+                    </div>
                   </button>
                 ))}
               </nav>
@@ -193,6 +203,7 @@ export default function AdminDashboard() {
             <div className="p-6">
 
               {/* Add new button */}
+              {activeTab !== 'messages' && (
               <button
                 onClick={() => {
                   setIsAdding(true);
@@ -204,6 +215,8 @@ export default function AdminDashboard() {
                 <Plus className="h-4 w-4 mr-2" />
                 Add New
               </button>
+              )}
+
               <div className="grid grid-cols-1 gap-6">
 
                 {/* Meetings List */}
@@ -212,14 +225,14 @@ export default function AdminDashboard() {
                     {meetings.map((meeting) => (
                       <div
                         key={meeting._id}
-                        className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center"
+                        className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
                       >
                         <div>
-                          <h3 className="text-lg font-medium">{meeting.title}</h3>
-                          <p className="text-gray-500">
+                          <h3 className="lg:text-lg text-base font-medium">{meeting.title}</h3>
+                          <p className="text-gray-500 lg:text-base text-sm">
                             {format(new Date(meeting.date), 'PPP')}
                           </p>
-                          <p className="text-gray-600 mt-2">{meeting.description}</p>
+                          <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{meeting.description}</p>
                         </div>
                         <div className="flex space-x-2">
 
@@ -250,15 +263,15 @@ export default function AdminDashboard() {
                       {cases.map((cases) => (
                         <div
                           key={cases._id}
-                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center"
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
                         >
                           <div>
-                            <h3 className="text-lg font-medium">{cases.title}</h3>
-                            <p className="text-gray-500">
+                            <h3 className="lg:text-lg text-base font-medium">{cases.title}</h3>
+                            <p className="text-gray-500 lg:text-base text-sm">
                               {format(new Date(cases.date), 'PPP')}
                             </p>
-                            <p className="text-gray-600 mt-2">{`Summary: ${cases.summary}`}</p>
-                            <p className="text-gray-600 mt-2">{`Outcome: ${cases.outcome}`}</p>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{`Summary: ${cases.summary}`}</p>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{`Outcome: ${cases.outcome}`}</p>
                           </div>
                           <div className="flex space-x-2">
 
@@ -282,20 +295,21 @@ export default function AdminDashboard() {
                       ))}
                     </div>
                 )}
+
                 {/* Blogs List */}
                 {activeTab === 'blogs' && (
                     <div>
                       {blogs.map((blogs) => (
                         <div
                           key={blogs._id}
-                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center"
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
                         >
                           <div>
-                            <h3 className="text-lg font-medium">{blogs.title}</h3>
-                            <p className="text-gray-500">
+                            <h3 className="lg:text-lg text-base font-medium">{blogs.title}</h3>
+                            <p className="text-gray-500 lg:text-base text-sm">
                               {format(new Date(blogs.date), 'PPP')}
                             </p>
-                            <p className="text-gray-600 mt-2">{blogs.description}</p>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{blogs.description}</p>
                           </div>
                           <div className="flex space-x-2">
                             <button
@@ -314,6 +328,41 @@ export default function AdminDashboard() {
                         </div>
                       ))}
                     </div>
+                )}
+
+                {/* Messages List */}
+                {activeTab === 'messages' && (
+                  <div>
+                    {messages.length > 0 ? (
+                      messages.map((message) => (
+                        <div
+                          key={message._id}
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
+                        >
+                          <div>
+                            <h3 className="lg:text-lg text-base font-medium">{message.name}</h3>
+                            <p className="text-gray-500 lg:text-base text-sm">{message.email}</p>
+                            <p className="text-gray-500 lg:text-base text-sm">{format(new Date(message.time), 'PPP')}</p>
+                            <p className='lg:text-base text-sm font-medium lg:mt-8 mt-6'>Message:</p>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular">
+                              {message.message.split('\n').map((line, index) => (
+                                <span key={index}>
+                                  {line}
+                                  <br />
+                                </span>
+                              ))}
+                            </p>
+                          </div>
+                          <button
+                              onClick={() => handleDelete(message._id)}
+                              className="p-2 text-red-600 hover:text-red-800"
+                            >
+                              <Trash2 className="h-5 w-5" />
+                          </button>
+                        </div>
+                      ))
+                    ) : "No messages found"}
+                  </div>
                 )}
               </div>
             </div>

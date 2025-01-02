@@ -379,11 +379,17 @@ async function run() {
         res.status(500).json({ message: "Failed to delete blog." });
       }
     });
-    
-
 
     // ============== CONTACT FORM ==============
-    // POST method to handle contact form submission
+
+    // Get all contact messages
+    app.get('/messages', async (req, res) => {
+      const cursor = contactCollection.find({}).sort({ time: -1 }); // Sort by time in descending order (newest first)
+      const results = await cursor.toArray();
+      res.status(200).json(results);
+    });
+
+    // Add
     app.post('/contact', async (req, res) => {
       const { name, email, message } = req.body;
       
@@ -392,9 +398,9 @@ async function run() {
       }
 
       const contactMessage = {
-        name: name,
-        email: email,
-        message: message,
+        name,
+        email,
+        message,
         time: new Date() // Capture the current time
       };
       
@@ -406,6 +412,24 @@ async function run() {
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to store contact message." });
+      }
+    });
+
+    // Delete
+    app.delete('/messages/:id', async (req, res) => {
+      const { id } = req.params;
+
+      try {
+        const result = await contactCollection.deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).json({ message: "Contact message not found." });
+        }
+
+        res.status(200).json({ message: "Contact message deleted successfully." });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to delete contact message." });
       }
     });
     
