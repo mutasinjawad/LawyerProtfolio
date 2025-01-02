@@ -1,13 +1,35 @@
 import React, { useState, useEffect } from "react";
 
-export function CreateMeetingForm({ onAdd, onCancel }) {
+export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
 
   // State variables to store the meeting details
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
 
-  // Add the meeting details
+  // Fetch the meeting details when the component mounts
+  useEffect(() => {
+    const fetchMeeting = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/meetings/${currentItem.id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch meeting details");
+        }
+        const meeting = await response.json();
+        setTitle(meeting.title);
+        setDescription(meeting.description);
+        setDate(meeting.date);
+      } catch (error) {
+        console.error("Error fetching meeting details:", error);
+      }
+    };
+
+    if (currentItem && currentItem.id) {
+      fetchMeeting();
+    }
+  }, [currentItem]);
+
+  // Update the meeting details
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -16,38 +38,20 @@ export function CreateMeetingForm({ onAdd, onCancel }) {
       return;
     }
 
-    try {
-      const response = await fetch(`http://localhost:5000/meetings`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, description }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add meeting");
-      }
-
-      onAdd({ id: currentItem.id, title, date, description });
-      setTitle("");
-      setDescription("");
-    } catch (error) {
-      console.error("Error adding meeting:", error);
-    }
+    onUpdate({ id: currentItem.id, title, date, description });
+    setTitle("");
+    setDescription("");
   };
 
   return (
-    // Add meeting form
+    // Update meeting form
     <div className="bg-white p-6 rounded-md w-[120vh] mx-[20px]">
 
       {/* Title */}
-      <h2 className="text-lg font-semibold mb-4">Add Meeting</h2>
+      <h2 className="text-lg font-semibold mb-4">Update Meeting</h2>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
-        
-        {/* Title */}
         <div>
           <label className="block text-sm font-medium text-gray-700" htmlFor="title">
             Title
@@ -61,8 +65,6 @@ export function CreateMeetingForm({ onAdd, onCancel }) {
             required
           />
         </div>
-        
-        {/* Description */}
         <div>
           <label className="block text-sm font-medium text-gray-700" htmlFor="description">
             Description
@@ -89,7 +91,7 @@ export function CreateMeetingForm({ onAdd, onCancel }) {
             type="submit"
             className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           >
-            Add
+            Update
           </button>
         </div>
       </form>

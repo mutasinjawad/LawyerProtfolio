@@ -1,8 +1,9 @@
 import { useState, useEffect, act } from 'react';
 import { format } from 'date-fns';
 import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2 } from 'lucide-react';
-import { UpdateMeetingForm } from '../../components/UpdateMeeting';
-import { CreateMeetingForm } from '../../components/CreateMeeting';
+import { CreateMeetingForm } from '../../components/CreateForm/CreateMeeting';
+import { UpdateMeetingForm } from '../../components/UpdateForm/UpdateMeeting';
+import { CreateBlogForm } from '../../components/CreateForm/CreateBlog';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('meetings');
@@ -25,15 +26,80 @@ export default function AdminDashboard() {
   };
     
   // Handle add
-  const handleAdd = (newMeeting) => {
-    setMeetings((prevMeetings) => [newMeeting, ...prevMeetings]);
-    setIsAdding(false);
+  const handleAdd = async (newContent) => {
+    try {
+      console.log('Adding new content', newContent);
+      const response = await fetch(`http://localhost:5000/${activeTab}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newContent),
+      });
+
+      if (response.ok) {
+        const addedContent = await response.json();
+
+        if (activeTab === "meetings") {
+          setMeetings((prevContents) => [addedContent, ...prevContents]);
+        }
+        if (activeTab === "cases") {
+          setCases((prevContents) => [addedContent, ...prevContents]);
+        }
+        if (activeTab === "blogs") {
+          setBlogs((prevContents) => [addedContent, ...prevContents]);
+        }
+      } else {
+        console.error("Failed to add content");
+      }
+    } catch (error) {
+      console.error("Error while adding content:", error);
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   // Handle edit
   const handleEdit = (type, id) => {
     setCurrentItem({ type, id });
     setIsEditing(!isEditing);
+  };
+
+  // Handle update
+  const handleUpdate = async (updatedMeeting) => {
+    try {
+      const response = await fetch(`http://localhost:5000/meetings/${updatedMeeting.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedMeeting),
+      });
+      
+      if (response.ok) {
+        const updatedContent = await response.json();
+        
+        if (activeTab === "meetings") {
+          setMeetings((prevContents) =>
+            prevContents.map((meeting) =>
+              meeting._id === updatedContent._id ? updatedContent : meeting
+        )
+      );          
+    }
+    if (activeTab === "cases") {
+      setCases((prevContents) => [updatedContent, ...prevContents]);
+    }
+    if (activeTab === "blogs") {
+      setBlogs((prevContents) => [updatedContent, ...prevContents]);
+    }
+  } else {
+    console.error("Failed to update content");
+  }
+} catch (error) {
+  console.error("Error while updating the meeting:", error);
+} finally {
+  setIsEditing(false);
+}
   };
 
   // Handle delete
@@ -57,16 +123,6 @@ export default function AdminDashboard() {
     } else {
       console.error('Failed to delete the item');
     }
-  };
-  
-  // Handle update
-  const handleUpdate = (updatedMeeting) => {
-    setMeetings((prevMeetings) =>
-      prevMeetings.map((meeting) =>
-        meeting.id === updatedMeeting.id ? updatedMeeting : meeting
-      )
-    );
-    setIsEditing(false);
   };
 
   // Fetch data on initial render annd when the active tab changes
@@ -131,17 +187,18 @@ export default function AdminDashboard() {
                   setCurrentItem(null);
                 }}
                 className="mb-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                disabled={isAdding} // Disable during processing
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add New
               </button>
               <div className="grid grid-cols-1 gap-6">
-                {/* Meetings */}
+                {/* Meetings List */}
                 {activeTab === 'meetings' && (
                   <div>
                     {meetings.map((meeting) => (
                       <div
-                        key={meeting.id}
+                        key={meeting._id}
                         className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center"
                       >
                         <div>
@@ -152,12 +209,16 @@ export default function AdminDashboard() {
                           <p className="text-gray-600 mt-2">{meeting.description}</p>
                         </div>
                         <div className="flex space-x-2">
+
+                          {/* Edit Button */}
                           <button
                             onClick={() => handleEdit("meeting", meeting._id)}
                             className="p-2 text-blue-600 hover:text-blue-800"
                           >
                             <Edit className="h-5 w-5" />
                           </button>
+
+                          {/* Delete Button */}
                           <button
                             onClick={() => handleDelete(meeting._id)}
                             className="p-2 text-red-600 hover:text-red-800"
@@ -169,12 +230,12 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 )}
-                {/* Cases */}
+                {/* Cases List */}
                 {activeTab === 'cases' && (
                     <div>
                       {cases.map((cases) => (
                         <div
-                          key={cases.id}
+                          key={cases._id}
                           className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center"
                         >
                           <div>
@@ -187,13 +248,13 @@ export default function AdminDashboard() {
                           </div>
                           <div className="flex space-x-2">
                             <button
-                              onClick={() => handleEdit('case', cases.id)}
+                              onClick={() => handleEdit('case', cases._id)}
                               className="p-2 text-blue-600 hover:text-blue-800"
                             >
                               <Edit className="h-5 w-5" />
                             </button>
                             <button
-                              onClick={() => handleDelete(cases.id)}
+                              onClick={() => handleDelete(cases._id)}
                               className="p-2 text-red-600 hover:text-red-800"
                             >
                               <Trash2 className="h-5 w-5" />
@@ -203,12 +264,12 @@ export default function AdminDashboard() {
                       ))}
                     </div>
                 )}
-                {/* Blogs */}
+                {/* Blogs List */}
                 {activeTab === 'blogs' && (
                     <div>
                       {blogs.map((blogs) => (
                         <div
-                          key={blogs.id}
+                          key={blogs._id}
                           className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center"
                         >
                           <div>
@@ -220,13 +281,13 @@ export default function AdminDashboard() {
                           </div>
                           <div className="flex space-x-2">
                             <button
-                              onClick={() => handleEdit("blog", blogs.id)}
+                              onClick={() => handleEdit("blog", blogs._id)}
                               className="p-2 text-blue-600 hover:text-blue-800"
                             >
                               <Edit className="h-5 w-5" />
                             </button>
                             <button
-                              onClick={() => handleDelete(blogs.id)}
+                              onClick={() => handleDelete(blogs._id)}
                               className="p-2 text-red-600 hover:text-red-800"
                             >
                               <Trash2 className="h-5 w-5" />
@@ -274,6 +335,14 @@ export default function AdminDashboard() {
             onAdd={handleAdd}
             onCancel={() => setIsAdding(false)}
           />
+          )}
+
+          {/* Add Blog */}
+          {activeTab === 'blogs' && (
+            <CreateBlogForm
+              onAdd={handleAdd}
+              onCancel={() => setIsAdding(false)}
+            />
           )}
         </div>
       )}

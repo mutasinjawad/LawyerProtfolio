@@ -1,38 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
+export function CreateBlogForm({ onAdd, onCancel }) {
 
-  // State variables to store the meeting details
+  // State variables to store the blog details
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
-  const [loading, setLoading] = useState(true);
 
-  // Fetch the meeting details when the component mounts
-  useEffect(() => {
-    const fetchMeeting = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/meetings/${currentItem.id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch meeting details");
-        }
-        const meeting = await response.json();
-        setTitle(meeting.title);
-        setDescription(meeting.description);
-        setDate(meeting.date);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching meeting details:", error);
-        setLoading(false);
-      }
-    };
-
-    if (currentItem && currentItem.id) {
-      fetchMeeting();
-    }
-  }, [currentItem]);
-
-  // Update the meeting details
+  // Add the blog details
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,8 +17,8 @@ export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/meetings/${currentItem.id}`, {
-        method: "PUT",
+      const response = await fetch(`http://localhost:5000/blogs`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,31 +26,29 @@ export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update meeting");
+        throw new Error("Failed to add blog");
       }
 
-      onUpdate({ id: currentItem.id, title, date, description });
+      const newBlog = await response.json(); // Assuming server returns the created blog
+      onAdd(newBlog);
       setTitle("");
       setDescription("");
     } catch (error) {
-      console.error("Error updating meeting:", error);
+      console.error("Error adding blog:", error);
     }
   };
 
-  // Show a loading message while fetching the meeting details
-  if (loading) {
-    return <p>Loading meeting details...</p>;
-  }
-
   return (
-    // Update meeting form
+    // Add blog form
     <div className="bg-white p-6 rounded-md w-[120vh] mx-[20px]">
 
       {/* Title */}
-      <h2 className="text-lg font-semibold mb-4">Update Meeting</h2>
+      <h2 className="text-lg font-semibold mb-4">Add Blog</h2>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
+        
+        {/* Title */}
         <div>
           <label className="block text-sm font-medium text-gray-700" htmlFor="title">
             Title
@@ -89,6 +62,8 @@ export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
             required
           />
         </div>
+        
+        {/* Description */}
         <div>
           <label className="block text-sm font-medium text-gray-700" htmlFor="description">
             Description
@@ -115,7 +90,7 @@ export function UpdateMeetingForm({ currentItem, onUpdate, onCancel }) {
             type="submit"
             className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           >
-            Update
+            Add
           </button>
         </div>
       </form>

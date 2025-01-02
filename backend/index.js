@@ -40,9 +40,9 @@ async function run() {
     const blogsCollection = client.db("meetingDB").collection("blog");
     const contactCollection = client.db("meetingDB").collection("message"); // New collection for storing contact messages
 
-    // ============== API Routes ==============
+    // ============== MEETINGS ==============
 
-    // Fetch all meetings or set a limit to the number of meetings returned
+    // Get all or limited
     app.get('/meetings', async (req, res) => {
       const { limit } = req.query; // Get the limit from the query params
       const cursor = meetingCollection
@@ -57,7 +57,7 @@ async function run() {
       res.status(200).json(results);
     });
 
-    // Fetch a specific meeting by ID
+    // Get by ID
     app.get('/meetings/:id', async (req, res) => {
       const { id } = req.params; // Get the ID from the URL params
     
@@ -84,7 +84,7 @@ async function run() {
       }
     });
 
-    // Route to add a new meeting
+    // Add
     app.post('/meetings', async (req, res) => {
       const { title, description } = req.body;
 
@@ -100,14 +100,14 @@ async function run() {
 
       try {
         await meetingCollection.insertOne(newMeeting);
-        res.status(201).json({ message: "Meeting added successfully.", newMeeting });
+        res.status(201).json(newMeeting);
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to add meeting." });
       }
     });
 
-    // Route to update a meeting
+    // Update
     app.put('/meetings/:id', async (req, res) => {
       const { id } = req.params;
       const { title, description } = req.body;
@@ -118,7 +118,7 @@ async function run() {
 
       try {
         const result = await meetingCollection.updateOne(
-          { id: parseInt(id, 10) },
+          { _id: new ObjectId(id) },
           { $set: { title, description } }
         );
 
@@ -126,14 +126,16 @@ async function run() {
           return res.status(404).json({ message: "Meeting not found." });
         }
 
-        res.status(200).json({ message: "Meeting updated successfully." });
+        const updatedMeeting = await meetingCollection.findOne({ _id: new ObjectId(id) });
+
+        res.status(200).json(updatedMeeting);
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to update meeting." });
       }
     });
 
-    // Route to delete a meeting
+    // Delete
     app.delete('/meetings/:id', async (req, res) => {
       const { id } = req.params;
 
@@ -151,6 +153,7 @@ async function run() {
       }
     });
 
+    // ============== CASES ==============
 
     // Cases API routes
     app.get('/cases', async (req, res) => {
@@ -167,6 +170,7 @@ async function run() {
       res.status(200).json(results);
     });
 
+    // ============== BLOGS ==============
 
     // Blogs API routes
     app.get('/blogs', async (req, res) => {
@@ -181,6 +185,29 @@ async function run() {
   
       const results = await cursor.toArray();
       res.status(200).json(results);
+    });
+
+    // Add
+    app.post('/blogs', async (req, res) => {
+      const { title, description } = req.body;
+
+      if (!title || !description) {
+        return res.status(400).json({ message: "Both title and description are required." });
+      }
+
+      const newBlog = {
+        title,
+        description,
+        date: new Date() // Capture the current time
+      };
+
+      try {
+        await blogsCollection.insertOne(newBlog);
+        res.status(201).json({ message: "Blog added successfully.", newBlog });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to add blog." });
+      }
     });
 
     // POST method to handle contact form submission
