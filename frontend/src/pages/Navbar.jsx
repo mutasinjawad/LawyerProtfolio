@@ -9,9 +9,12 @@ import { div } from 'motion/react-client'
 function Navbar() {
 
     const titles = {
+        "/about": "About",
         "/meetings": "Meetings",
         "/cases": "Cases",
         "/blogs": "Blogs",
+        "/live": "Live",
+        "/contact": "Contact",
       };
 
     const [mobileDrawer, setMobileDrawer] = useState(false)
@@ -78,12 +81,12 @@ function Navbar() {
                                 activeClass="border-b-4 border-secondary transition duration-100">Case</Link>
                         </li>
                         <li key="blog">
-                            <Link to="blog" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                            <Link to="blog" smooth={true} duration={500} offset={-200} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-secondary transition duration-100">Blog</Link>
                         </li>
                         <li key="live">
-                            <Link to="live" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                            <Link to="live" smooth={true} duration={500} offset={-200} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
                                 spy={true}
                                 activeClass="border-b-4 border-secondary transition duration-100">Live</Link>
                         </li>

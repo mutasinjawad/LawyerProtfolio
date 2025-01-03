@@ -21,7 +21,7 @@ const Live = () => {
     }, []);
 
   return (
-    <div  className='relative flex flex-col items-center justify-between xl:m-16 lg:m-8 mx-10 h-[20vh]'>
+    <div className='relative flex flex-col items-center justify-between xl:m-16 lg:m-8 mx-10 h-[20vh]' name="live">
        
     {/* Meeting Title */}
     <h1 className="font-psemibold xl:text-[60px] lg:text-[45px] text-[34px] text-black">Live</h1>
