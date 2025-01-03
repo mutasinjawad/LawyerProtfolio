@@ -60,6 +60,9 @@ export default function AdminDashboard() {
         if (activeTab === "blogs") {
           setBlogs((prevContents) => [addedContent, ...prevContents]);
         }
+        if (activeTab === "live") {
+          setLiveLink((prevLink) => [addedContent, ...prevLink]);
+        }
       } else {
         console.error("Failed to add content");
       }

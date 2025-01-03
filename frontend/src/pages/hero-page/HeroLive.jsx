@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Live = () => {
-    const [liveLink, setLiveLink] = useState([]);
+    const [liveLink, setLiveLink] = useState("");
 
     useEffect(() => {
         const fetchLive = async () => {
@@ -39,7 +39,7 @@ const Live = () => {
           </p>
         </div>
       ) : (
-        <p className="font-pmedium xl:text-xl text-sm text-gray-400">No live link has been provided at this time.</p>
+        <p className="mb-[20px] font-pregular xl:text-lg text-sm text-gray-400">No live link has been provided at this time.</p>
       )}
     </div>
   );

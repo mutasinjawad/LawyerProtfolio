@@ -21,16 +21,6 @@ const client = new MongoClient(uri, {
   }
 });
 
-// Function to get the next sequence for a collection
-const getNextSequence = async (db, sequenceName) => {
-  const counter = await db.collection("counters").findOneAndUpdate(
-    { _id: sequenceName },
-    { $inc: { seq: 1 } },
-    { returnDocument: "after", upsert: true }
-  );
-  return counter.value.seq;
-};
-
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -41,6 +31,21 @@ async function run() {
     const blogsCollection = client.db("meetingDB").collection("blog");
     const liveCollection = client.db("meetingDB").collection("live");
     const contactCollection = client.db("meetingDB").collection("message"); // New collection for storing contact messages
+
+    // Drop the existing TTL index if it exists
+    const indexes = await liveCollection.indexes();
+    const existingIndex = indexes.find(index => index.name === 'time_1');
+
+    if (existingIndex) {
+      console.log("Dropping existing index...");
+      await liveCollection.dropIndex('time_1');
+    }
+
+    // Ensure the TTL index is created for automatic deletion after 5 hours
+    await liveCollection.createIndex(
+      { time: 1 }, // Index on the `time` field
+      { expireAfterSeconds: 18000 } // 5 hours = 18000 seconds
+    );
 
     // ============== MEETINGS ==============
 
