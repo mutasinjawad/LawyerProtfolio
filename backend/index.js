@@ -8,8 +8,9 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 app.use(cors());
 app.use(express.json());
 
+require('dotenv').config();
 
-const uri = "mongodb+srv://muhtasinjawad1:505QzlgszneoHfPl@cluster0.iknez.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = process.env.MONGODB_URI;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -38,6 +39,7 @@ async function run() {
     const meetingCollection = client.db("meetingDB").collection("meeting");
     const casesCollection = client.db("meetingDB").collection("case");
     const blogsCollection = client.db("meetingDB").collection("blog");
+    const liveCollection = client.db("meetingDB").collection("live");
     const contactCollection = client.db("meetingDB").collection("message"); // New collection for storing contact messages
 
     // ============== MEETINGS ==============
@@ -380,6 +382,61 @@ async function run() {
       }
     });
 
+    // ============== LIVE ==============
+
+    // Get live link
+    app.get('/live', async (req, res) => {
+      const { limit } = req.query; // Get the limit from the query params
+      const cursor = liveCollection.find({}).sort({ time: -1 }); // Sort by time in descending order (newest first)
+
+      if (limit) {
+        cursor.limit(parseInt(limit, 10)); // Apply limit if provided
+      }
+      
+      const results = await cursor.toArray();
+      res.status(200).json(results);
+    });
+
+    // Add
+    app.post('/live', async (req, res) => {
+      const { link } = req.body;
+
+      if (!link) {
+        return res.status(400).json({ message: "Link is required." });
+      }
+
+      const newLive = {
+        link,
+        time: new Date() // Capture the current time
+      };
+
+      try {
+        await liveCollection.insertOne(newLive);
+        res.status(201).json(newLive);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to add live link." });
+      }
+    });
+
+    // Delete
+    app.delete('/live/:id', async (req, res) => {
+      const { id } = req.params;
+
+      try {
+        const result = await liveCollection.deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).json({ message: "Live link not found." });
+        }
+
+        res.status(200).json({ message: "Live link deleted successfully." });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to delete live link." });
+      }
+    });
+
     // ============== CONTACT FORM ==============
 
     // Get all contact messages
@@ -433,6 +490,10 @@ async function run() {
       }
     });
     
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Connected to MongoDB!");

@@ -106,7 +106,7 @@ const HeroBlog = () => {
                 <h1 className="font-psemibold xl:text-[60px] lg:text-[45px] text-[34px] text-black">Blogs</h1>
 
                 {/* Blog Swiper */}
-                <div className="flex lg:flex-row flex-col justify-center items-center w-full xl:gap-16 lg:gap-10 gap-6 lg:mb-0 mb-8 lg:mt-0 mt-8">
+                <div className="flex lg:flex-row flex-col justify-center items-center w-full xl:gap-16 lg:gap-10 gap-6 lg:mb-0 mb-8 mt-8">
                     <Swiper
                     breakpoints={{
                         320: {

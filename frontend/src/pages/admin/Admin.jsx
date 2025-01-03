@@ -1,10 +1,11 @@
 import { useState, useEffect, act } from 'react';
 import { format } from 'date-fns';
-import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2, Mails } from 'lucide-react';
+import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2, Mails, Radio } from 'lucide-react';
 
 import { CreateMeetingForm } from '../../components/CreateForm/CreateMeeting';
 import { CreateCaseForm } from '../../components/CreateForm/CreateCase';
 import { CreateBlogForm } from '../../components/CreateForm/CreateBlog';
+import { CreateLiveForm } from '../../components/CreateForm/CreateLive';
 
 import { UpdateMeetingForm } from '../../components/UpdateForm/UpdateMeeting';
 import { UpdateCaseForm } from '../../components/UpdateForm/UpdateCase';
@@ -16,6 +17,7 @@ export default function AdminDashboard() {
   const [meetings, setMeetings] = useState([]);
   const [cases, setCases] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [liveLink, setLiveLink] = useState([]);
   const [messages, setMessages] = useState([]);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -32,11 +34,12 @@ export default function AdminDashboard() {
     if (activeTab === 'cases') setCases(data);
     if (activeTab === 'blogs') setBlogs(data);
     if (activeTab === 'messages') setMessages(data);
+    if (activeTab === 'live') setLiveLink(data);
   };
     
   // Handle add
   const handleAdd = async (newContent) => {
-
+    console.log(newContent);
     try {
       const response = await fetch(`http://localhost:5000/${activeTab}`, {
         method: "POST",
@@ -136,6 +139,9 @@ export default function AdminDashboard() {
       if (activeTab === 'blogs') {
         setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
       }
+      if (activeTab === 'live') {
+        setLiveLink((prevLink) => prevLink.filter((link) => link._id !== id));
+      }
       if (activeTab === 'messages') {
         setMessages((prevMessages) => prevMessages.filter((message) => message._id !== id));
       }
@@ -171,13 +177,13 @@ export default function AdminDashboard() {
 
     // Admin dashboard
     <>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-auto bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-lg shadow">
             <div className="border-b border-gray-200">
               <nav className="-mb-px flex">
                 {/* Tabs */}
-                {['meetings', 'cases', 'blogs', 'messages'].map((tab) => (
+                {['meetings', 'cases', 'blogs', 'live', 'messages'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -191,6 +197,7 @@ export default function AdminDashboard() {
                       {tab === 'meetings' && <Calendar className="h-5 w-5" />}
                       {tab === 'cases' && <Briefcase className="h-5 w-5" />}
                       {tab === 'blogs' && <BookOpen className="h-5 w-5" />}
+                      {tab === 'live' && <Radio className="h-5 w-5" />}
                       {tab === 'messages' && <Mails className="h-5 w-5" />}
                       <span className="text-sm lg:text-base">{tab.charAt(0).toUpperCase() + tab.slice(1)}</span>
                     </div>
@@ -330,6 +337,38 @@ export default function AdminDashboard() {
                     </div>
                 )}
 
+                {/* Live Link */}
+                {activeTab === 'live' && (
+                  <div>
+                    {liveLink.length > 0 ? (
+                      liveLink.map((link) => (
+                        <div
+                          key={link._id}
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
+                        >
+                         <div>
+                            <h3 className="lg:text-lg text-base font-medium">Live Details:</h3>
+                            <p className="text-gray-500 lg:text-base text-sm">
+                              {format(new Date(link.time), 'PPP')}
+                            </p>
+                            <a href={link.link}
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-gray-800 lg:text-base text-sm font-regular mt-4 hover:cursor-pointer">{link.link}</a>
+                          </div>
+                          <button
+                            onClick={() => handleDelete(link._id)}
+                            className="p-2 text-red-600 hover:text-red-800"
+                          >
+                            <Trash2 className="h-5 w-5" />
+                          </button>
+                        </div>
+                      ))
+                    ) : <h1 className='text-gray-400'>No live link added</h1>  
+                    }
+                  </div>
+                )}
+
                 {/* Messages List */}
                 {activeTab === 'messages' && (
                   <div>
@@ -361,7 +400,7 @@ export default function AdminDashboard() {
                           </button>
                         </div>
                       ))
-                    ) : "No messages found"}
+                    ) : <h1 className='text-gray-400'>No messages found</h1>}
                   </div>
                 )}
               </div>
@@ -427,6 +466,14 @@ export default function AdminDashboard() {
           {/* Add Blog */}
           {activeTab === 'blogs' && (
             <CreateBlogForm
+              onAdd={handleAdd}
+              onCancel={() => setIsAdding(false)}
+            />
+          )}
+
+          {/* Add Live Link */}
+          {activeTab === 'live' && (
+            <CreateLiveForm
               onAdd={handleAdd}
               onCancel={() => setIsAdding(false)}
             />
