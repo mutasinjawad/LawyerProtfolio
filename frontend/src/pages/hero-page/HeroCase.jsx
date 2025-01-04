@@ -9,16 +9,14 @@ const HeroCase = () => {
 
   // State variables
   const [cases, setCases] = useState([]); // Store cases
-  const [caseId, setCaseId] = useState(null); // Store case id for expanded case
-  const [expand, setExpand] = useState(false);  // Expand state
   const [itemsToShow, setItemsToShow] = useState(cases.length); // Default to all items
   const [iconSize, setIconSize] = useState(24); // Icon size
   const navigate = useNavigate(); // Navigation
 
   // Toggle expand
-  const toggleExpand = (id) => {
-    setCaseId(id);
-    setExpand(!expand)
+  const toggleExpand = (cass) => {
+    const id = cass._id;
+    navigate(`/cases/${id}`);
   }
 
   // Update icon size
@@ -76,15 +74,6 @@ const HeroCase = () => {
     fetchCase();
   }, []);
 
-  // Event listener for scroll
-  useEffect(() => {
-    if (expand) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [expand]);
-  
   // Event listener for number of cards to show
   useEffect(() => {
     updateItemsToShow(); // Set initially
@@ -122,7 +111,21 @@ const HeroCase = () => {
               }}>
                 <h3 className="font-pmedium xl:text-base text-sm text-black">{cass.title}</h3>
                 <p className="font-pregular text-gray-500 xl:text-sm text-[11px]">{fomratDate(cass.date)}</p>
-                <p className="font-pregular lg:pt-10 pt-4 xl:text-sm text-[11px]">{cass.summary}</p>
+                <div className='lg:pt-10 pt-4 '>
+                  <h1 className='font-pmedium xl:text-base text-sm text-gray-500'>Summary:</h1>
+                  <p className="font-pregular xl:text-sm text-[11px]">
+                    {cass.summary.split('\n').map((line, index) => (
+                      <span key={index}>
+                        {line}
+                        <br />
+                      </span>
+                    ))}
+                  </p>
+                </div>
+                <div className='lg:pt-10 pt-4 '>
+                  <h1 className='font-pmedium xl:text-base text-sm text-gray-500'>Outcome:</h1>
+                  <p className="font-pregular xl:text-sm text-[11px]">{cass.outcome}</p>
+                </div>
               </div>
               
               {/* Expand Button */}
@@ -142,37 +145,6 @@ const HeroCase = () => {
           <Button text="See More" Icon={ArrowRight} onClick={handleSeeMore} iconSize={iconSize}/>
         </div>
       </Element>
-
-      {/* Expanded Case Component */}
-      {expand && (
-        <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
-          onClick={toggleExpand}
-        >
-          <div
-            className="bg-white rounded-3xl xl:p-5 p-4 w-[88%] lg:h-[84vh] h-[88vh] shadow-lg overflow-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="font-pbold xl:text-xl lg:text-lg text-black">{caseId.title}</h2>
-              <button className="text-black hover:text-modernRed transition duration-200 ease-in-out" onClick={toggleExpand}>
-                <X size={iconSize}/>
-              </button>
-            </div>
-            <div>
-              <p className='font-pregular text-gray-600 xl:text-lg text-sm'>{fomratDate(caseId.date)}</p>
-              <div className='flex flex-col gap-y-2 pt-10'>
-                <h1 className="font-plight xl:text-xl text-lg text-gray-400">Summary:</h1>
-                <p className="font-pregular xl:text-lg text-sm">{caseId.summary}</p>
-              </div>
-              <div className='flex flex-col gap-y-2 pt-6'>
-                <h1 className="font-plight xl:text-xl text:lg text-gray-400">Outcome:</h1>
-                <p className="font-pregular xl:text-lg text-sm">{caseId.outcome}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   )
 }

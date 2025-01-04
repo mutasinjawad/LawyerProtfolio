@@ -9,15 +9,14 @@ const HeroMeetings = () => {
   // State variables
   const [meetings, setMeetings] = useState([]); // Store meetings
   const [meetingId, setMeetingId] = useState(null); // Store meeting id for expanded meeting
-  const [expand, setExpand] = useState(false);  // Expand state
   const [itemsToShow, setItemsToShow] = useState(meetings.length); // Default to all items
   const [iconSize, setIconSize] = useState(24); // Icon size
   const navigate = useNavigate(); // Navigation
 
   // Toggle expand
-  const toggleExpand = (id) => {
-    setMeetingId(id);
-    setExpand(!expand);
+  const toggleExpand = (meeting) => {
+    const id = meeting._id;
+    navigate(`/meetings/${id}`);
   }
 
   // Update icon size
@@ -75,15 +74,6 @@ const HeroMeetings = () => {
     fetchMeetings();
   }, []);
 
-  // Event listener for scroll
-  useEffect(() => {
-    if (expand) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [expand]);
-  
   // Event listener for number of cards to show
   useEffect(() => {
     updateItemsToShow(); // Set initially
@@ -121,7 +111,14 @@ const HeroMeetings = () => {
               }}>
                 <h3 className="font-pmedium xl:text-base text-sm text-black">{meeting.title}</h3>
                 <p className="font-pregular text-gray-500 xl:text-sm text-[11px]">{fomratDate(meeting.date)}</p>
-                <p className="font-pregular lg:pt-10 pt-4 xl:text-sm text-[11px]">{meeting.description}</p>
+                <p className="font-pregular lg:pt-10 pt-4 xl:text-sm text-[11px]">
+                  {meeting.description.split('\n').map((line, index) => (
+                      <span key={index}>
+                          {line}
+                          <br />
+                      </span>
+                  ))}
+                </p>
               </div>
 
               {/* Expand Button */}
@@ -145,28 +142,6 @@ const HeroMeetings = () => {
       </Element>
 
       {/* Expanded Meeting Component */}
-      {expand && (
-        <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
-          onClick={toggleExpand}
-        >
-          <div
-            className="bg-white rounded-3xl xl:p-5 p-4 w-[88%] lg:h-[84vh] h-[88vh] shadow-lg overflow-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="font-pbold xl:text-xl lg:text-lg text-black">{meetingId.title}</h2>
-              <button className="text-black hover:text-modernRed transition duration-200 ease-in-out" onClick={toggleExpand}>
-                <X size={iconSize}/>
-              </button>
-            </div>
-            <div>
-              <p className="font-pregular text-gray-600 xl:text-lg text-sm">{fomratDate(meetingId.date)}</p>
-              <p className="font-pregular lg:pt-10 pt-6 xl:text-lg text-sm">{meetingId.description}</p>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   )
 }

@@ -12,48 +12,13 @@ const HeroBlog = () => {
 
     // State variables
     const [blogs, setBlogs] = useState([])  // Store blogs
-    const [blogId, setBlogId] = useState(null)  // Store blog id for expanded blog
-    const [expand, setExpand] = useState(false) // Expand state
-    const [iconSize, setIconSize] = useState(24); // Icon size
     const navigate = useNavigate(); // Navigation
     
     // Toggle expand
-    const toggleExpand = (id) => {
-        setBlogId(id);
-        setExpand(!expand)
+    const toggleExpand = (blog) => {
+        const id = blog._id;
+        navigate(`/blogs/${id}`);
     }
-    
-    // Update icon size
-    const updateIconSize = () => {
-        const width = window.innerWidth;
-        
-        if (width >= 1280) {
-            // XL screens
-            setIconSize(24);
-        } else if (width >= 1024) {
-            // LG screens
-            setIconSize(21);
-        } else {
-            // Small screens
-            setIconSize(18);
-      }
-    };
-
-    // Update card numbers
-    const updateItemsToShow = () => {
-        const width = window.innerWidth;
-
-        if (width >= 1280) {
-            // XL screens
-            setItemsToShow(4);
-        } else if (width >= 1024) {
-            // LG screens
-            setItemsToShow(3);
-        } else {
-            // Small screens
-            setItemsToShow(blogs.length);
-        }
-    };
 
     // Format date
     const fomratDate = (date) => {
@@ -76,25 +41,6 @@ const HeroBlog = () => {
       };
 
       fetchBlogs();
-    }, []);
-
-    // Event listener for scroll
-    useEffect(() => {
-        if (expand) {
-            document.body.classList.add("overflow-hidden");
-        } else {
-            document.body.classList.remove("overflow-hidden");
-        }
-    }, [expand]);
-
-    // Event listener for icon size
-    useEffect(() => {
-        updateIconSize(); // Set initially
-        window.addEventListener('resize', updateIconSize);
-        
-        return () => {
-          window.removeEventListener('resize', updateIconSize); // Cleanup
-        };
     }, []);
 
     return (
@@ -156,8 +102,13 @@ const HeroBlog = () => {
                                     <p className="font-pregular text-gray-500 xl:text-sm text-[11px]">
                                     {fomratDate(blog.date)}
                                     </p>
-                                    <p className="font-pregular lg:pt-10 pt-4 xl:text-sm text-[11px]">
-                                    {blog.description}
+                                    <p className="font-pregular pt-10 xl:text-sm text-[11px]">
+                                        {blog.description.split('\n').map((line, index) => (
+                                            <span key={index}>
+                                                {line}
+                                                <br />
+                                            </span>
+                                        ))}
                                     </p>
                                 </div>
                                 {/* Expand Button */}
@@ -178,31 +129,6 @@ const HeroBlog = () => {
                     <Button text="See More" Icon={ArrowRight} onClick={handleSeeMore} classstyle="ml-2 lg:w-6 lg:h-6 w-4 h-4"/>
                 </div>
             </div>
-            {expand && (
-                <div
-                className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
-                onClick={toggleExpand}
-                >
-                    <div
-                        className="bg-white rounded-3xl lg:p-8 p-4 w-[80%] h-[80vh] shadow-lg"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="flex items-center justify-between">
-                            <h2 className="lg:text-2xl text-[18px] font-pbold">{blogId.title}</h2>
-                            <button className="text-black hover:text-modernRed transition duration-300 ease-in-out" onClick={toggleExpand}>
-                                <X />
-                            </button>
-                        </div>
-                        <div>
-                            <p className="font-pregular text-gray-600 lg:text-[18px] text-[15px]">{fomratDate(blogId.date)}</p>
-                            <div className='flex flex-col gap-y-2 pt-10'>
-                                <h1 className='font-plight text-2xl text-gray-400'>Description:</h1>
-                                <p className="font-pregular">{blogId.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </>
     )
 }

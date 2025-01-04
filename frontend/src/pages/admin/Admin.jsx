@@ -175,7 +175,7 @@ export default function AdminDashboard() {
       document.body.classList.remove("overflow-hidden");
     }
   }, [isAdding]);
-
+  
   return (
 
     // Admin dashboard
@@ -273,15 +273,31 @@ export default function AdminDashboard() {
                       {cases.map((cases) => (
                         <div
                           key={cases._id}
-                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start max-h-96 overflow-y-auto"
                         >
                           <div>
                             <h3 className="lg:text-lg text-base font-medium">{cases.title}</h3>
                             <p className="text-gray-500 lg:text-base text-sm">
                               {format(new Date(cases.date), 'PPP')}
                             </p>
-                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{`Summary: ${cases.summary}`}</p>
-                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{`Outcome: ${cases.outcome}`}</p>
+                            <h1 className="font-pmedium xl:text-base text-sm mt-6">Summary:</h1>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular">
+                              {cases.summary.split('\n').map((line, index) => (
+                                <span key={index}>
+                                  {line}
+                                  <br />
+                                </span>
+                              ))}
+                            </p>
+                            <h1 className="font-pmedium xl:text-base text-sm mt-6">Outcome:</h1>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular">
+                              {cases.outcome.split('\n').map((line, index) => (
+                                <span key={index}>
+                                  {line}
+                                  <br />
+                                </span>
+                              ))}
+                            </p>
                           </div>
                           <div className="flex space-x-2">
 
@@ -312,14 +328,21 @@ export default function AdminDashboard() {
                       {blogs.map((blogs) => (
                         <div
                           key={blogs._id}
-                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start max-h-96 overflow-y-auto"
                         >
                           <div>
                             <h3 className="lg:text-lg text-base font-medium">{blogs.title}</h3>
                             <p className="text-gray-500 lg:text-base text-sm">
                               {format(new Date(blogs.date), 'PPP')}
                             </p>
-                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{blogs.description}</p>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">
+                              {blogs.description.split('\n').map((line, index) => (
+                                <span key={index}>
+                                  {line}
+                                  <br />
+                                </span>
+                              ))}
+                            </p>
                           </div>
                           <div className="flex space-x-2">
                             <button
@@ -379,12 +402,12 @@ export default function AdminDashboard() {
                       messages.map((message) => (
                         <div
                           key={message._id}
-                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start max-h-96 overflow-y-auto"
                         >
                           <div>
                             <h3 className="lg:text-lg text-base font-medium">{message.name}</h3>
                             <p className="text-gray-500 lg:text-base text-sm">{message.email}</p>
-                            <p className="text-gray-500 lg:text-base text-sm">{format(new Date(message.time), 'PPP')}</p>
+                            <p className="text-gray-500 lg:text-base text-sm">{format(new Date(message.time), 'PPP, hh:mm a')}</p>
                             <p className='lg:text-base text-sm font-medium lg:mt-8 mt-6'>Message:</p>
                             <p className="text-gray-800 lg:text-base text-sm font-regular">
                               {message.message.split('\n').map((line, index) => (

@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const bcrypt = require('bcrypt'); // For hashing passwords
+const jwt = require('jsonwebtoken'); // For token generation
+const token = process.env.JWT_SECRET; // Secret key for token generation
+const adminRoutes = require('./routes/admin');
 
 // Middleware
 app.use(cors());
@@ -11,6 +15,9 @@ app.use(express.json());
 require('dotenv').config();
 
 const uri = process.env.MONGODB_URI;
+
+// Routes
+app.use('/api/admin', adminRoutes);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -31,6 +38,7 @@ async function run() {
     const blogsCollection = client.db("meetingDB").collection("blog");
     const liveCollection = client.db("meetingDB").collection("live");
     const contactCollection = client.db("meetingDB").collection("message"); // New collection for storing contact messages
+    const adminCollection = client.db("meetingDB").collection("admin"); // Collection for storing admin credentials
 
     // Drop the existing TTL index if it exists
     const indexes = await liveCollection.indexes();
@@ -495,7 +503,7 @@ async function run() {
       }
     });
     
-
+    // ================== ADMIN ==================
 
 
 

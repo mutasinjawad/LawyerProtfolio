@@ -4,15 +4,17 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 import { Link } from 'react-scroll'
 import { useLocation, useNavigate } from "react-router-dom";
-import { div } from 'motion/react-client'
 
 function Navbar() {
 
     const titles = {
         "/about": "About",
         "/meetings": "Meetings",
+        "/meetings/:id": "Meeting",
         "/cases": "Cases",
+        "/cases/:id": "Case",
         "/blogs": "Blogs",
+        "/blogs/:id": "Blog",
         "/live": "Live",
         "/contact": "Contact",
       };
@@ -36,9 +38,28 @@ function Navbar() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const extendedPages = ["/meetings", "/cases", "/blogs"];
+    const extendedPages = ["/meetings", /^\/meetings\/[a-zA-Z0-9]+$/, "/cases", /^\/cases\/[a-zA-Z0-9]+$/, "/blogs", /^\/blogs\/[a-zA-Z0-9]+$/];
 
-    const isExtendedPage = extendedPages.includes(location.pathname);
+    // Check if current path is an extended page
+    const isExtendedPage = extendedPages.some(page => {
+        if (typeof page === "string") return page === location.pathname;
+        if (page instanceof RegExp) return page.test(location.pathname); // Check regex match
+        return false;
+    });
+
+    // Determine the title based on the path (check for dynamic blog path)
+    const getTitle = () => {
+        if (/^\/meetings\/[a-zA-Z0-9]+$/.test(location.pathname)) {
+          return titles["/meetings/:id"]; // Return "Blog" for dynamic blog pages
+        }
+      if (/^\/blogs\/[a-zA-Z0-9]+$/.test(location.pathname)) {
+        return titles["/blogs/:id"]; // Return "Blog" for dynamic blog pages
+      }
+      if (/^\/cases\/[a-zA-Z0-9]+$/.test(location.pathname)) {
+        return titles["/cases/:id"]; // Return "Case" for dynamic case pages
+        }
+      return titles[location.pathname] || "Page Title";  // Fallback if no match
+    };
 
     if (isExtendedPage) {
         return (
@@ -53,7 +74,7 @@ function Navbar() {
                         </span>
                 </button>
                 <div className='fixed left-1/2 transform -translate-x-1/2 font-pmedium text-black lg:text-2xl text-xl outline-none'>
-                    <h1>{titles[location.pathname]}</h1>
+                    <h1>{getTitle()}</h1>
                 </div>
             </div>
         );
@@ -66,34 +87,28 @@ function Navbar() {
                 <div className="flex items-center justify-end">
                     <ul className="hidden lg:flex items-center justify-center space-x-14 font-pmedium text-[18px] text-black cursor-pointer">
                         <li key="about">
-                            <Link to="about" smooth={true} offset={-180} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
-                                spy={true}
-                                activeClass="border-b-4 border-secondary transition duration-100">About</Link>
+                            <Link to="about" smooth={true} offset={-95} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                                spy={true}>About</Link>
                         </li>
                         <li key="meeting">
-                            <Link to="meeting" smooth={true} offset={-280} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
-                                spy={true}
-                                activeClass="border-b-4 border-secondary transition duration-100">Meeting</Link>
+                            <Link to="meeting" smooth={true} offset={-160} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                                spy={true}>Meeting</Link>
                         </li>
                         <li key="case">
-                            <Link to="case" smooth={true} offset={-200} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
-                                spy={true}
-                                activeClass="border-b-4 border-secondary transition duration-100">Case</Link>
+                            <Link to="case" smooth={true} offset={-160} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                                spy={true}>Case</Link>
                         </li>
                         <li key="blog">
-                            <Link to="blog" smooth={true} duration={500} offset={-200} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
-                                spy={true}
-                                activeClass="border-b-4 border-secondary transition duration-100">Blog</Link>
+                            <Link to="blog" smooth={true} duration={500} offset={-160} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                                spy={true}>Blog</Link>
                         </li>
                         <li key="live">
-                            <Link to="live" smooth={true} duration={500} offset={-200} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
-                                spy={true}
-                                activeClass="border-b-4 border-secondary transition duration-100">Live</Link>
+                            <Link to="live" smooth={true} duration={500} offset={-160} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                                spy={true}>Live</Link>
                         </li>
                         <li key="contact">
-                            <Link to="contact" smooth={true} offset={-250} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
-                                spy={true}
-                                activeClass="border-b-4 border-secondary transition duration-100">Contact</Link>
+                            <Link to="contact" smooth={true} duration={500} className='outline-none hover:border-b-4 hover:border-secondary transition duration-100'
+                                spy={true}>Contact</Link>
                         </li>
                     </ul>
                 </div>
@@ -117,9 +132,9 @@ function Navbar() {
                     animate={{ opacity: 1, x: "0" }}
                     exit={{ opacity:0, x: "100%" }}
                     transition={{ duration: 0.2 }}
-                    className={`fixed flex items-center justify-end top-0 right-0 w-[32vh] h-screen bg-black z-30`}
+                    className={`fixed flex items-start justify-start top-0 right-0 w-[32vh] h-screen bg-black z-30`}
                 >
-                    <ul className="flex flex-col items-end space-y-10 pr-12 font-pregular text-white">
+                    <ul className="flex flex-col items-start space-y-10 pt-28 pl-12 font-pregular text-white">
                         <li key="about">
                             <Link to="about" smooth={true} offset={-60} duration={500} className='outline-none' onClick={toggleMobileDrawer}>About</Link>
                         </li>
