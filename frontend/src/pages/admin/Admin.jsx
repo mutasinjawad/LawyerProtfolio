@@ -232,45 +232,56 @@ export default function AdminDashboard() {
                 {/* Meetings List */}
                 {activeTab === 'meetings' && (
                   <div>
-                    {meetings.map((meeting) => (
-                      <div
-                        key={meeting._id}
-                        className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center max-h-96 overflow-y-auto"
-                      >
-                        <div>
-                          <h3 className="lg:text-lg text-base font-medium">{meeting.title}</h3>
-                          <p className="text-gray-500 lg:text-base text-sm">
-                            {format(new Date(meeting.date), 'PPP')}
-                          </p>
-                          <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">{meeting.description}</p>
-                        </div>
-                        <div className="flex space-x-2">
+                    {meetings.length > 0 ? ( 
+                      meetings.map((meeting) => (
+                        <div
+                          key={meeting._id}
+                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start max-h-96 overflow-y-auto"
+                        >
+                          <div>
+                            <h3 className="lg:text-lg text-base font-medium">{meeting.title}</h3>
+                            <p className="text-gray-500 lg:text-base text-sm">
+                              {format(new Date(meeting.date), 'PPP')}
+                            </p>
+                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">
+                              {meeting.description.split('\n').map((line, index) => (
+                                <span key={index}>
+                                  {line}
+                                  <br />
+                                </span>
+                              ))}
+                            </p>
+                          </div>
+                          <div className="flex space-x-2">
 
-                          {/* Edit Button */}
-                          <button
-                            onClick={() => handleEdit("meeting", meeting._id)}
-                            className="p-2 text-blue-600 hover:text-blue-800"
-                          >
-                            <Edit className="h-5 w-5" />
-                          </button>
+                            {/* Edit Button */}
+                            <button
+                              onClick={() => handleEdit("meeting", meeting._id)}
+                              className="p-2 text-blue-600 hover:text-blue-800"
+                            >
+                              <Edit className="h-5 w-5" />
+                            </button>
 
-                          {/* Delete Button */}
-                          <button
-                            onClick={() => handleDelete(meeting._id)}
-                            className="p-2 text-red-600 hover:text-red-800"
-                          >
-                            <Trash2 className="h-5 w-5" />
-                          </button>
+                            {/* Delete Button */}
+                            <button
+                              onClick={() => handleDelete(meeting._id)}
+                              className="p-2 text-red-600 hover:text-red-800"
+                            >
+                              <Trash2 className="h-5 w-5" />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                    ))
+                  ) : <h1 className='text-gray-400'>No meetings found</h1>
+                  }
                   </div>
                 )}
 
                 {/* Cases List */}
                 {activeTab === 'cases' && (
-                    <div>
-                      {cases.map((cases) => (
+                  <div>
+                    {cases.length > 0 ? (
+                      cases.map((cases) => (
                         <div
                           key={cases._id}
                           className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start max-h-96 overflow-y-auto"
@@ -318,48 +329,53 @@ export default function AdminDashboard() {
                             </button>
                           </div>
                         </div>
-                      ))}
+                      ))
+                    ) : <h1 className='text-gray-400'>No cases found</h1>
+                    }
                     </div>
                 )}
 
                 {/* Blogs List */}
                 {activeTab === 'blogs' && (
-                    <div>
-                      {blogs.map((blogs) => (
-                        <div
-                          key={blogs._id}
-                          className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start max-h-96 overflow-y-auto"
-                        >
-                          <div>
-                            <h3 className="lg:text-lg text-base font-medium">{blogs.title}</h3>
-                            <p className="text-gray-500 lg:text-base text-sm">
-                              {format(new Date(blogs.date), 'PPP')}
-                            </p>
-                            <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">
-                              {blogs.description.split('\n').map((line, index) => (
-                                <span key={index}>
-                                  {line}
-                                  <br />
-                                </span>
-                              ))}
-                            </p>
+                  <div>
+                      {blogs.length > 0 ? (
+                        blogs.map((blogs) => (
+                          <div
+                            key={blogs._id}
+                            className="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-start max-h-96 overflow-y-auto"
+                          >
+                            <div>
+                              <h3 className="lg:text-lg text-base font-medium">{blogs.title}</h3>
+                              <p className="text-gray-500 lg:text-base text-sm">
+                                {format(new Date(blogs.date), 'PPP')}
+                              </p>
+                              <p className="text-gray-800 lg:text-base text-sm font-regular mt-4">
+                                {blogs.description.split('\n').map((line, index) => (
+                                  <span key={index}>
+                                    {line}
+                                    <br />
+                                  </span>
+                                ))}
+                              </p>
+                            </div>
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => handleEdit("blog", blogs._id)}
+                                className="p-2 text-blue-600 hover:text-blue-800"
+                              >
+                                <Edit className="h-5 w-5" />
+                              </button>
+                              <button
+                                onClick={() => handleDelete(blogs._id)}
+                                className="p-2 text-red-600 hover:text-red-800"
+                              >
+                                <Trash2 className="h-5 w-5" />
+                              </button>
+                            </div>
                           </div>
-                          <div className="flex space-x-2">
-                            <button
-                              onClick={() => handleEdit("blog", blogs._id)}
-                              className="p-2 text-blue-600 hover:text-blue-800"
-                            >
-                              <Edit className="h-5 w-5" />
-                            </button>
-                            <button
-                              onClick={() => handleDelete(blogs._id)}
-                              className="p-2 text-red-600 hover:text-red-800"
-                            >
-                              <Trash2 className="h-5 w-5" />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
+                      ))
+                    ) : <h1 className='text-gray-400'>No blogs found</h1>
+                    }
                     </div>
                 )}
 
