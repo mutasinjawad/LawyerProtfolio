@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
 
-export function UpdateCaseForm({ currentItem, onUpdate, onCancel }) {
+export function UpdateCaseForm() {
 
   // State variables to store the meeting details
+  const { id } = useParams();
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [outcome, setOutcome] = useState("");
-  const [date, setDate] = useState("");
+
+  const navigate = useNavigate();
 
   // Fetch the meeting details when the component mounts
   useEffect(() => {
     const fetchMeeting = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/cases/${currentItem.id}`);
+            const response = await fetch(`http://localhost:5000/cases/${id}`);
             if (!response.ok) {
             throw new Error("Failed to fetch meeting details");
             }
@@ -20,16 +23,14 @@ export function UpdateCaseForm({ currentItem, onUpdate, onCancel }) {
             setTitle(cases.title);
             setSummary(cases.summary);
             setOutcome(cases.outcome);
-            setDate(cases.date);
         } catch (error) {
             console.error("Error fetching case details:", error);
         }
     };
 
-    if (currentItem && currentItem.id) {
-      fetchMeeting();
-    }
-  }, [currentItem]);
+    fetchMeeting();
+
+  }, []);
 
   // Update the meeting details
   const handleSubmit = async (e) => {
@@ -40,15 +41,44 @@ export function UpdateCaseForm({ currentItem, onUpdate, onCancel }) {
       return;
     }
 
-    onUpdate({ id: currentItem.id, title, date, summary, outcome });
-    setTitle("");
-    setSummary("");
-    setOutcome("");
+    const updatedContent = {
+      title,
+      summary,
+      outcome,
+    };
+
+    try {
+      const response = await fetch(`http://localhost:5000/cases/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedContent),
+      });
+      
+      if (response.ok) {
+          const data = await response.json();
+          navigate(-1);
+          console.log("Meeting updated successfully:", data);        
+        } else {
+          console.error("Failed to update content");
+        }
+    } catch (error) {
+      console.error("Error while updating the meeting:", error);
+    } finally {
+      setTitle("");
+      setSummary("");
+      setOutcome("");
+    }
   };
+
+  const onCancel = () => {
+    navigate(-1);
+  }
 
   return (
     // Update meeting form
-    <div className="bg-white p-6 rounded-md w-[120vh] mx-[20px]">
+    <div className="bg-white p-6 rounded-md w-full min-h-screen">
 
       {/* Title */}
       <h2 className="text-lg font-semibold mb-4">Update Case</h2>
@@ -81,7 +111,7 @@ export function UpdateCaseForm({ currentItem, onUpdate, onCancel }) {
                     id="summary"
                     value={summary}
                     onChange={(e) => setSummary(e.target.value)}
-                    className="mt-1 block w-full xl:h-[20vh] lg:h-[18vh] h-[25vh] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none outline-none"
+                    className="mt-1 block w-full h-[40vh] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none outline-none"
                     required
                 ></textarea>
             </div>
@@ -95,7 +125,7 @@ export function UpdateCaseForm({ currentItem, onUpdate, onCancel }) {
                     id="outcome"
                     value={outcome}
                     onChange={(e) => setOutcome(e.target.value)}
-                    className="mt-1 block w-full xl:h-[20vh] lg:h-[18vh] h-[25vh] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none outline-none"
+                    className="mt-1 block w-full h-[35vh] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none outline-none"
                     required
                 ></textarea>
             </div>

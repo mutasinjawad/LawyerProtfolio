@@ -1,6 +1,8 @@
 import { useState, useEffect, act } from 'react';
 import { format } from 'date-fns';
-import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2, Mails, Radio } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2, Mails, Radio, House, LogOut } from 'lucide-react';
+import { useAuth } from '../../App';
 
 import { CreateMeetingForm } from '../../components/CreateForm/CreateMeeting';
 import { CreateCaseForm } from '../../components/CreateForm/CreateCase';
@@ -12,6 +14,9 @@ import { UpdateCaseForm } from '../../components/UpdateForm/UpdateCase';
 import { UpdateBlogForm } from '../../components/UpdateForm/UpdateBlog';
 
 export default function AdminDashboard() {
+  const { logOut } = useAuth();
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState('meetings');
   
   const [meetings, setMeetings] = useState([]);
@@ -37,6 +42,11 @@ export default function AdminDashboard() {
     if (activeTab === 'live') setLiveLink(data);
   };
     
+  // Handle navigation
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
   // Handle add
   const handleAdd = async (newContent) => {
     console.log(newContent);
@@ -75,8 +85,16 @@ export default function AdminDashboard() {
 
   // Handle edit
   const handleEdit = (type, id) => {
+    if (type === "meeting") {
+      navigate(`/update-meeting/${id}`);
+    }
+    if (type === "case") {
+      navigate(`/update-case/${id}`);
+    }
+    if (type === "blog") {
+      navigate(`/update-blog/${id}`);
+    }
     setCurrentItem({ type, id });
-    setIsEditing(!isEditing);
   };
 
   // Handle update
@@ -182,6 +200,16 @@ export default function AdminDashboard() {
     <>
       <div className="min-h-auto bg-gray-100">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex justify-between bg-white rounded-lg mb-4 p-4">
+            <button onClick={handleGoHome} className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-secondary'>
+              <House className="h-4 w-4 mr-2" />
+              Go to Home
+            </button>
+            <button onClick={logOut} className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700'>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </button>
+          </div>
           <div className="bg-white rounded-lg shadow">
             <div className="border-b border-gray-200">
               <nav className="-mb-px flex">
@@ -252,7 +280,7 @@ export default function AdminDashboard() {
                               ))}
                             </p>
                           </div>
-                          <div className="flex space-x-2">
+                          <div className="flex flex-col space-y-2">
 
                             {/* Edit Button */}
                             <button
@@ -310,7 +338,7 @@ export default function AdminDashboard() {
                               ))}
                             </p>
                           </div>
-                          <div className="flex space-x-2">
+                          <div className="flex flex-col space-y-2">
 
                             {/* Edit Button */}
                             <button
@@ -358,7 +386,7 @@ export default function AdminDashboard() {
                                 ))}
                               </p>
                             </div>
-                            <div className="flex space-x-2">
+                            <div className="flex flex-col space-y-2">
                               <button
                                 onClick={() => handleEdit("blog", blogs._id)}
                                 className="p-2 text-blue-600 hover:text-blue-800"
@@ -455,25 +483,6 @@ export default function AdminDashboard() {
       {isEditing && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
         >
-
-          {/* Meeting Editing */}
-          {currentItem.type === 'meeting' && (
-            <UpdateMeetingForm
-              currentItem={currentItem}
-              onUpdate={handleUpdate}
-              onCancel={() => setIsEditing(false)}
-            />
-          )}
-
-          {/* Case Editing */}
-          {currentItem.type === 'case' && (
-            <UpdateCaseForm
-              currentItem={currentItem}
-              onUpdate={handleUpdate}
-              onCancel={() => setIsEditing(false)}  
-            />
-          )}
-          
           {/* Blog Editing */}
           {currentItem.type === 'blog' && (
             <UpdateBlogForm

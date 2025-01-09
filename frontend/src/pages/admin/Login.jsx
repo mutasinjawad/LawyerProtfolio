@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import { useAuth } from "../../App";
 import Swal from "sweetalert2";
+import { House } from "lucide-react";
 
 const Login = () => {
   window.scrollTo(0, 0);
@@ -39,6 +40,11 @@ const Login = () => {
         }, 100);
       });
   };
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
   return (
     <div className="">
       <section className=" h-screen flex justify-center items-center">
@@ -46,14 +52,14 @@ const Login = () => {
           <div className="w-[95%] bg-white rounded-lg shadow-md  md:mt-0 sm:max-w-md xl:p-0 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-2xl text-center font-bold leading-tight tracking-tight pb-3 text-gray-900 md:text-3xl ">
-                Login
+                Login to Admin Dashboard
               </h1>
               <form className="space-y-4 md:space-y-4">
-                <div className=" space-y-1 lg:py-1">
+                <div className="space-y-1 lg:py-1">
                   <button
                     onClick={handleGoogleLogin}
                     type="button"
-                    className=" inline-flex w-full items-center justify-center rounded-md   text-gray-700  border-gray-400  px-3.5 py-2.5 font-semibold transition-all duration-200 bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+                    className="inline-flex w-full items-center justify-center rounded-md text-gray-700 border-gray-400 px-3.5 py-2.5 font-semibold transition-all duration-200 bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
                   >
                     <span className="mr-2 inline-block">
                       <svg
@@ -69,6 +75,21 @@ const Login = () => {
                   </button>
                 </div>
               </form>
+              <div className=" flex items-center w-full gap-4">
+                <div className=" border w-44 border-gray-300"></div>
+                <div className="text-xl font-medium">or</div>
+                <div className=" border w-44 border-gray-300"></div>
+              </div>
+              <div className="space-y-1 lg:py-1">
+                  <button
+                    onClick={handleGoHome}
+                    type="button"
+                    className="inline-flex w-full items-center justify-center rounded-md text-gray-700 border-gray-400 px-3.5 py-2.5 font-semibold transition-all duration-200 bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+                  >
+                    <House size={24} className="mr-4" />
+                    Go Home
+                  </button>
+                </div>
             </div>
           </div>
         </div>
