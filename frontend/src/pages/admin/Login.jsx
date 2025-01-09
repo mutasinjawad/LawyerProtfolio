@@ -1,4 +1,3 @@
-import  { useContext, useState } from "react";
 import {
   useLocation,
   useNavigate,
@@ -8,18 +7,25 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   window.scrollTo(0, 0);
-  const { isAdmin, signIn, logOut, googleLogin } = useAuth();
-  const allowedEmails = ["random1@gmail.com"];
+  const { logOut, googleLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleGoogleLogin = () => {
     googleLogin()
-      .then((result) => {
-        const userEmail = result?.user?.email;
-  
-        if (!allowedEmails.includes(userEmail)) {
-          // alert("Access denied. Your email is not authorized.");
+      .then(async (result) => {
+        const token = await result.user.getIdToken();
+        const response = await fetch("http://localhost:5000/verify-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        });
+        const data = await response.json();
+        if (data.authorized) {
+          navigate(location.state ? location.state : "/");
+        } else {
           Swal.fire({
             icon: "error",
             title: "Returned to Home page",
@@ -28,17 +34,10 @@ const Login = () => {
           logOut(); // Immediately log out the unauthorized user
           return navigate("/");
         }
-  
-        const userDetails = {
-          name: result?.user?.displayName,
-          email: userEmail,
-        };
-  
-        // Proceed to navigate if the email is authorized
         setTimeout(() => {
           navigate(location.state ? location.state : "/");
         }, 100);
-      })
+      });
   };
   return (
     <div className="">

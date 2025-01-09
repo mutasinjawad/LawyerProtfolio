@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useState, createContext, useContext, useEffect } from "react";
 import {
   GoogleAuthProvider,
@@ -18,8 +18,7 @@ import BlogDetails from "./pages/expandPage/BlogDetails";
 import CaseDetails from "./pages/expandPage/CaseDetails";
 import Admin from "./pages/admin/Admin";
 import Login from "./pages/admin/Login";
-import Sample from "./pages/Smaple";
-import { app } from "./firebase";
+import { app } from "../firebase";
 import PrivateRouter from "./private_router/PrivateRouter";
 
 // Create Auth Context
@@ -77,7 +76,7 @@ export default function App() {
     <AuthContext.Provider value={ userInfo }>
       <BrowserRouter>
         <div>
-          <Navbar />
+          <ConditionalNavbar />
           <Routes>
             <Route index element={<Hero />} />
             <Route path="meetings" element={<Meeting />} />
@@ -86,7 +85,6 @@ export default function App() {
             <Route path="cases/:id" element={<CaseDetails />} />
             <Route path="blogs" element={<Blog />} />
             <Route path="blogs/:id" element={<BlogDetails />} />
-            <Route path="sample" element={<Sample />} />
             <Route
               path="admin"
               element={
@@ -101,4 +99,19 @@ export default function App() {
       </BrowserRouter>
     </AuthContext.Provider>
   );
+}
+
+// Conditional Navbar Component
+function ConditionalNavbar() {
+  const location = useLocation();
+
+  // Define routes where the Navbar should not be displayed
+  const excludedRoutes = ["/admin", "/login"];
+
+  // Check if the current route is excluded
+  if (excludedRoutes.includes(location.pathname)) {
+    return null;
+  }
+
+  return <Navbar />;
 }

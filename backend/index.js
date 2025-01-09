@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt'); // For hashing passwords
 const jwt = require('jsonwebtoken'); // For token generation
 const token = process.env.JWT_SECRET; // Secret key for token generation
 const adminRoutes = require('./routes/admin');
+const admin = require("firebase-admin");
 
 // Middleware
 app.use(cors());
@@ -15,6 +16,12 @@ app.use(express.json());
 require('dotenv').config();
 
 const uri = process.env.MONGODB_URI;
+
+admin.initializeApp({
+  credential: admin.credential.cert(require("./service-account-key.json")),
+});
+
+const allowedEmail = process.env.ALLOWED_EMAIL;
 
 // Routes
 app.use('/api/admin', adminRoutes);
@@ -505,7 +512,23 @@ async function run() {
     
     // ================== ADMIN ==================
 
-
+    // Admin login
+    app.post("/verify-email", async (req, res) => {
+      const { token } = req.body;
+      try {
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const userEmail = decodedToken.email;
+    
+        if (allowedEmail.includes(userEmail)) {
+          res.json({ authorized: true });
+        } else {
+          res.json({ authorized: false });
+        }
+      } catch (error) {
+        console.error("Error verifying token:", error);
+        res.status(401).json({ authorized: false });
+      }
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
