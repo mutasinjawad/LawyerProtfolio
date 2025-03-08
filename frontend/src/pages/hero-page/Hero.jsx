@@ -1,4 +1,5 @@
 import About from "./About"
+import DemoAbout from "./DemoAbout"
 import HeroMeetings from "./HeroMeetings"
 import HeroCase from "./HeroCase"
 import HeroBlog from "./HeroBlog"
@@ -9,7 +10,8 @@ import Footer from "./Footer"
 const Hero = () => {
     return (
       <div>
-        <About />
+        {/* <About /> */}
+        <DemoAbout />
         <hr style={{ border: "1px grey #e0e0e0" }} />
         <HeroMeetings />
         <hr style={{ border: "1px grey #e0e0e0" }} />
