@@ -28,6 +28,11 @@ import { UpdateMeetingForm } from "./components/UpdateForm/UpdateMeeting";
 import { UpdateCaseForm } from "./components/UpdateForm/UpdateCase";
 import { UpdateBlogForm } from "./components/UpdateForm/UpdateBlog";
 
+import { CreateMeetingForm } from "./components/CreateForm/CreateMeeting";
+import { CreateCaseForm } from "./components/CreateForm/CreateCase";
+import { CreateBlogForm } from "./components/CreateForm/CreateBlog";
+import { CreateLiveForm } from "./components/CreateForm/CreateLive";
+
 import PrivateRouter from "./private_router/PrivateRouter";
 
 // Create Auth Context
@@ -104,6 +109,10 @@ export default function App() {
             <Route path="update-meeting/:id" element={<PrivateRouter><UpdateMeetingForm /></PrivateRouter>} />
             <Route path="update-case/:id" element={<PrivateRouter><UpdateCaseForm /></PrivateRouter>} />
             <Route path="update-blog/:id" element={<PrivateRouter><UpdateBlogForm /></PrivateRouter>} />
+            <Route path="add-meeting" element={<PrivateRouter><CreateMeetingForm /></PrivateRouter>} />
+            <Route path="add-case" element={<PrivateRouter><CreateCaseForm /></PrivateRouter>} />
+            <Route path="add-blog" element={<PrivateRouter><CreateBlogForm /></PrivateRouter>} />
+            <Route path="add-live" element={<PrivateRouter><CreateLiveForm /></PrivateRouter>} />
           </Routes>
         </div>
       </BrowserRouter>

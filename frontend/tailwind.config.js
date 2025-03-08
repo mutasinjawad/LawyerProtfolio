@@ -8,10 +8,10 @@ export default {
           DEFAULT: "#8873ef",
           100: "#FFFFF8"
         },
-        secondary: "#404030",
+        secondary: "#1D3557",
         modernRed: "#E0115F",
         black:
-          {DEFAULT: "#202020"},
+          {DEFAULT: "#343A40"},
         whiteBg: "#f5f5f5",
       },
       fontFamily: {

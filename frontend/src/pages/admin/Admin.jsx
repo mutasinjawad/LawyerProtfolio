@@ -4,15 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar, Briefcase, BookOpen, Plus, Edit, Trash2, Mails, Radio, House, LogOut } from 'lucide-react';
 import { useAuth } from '../../App';
 
-import { CreateMeetingForm } from '../../components/CreateForm/CreateMeeting';
-import { CreateCaseForm } from '../../components/CreateForm/CreateCase';
-import { CreateBlogForm } from '../../components/CreateForm/CreateBlog';
-import { CreateLiveForm } from '../../components/CreateForm/CreateLive';
-
-import { UpdateMeetingForm } from '../../components/UpdateForm/UpdateMeeting';
-import { UpdateCaseForm } from '../../components/UpdateForm/UpdateCase';
-import { UpdateBlogForm } from '../../components/UpdateForm/UpdateBlog';
-
 export default function AdminDashboard() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
@@ -24,10 +15,6 @@ export default function AdminDashboard() {
   const [blogs, setBlogs] = useState([]);
   const [liveLink, setLiveLink] = useState([]);
   const [messages, setMessages] = useState([]);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
-  const [currentItem, setCurrentItem] = useState({ type: '', id: '' });
 
   // Fetch data based on the active tab
   const fetchData = async () => {
@@ -48,38 +35,18 @@ export default function AdminDashboard() {
   };
 
   // Handle add
-  const handleAdd = async (newContent) => {
-    console.log(newContent);
-    try {
-      const response = await fetch(`http://localhost:5000/${activeTab}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newContent),
-      });
-
-      if (response.ok) {
-        const addedContent = await response.json();
-        if (activeTab === "meetings") {
-          setMeetings((prevContents) => [addedContent, ...prevContents]);
-        }
-        if (activeTab === "cases") {
-          setCases((prevContents) => [addedContent, ...prevContents]);
-        }
-        if (activeTab === "blogs") {
-          setBlogs((prevContents) => [addedContent, ...prevContents]);
-        }
-        if (activeTab === "live") {
-          setLiveLink((prevLink) => [addedContent, ...prevLink]);
-        }
-      } else {
-        console.error("Failed to add content");
-      }
-    } catch (error) {
-      console.error("Error while adding content:", error);
-    } finally {
-      setIsAdding(false);
+  const handleAdd = () => {
+    if (activeTab === 'meetings') {
+      navigate('/add-meeting');
+    }
+    if (activeTab === 'cases') {
+      navigate('/add-case');
+    }
+    if (activeTab === 'blogs') {
+      navigate('/add-blog');
+    }
+    if (activeTab === 'live') {
+      navigate('/add-live');
     }
   };
 
@@ -94,52 +61,6 @@ export default function AdminDashboard() {
     if (type === "blog") {
       navigate(`/update-blog/${id}`);
     }
-    setCurrentItem({ type, id });
-  };
-
-  // Handle update
-  const handleUpdate = async (updatedContent) => {
-    try {
-      const response = await fetch(`http://localhost:5000/${activeTab}/${updatedContent.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedContent),
-      });
-      
-      if (response.ok) {
-        const updatedContent = await response.json();
-        
-        if (activeTab === "meetings") {
-          setMeetings((prevContents) =>
-            prevContents.map((meeting) =>
-              meeting._id === updatedContent._id ? updatedContent : meeting
-            )
-          );          
-        }
-        if (activeTab === "cases") {
-          setCases((prevContents) =>
-            prevContents.map((cases) =>
-              cases._id === updatedContent._id ? updatedContent : cases
-            )
-          ); 
-        }
-          if (activeTab === "blogs") {
-            setBlogs((prevContents) => 
-              prevContents.map((blog) =>
-                blog._id === updatedContent._id ? updatedContent : blog
-              )
-            );
-          }
-        } else {
-          console.error("Failed to update content");
-        }
-} catch (error) {
-  console.error("Error while updating the meeting:", error);
-} finally {
-  setIsEditing(false);
-}
   };
 
   // Handle delete
@@ -175,24 +96,6 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchData();
   }, [activeTab]);
-
-  // Prevent scrolling when editing
-  useEffect(() => {
-    if (isEditing) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [isEditing]);
-
-  // Prevent scrolling when adding
-  useEffect(() => {
-    if (isAdding) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [isAdding]);
   
   return (
 
@@ -243,12 +146,8 @@ export default function AdminDashboard() {
               {/* Add new button */}
               {activeTab !== 'messages' && (
               <button
-                onClick={() => {
-                  setIsAdding(true);
-                  setCurrentItem(null);
-                }}
+                onClick={handleAdd}
                 className="mb-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                disabled={isAdding} // Disable during processing
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add New
@@ -419,7 +318,7 @@ export default function AdminDashboard() {
                          <div>
                             <h3 className="lg:text-lg text-base font-medium">Live Details:</h3>
                             <p className="text-gray-500 lg:text-base text-sm">
-                              {format(new Date(link.time), 'PPP')}
+                              {format(new Date(link.time), 'PPP p')}
                             </p>
                             <a href={link.link}
                               target="_blank" 
@@ -478,59 +377,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
-
-      {/* Tab for Editing */}
-      {isEditing && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
-        >
-          {/* Blog Editing */}
-          {currentItem.type === 'blog' && (
-            <UpdateBlogForm
-              currentItem={currentItem}
-              onUpdate={handleUpdate}
-              onCancel={() => setIsEditing(false)}
-            />
-          )}
-        </div>
-      )}
-
-      {/* Tab for Adding */}
-      {isAdding && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
-
-          {/* Add Meeting */}
-          {activeTab === 'meetings' && (
-          <CreateMeetingForm
-            onAdd={handleAdd}
-            onCancel={() => setIsAdding(false)}
-          />
-          )}
-
-          {/* Add Case */}
-          {activeTab === 'cases' && (
-            <CreateCaseForm
-              onAdd={handleAdd}
-              onCancel={() => setIsAdding(false)}
-            />
-          )}
-
-          {/* Add Blog */}
-          {activeTab === 'blogs' && (
-            <CreateBlogForm
-              onAdd={handleAdd}
-              onCancel={() => setIsAdding(false)}
-            />
-          )}
-
-          {/* Add Live Link */}
-          {activeTab === 'live' && (
-            <CreateLiveForm
-              onAdd={handleAdd}
-              onCancel={() => setIsAdding(false)}
-            />
-          )}
-        </div>
-      )}
     </>
   );
 }

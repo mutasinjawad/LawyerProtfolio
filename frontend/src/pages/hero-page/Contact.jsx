@@ -140,7 +140,7 @@ return (
                 </div>
 
                 {/* Form Box */}
-                <div className='lg:w-3/5 w-full lg:h-full lg:mt-0 mt-12'>
+                <div className='lg:w-2/5 w-full lg:h-full lg:mt-0 mt-12'>
                     <form onSubmit={handleSubmit} className='flex flex-col lg:h-full w-full md:justify-between space-y-3'>
 
                         {/* Name */}

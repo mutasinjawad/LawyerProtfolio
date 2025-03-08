@@ -59,12 +59,12 @@ export function UpdateCaseForm() {
       if (response.ok) {
           const data = await response.json();
           navigate(-1);
-          console.log("Meeting updated successfully:", data);        
+          console.log("Case updated successfully:", data);        
         } else {
           console.error("Failed to update content");
         }
     } catch (error) {
-      console.error("Error while updating the meeting:", error);
+      console.error("Error while updating the case:", error);
     } finally {
       setTitle("");
       setSummary("");
