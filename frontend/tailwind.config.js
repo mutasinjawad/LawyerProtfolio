@@ -86,6 +86,7 @@ export default {
       },
     },
     screens: {
+      xs: '375px', // Extra small screens
       sm: '640px', // Small screens
       md: '768px', // Medium screens (768)
       lg: '1024px', // Large screens (1024)

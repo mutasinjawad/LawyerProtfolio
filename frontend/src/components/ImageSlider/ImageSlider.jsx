@@ -25,7 +25,7 @@ export default function App({ images }) {
         }}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="custom-swiper bg-white xl:h-2/3 lg:h-2/4 md:h-1/2"
+        className="bg-white custom-swiper"
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
