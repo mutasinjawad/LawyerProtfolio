@@ -36,7 +36,7 @@ const HeroServices = () => {
     }
 
     return (
-        <Element className='w-full h-full flex items-center justify-center pt-40' name='services'
+        <Element className='flex items-center justify-center w-full h-full pt-40' name='services'
         >
             <div className='flex flex-col items-center justify-between w-[140vh] gap-4'>
                 <div className='flex flex-col items-center justify-between gap-4 xl:gap-8'>
@@ -48,7 +48,7 @@ const HeroServices = () => {
                             className='flex items-center gap-2 w-[400px] h-[40px]'
                         >
                             <Check />
-                            <div className='w-full h-full flex items-center font-eslight hover:text-secondary text-sm duration-150'
+                            <div className='flex items-center w-full h-full text-sm duration-150 font-eslight hover:text-secondary'
                                 onClick={() => handleServiceClick(service.path)}
                             >
                             {service.name}

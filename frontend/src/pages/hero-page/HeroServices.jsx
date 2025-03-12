@@ -42,7 +42,7 @@ const HeroServices = () => {
 
   return (
     <Element
-      className='flex flex-col items-center justify-between xl:m-8 xl:mx-16 xl:mb-20 lg:mb-24 mb-20 lg:m-8 mx-10 xl:h-[36vh] lg:h-[62vh]'
+      className='flex xl:pt-10 xl:h-[800px] lg:pt-8 lg:h-[700px] md:h-[1000px] h-[980px] pt-12 mb-2'
       name='services'
     >
       <div className='flex flex-col items-center justify-between w-[140vh] h-full gap-4'>
@@ -59,7 +59,7 @@ const HeroServices = () => {
                 className='flex items-center gap-2 w-[240px] h-[40px]'
               >
                 <Check />
-                <div className='w-full h-full flex items-center font-eslight hover:text-secondary text-sm duration-150'
+                <div className='flex items-center w-full h-full text-sm duration-150 font-eslight hover:text-secondary'
                   onClick={() => handleServiceClick(service.path)}
                 >
                   {service.name}

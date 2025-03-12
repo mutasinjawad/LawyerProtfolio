@@ -1,5 +1,5 @@
 import React from 'react';
-import News from '../../hero-page/News';
+import News from '../../../components/NewsTicker/News';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
@@ -10,9 +10,9 @@ const AdministrativeLaw = () => {
     return (
         <div className='flex flex-col items-center justify-between w-full h-screen'>
             <div className='flex flex-col items-start max-w-[100vh] mt-16'>
-                <button className="stickey left-0 flex items-center justify-start lg:w-28 font-psemibold p-1 mb-5 text-black lg:text-xl text-base outline-none hover:text-secondary lg:gap-6 hover:gap-2 hover:cursor transition-all duration-200 ease-in-out"
+                <button className="left-0 flex items-center justify-start p-1 mb-5 text-base text-black transition-all duration-200 ease-in-out outline-none stickey lg:w-28 font-psemibold lg:text-xl hover:text-secondary lg:gap-6 hover:gap-2 hover:cursor"
                         onClick={() => navigate(-1)}>
-                            <ChevronLeft className='lg:w-6 lg:h-6 w-5 h-5' strokeWidth={3}/>
+                            <ChevronLeft className='w-5 h-5 lg:w-6 lg:h-6' strokeWidth={3}/>
                             <span
                             className='hidden lg:block'
                             >
@@ -41,7 +41,7 @@ const AdministrativeLaw = () => {
                         to assess and plan cases expeditiously and effectively, delivering exceptional advocacy.
                     </p>
 
-                    <button className="mt-6 px-6 py-2 bg-secondary text-black font-essemibold rounded-full shadow-md hover:bg-opacity-90 transition-all">
+                    <button className="px-6 py-2 mt-6 text-black transition-all rounded-full shadow-md bg-secondary font-essemibold hover:bg-opacity-90">
                         Contact Us for Legal Support
                     </button>
                 </div>

@@ -14,18 +14,20 @@ const News = () => {
       
 
     return (
-        <div className='flex stock-ticker h-12 bg-primary'>
-            <h1 className='flex items-center px-3 h-full bg-secondary font-rsemibold text-xl'>UPDATE:</h1>
-            <Marquee>
-                <ul className='flex items-center justify-center pl-6 gap-6 font-rregular text-sm text-white'>
-                    {[...updates].map((update, index) => (
-                        <li key={index}>
-                            <strong>• </strong>
-                            <span>{update}</span>
-                        </li>
-                    ))}
-                </ul>
-            </Marquee>
+        <div className='flex items-center justify-center h-6 md:h-10 xl:h-12 bg-primary'>
+            <div className='flex stock-ticker max-w-[1240px] lg:w-[1000px] md:w-full md:max-w-[990px] w-full h-full'>
+                <h1 className='flex items-center h-full xs:px-3 px-2 xl:text-xl lg:text-[18px] xs:text-[14px] text-[11px] bg-secondary font-rsemibold'>UPDATE:</h1>
+                <Marquee>
+                    <ul className='flex items-center justify-center gap-6 pl-6 text-white xl:text-sm xs:text-[12px] text-[9px] font-rregular'>
+                        {[...updates].map((update, index) => (
+                            <li key={index}>
+                                <strong>• </strong>
+                                <span>{update}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </Marquee>
+            </div>
         </div>
   )
 }
