@@ -13,6 +13,9 @@ import Navbar from "./pages/Navbar";
 
 import Hero from "./pages/hero-page/Hero";
 
+import Services from "./pages/Services";
+import AdministrativeLaw from "./pages/expandPage/services/AdministrativeLaw";
+
 import Meeting from "./pages/Meeting";
 import Case from "./pages/Case";
 import Blog from "./pages/Blog";
@@ -20,6 +23,8 @@ import Blog from "./pages/Blog";
 import MeetingDetails from "./pages/expandPage/MeetingDetails";
 import BlogDetails from "./pages/expandPage/BlogDetails";
 import CaseDetails from "./pages/expandPage/CaseDetails";
+
+import Career from "./pages/Career";
 
 import Admin from "./pages/admin/Admin";
 import Login from "./pages/admin/Login";
@@ -87,16 +92,21 @@ export default function App() {
   return (
     <AuthContext.Provider value={ userInfo }>
       <BrowserRouter>
-        <div>
+        <div className="bg-whiteBg">
           <ConditionalNavbar />
           <Routes>
             <Route index element={<Hero />} />
+            <Route path="services" element={<Services />} />
+            <Route path="administrative-law" element={<AdministrativeLaw />} />
+
             <Route path="meetings" element={<Meeting />} />
             <Route path="meetings/:id" element={<MeetingDetails />} />
             <Route path="cases" element={<Case />} />
             <Route path="cases/:id" element={<CaseDetails />} />
             <Route path="blogs" element={<Blog />} />
             <Route path="blogs/:id" element={<BlogDetails />} />
+
+            <Route path="career" element={<Career />} />
             <Route
               path="admin"
               element={
@@ -125,7 +135,7 @@ function ConditionalNavbar() {
   const location = useLocation();
 
   // Define routes where the Navbar should not be displayed
-  const includedRoutes = ["/", "/meetings", "/meetings/:id", "/cases", "/cases/:id", "/blogs", "/blogs/:id"];
+  const includedRoutes = ["/","/services", "/meetings", "/meetings/:id", "/cases", "/cases/:id", "/blogs", "/blogs/:id", "/career"];
 
   const shouldShowNavbar = includedRoutes.some((pattern) => matchPath(pattern, location.pathname));
 

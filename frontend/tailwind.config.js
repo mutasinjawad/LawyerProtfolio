@@ -5,14 +5,11 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#8873ef",
-          100: "#FFFFF8"
+          DEFAULT: "#010522",
         },
-        secondary: "#1D3557",
-        modernRed: "#E0115F",
-        black:
-          {DEFAULT: "#343A40"},
-        whiteBg: "#f5f5f5",
+        secondary: "#C9A227",
+        accent: "#E8D5B7",
+        whiteBg: "#f8f8f8",
       },
       fontFamily: {
         pthin: ["Poppins", "sans-serif"],
@@ -24,6 +21,27 @@ export default {
         pbold: ["Poppins", "sans-serif"],
         pextrabold: ["Poppins", "sans-serif"],
         pblack: ["Poppins", "sans-serif"],
+
+        esextraextralight: ["Encode Sans", "sans-serif"],
+        esthin: ["Encode Sans", "sans-serif"],
+        esextralight: ["Encode Sans", "sans-serif"],
+        eslight: ["Encode Sans", "sans-serif"],
+        esregular: ["Encode Sans", "sans-serif"],
+        esmedium: ["Encode Sans", "sans-serif"],
+        essemibold: ["Encode Sans", "sans-serif"],
+        esbold: ["Encode Sans", "sans-serif"],
+        esextrabold: ["Encode Sans", "sans-serif"],
+        esblack: ["Encode Sans", "sans-serif"],
+
+        rthin: ["Roboto", "sans-serif"],
+        rextralight: ["Roboto", "sans-serif"],
+        rlight: ["Roboto", "sans-serif"],
+        rregular: ["Roboto", "sans-serif"],
+        rmedium: ["Roboto", "sans-serif"],
+        rsemibold: ["Roboto", "sans-serif"],
+        rbold: ["Roboto", "sans-serif"],
+        rextrabold: ["Roboto", "sans-serif"],
+        rblack: ["Roboto", "sans-serif"],
       },
       fontWeight: {
         pthin: '100',
@@ -35,13 +53,45 @@ export default {
         pbold: '700',
         pextrabold: '800',
         pblack: '900',
-      }
+
+        esextraextralight: '100',
+        esthin: '200',
+        esextralight: '300',
+        eslight: '400',
+        esregular: '500',
+        esmedium: '600',
+        essemibold: '700',
+        esbold: '800',
+        esextrabold: '900',
+        esblack: '1000',
+
+        rthin: '100',
+        rextralight: '200',
+        rlight: '300',
+        rregular: '400',
+        rmedium: '500',
+        rsemibold: '600',
+        rbold: '700',
+        rextrabold: '800',
+        rblack: '900',
+      },
+      keyframes: {
+        "infinite-scroll": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(calc(-50% - 20px))" },
+        },
+      },
+      animation: {
+        "infinite-scroll": "infinite-scroll 10s linear infinite",
+      },
     },
     screens: {
       sm: '640px', // Small screens
-      md: '768px', // Medium screens
-      lg: '1024px', // Large screens
-      xl: '1280px', // Extra large screens
+      md: '768px', // Medium screens (768)
+      lg: '1024px', // Large screens (1024)
+      xl: '1290px', // Extra large screens (1280)
+      lp: '1366px', // Laptop screens
+      xxl: '2560px', // Extra extra large screens
     },
   },
   plugins: [],

@@ -5,8 +5,7 @@ const Button = ({ text, Icon, onClick, iconSize }) => {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center justify-center xl:px-5 px-3 gap-2 xl:py-4 lg:py-3 py-2 bg-black text-white font-pregular xl:text-base text-sm 
-      xl:rounded-3xl rounded-2xl shadow-md hover:bg-secondary hover:shadow-lg hover:cursor hover:gap-4
+      className={`flex items-center justify-center gap-2 xl:px-[10px] xl:py-[8px] xl:text-[12px] xl:rounded-xl md:px-[8px] md:py-[6px] md:rounded-[10px] md:text-[12px] px-1 py-1 rounded-[5px] text-[10px] bg-primary text-white font-rregular shadow-md hover:bg-[#212529] hover:shadow-lg hover:cursor hover:gap-4
       transition-all duration-200 ease-in-out`}
     >
       {text}
