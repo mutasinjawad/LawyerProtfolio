@@ -15,18 +15,18 @@ const Hero = () => {
         <About />
         {/* <DemoAbout /> */}
         <News />
-        {/* <HeroServices /> */}
-        {/* <hr style={{ border: "1px grey #e0e0e0" }} />
+        <HeroServices />
+        <hr style={{ border: "1px grey #e0e0e0" }} />
         <HeroMeetings />
         <hr style={{ border: "1px grey #e0e0e0" }} />
         <HeroCase />
         <hr style={{ border: "1px grey #e0e0e0" }} />
         <HeroBlog />
-        <hr style={{ border: "1px grey #e0e0e0" }} />
+        {/* <hr style={{ border: "1px grey #e0e0e0" }} />
         <Live />
         <hr style={{ border: "1px grey #e0e0e0" }} />
-        <Contact /> */}
-        <Footer />
+        <Contact />
+        <Footer /> */}
       </div>
     )
   }

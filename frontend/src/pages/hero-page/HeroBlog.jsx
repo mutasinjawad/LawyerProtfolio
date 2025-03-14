@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Button from '../../components/Button'
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, ChevronRight, X } from 'lucide-react';
+import { Element } from "react-scroll";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
@@ -45,90 +46,72 @@ const HeroBlog = () => {
 
     return (
         <>
-            {/* Blogs Component Start */}
-            <div className='relative flex flex-col items-center justify-between xl:m-16 xl:mb-36 lg:mb-24 mb-20 lg:m-8 mx-10 xl:h-[70vh] lg:h-[62vh]' id="blog">
-                
-                {/* Blog Title */}
-                <h1 className="font-psemibold xl:text-[60px] lg:text-[45px] text-[34px] text-black">Blogs</h1>
+            <Element className='flex items-center justify-center xl:py-10 xl:h-[700px] lg:h-[700px] md:h-[1020px] xs:h-[800px] h-[600px] md:py-8 xs:py-6 py-4 w-full overflow-hidden' name="blog">
+                {/* Blogs Component Start */}
+                <div className='flex flex-col items-center justify-between md:w-[1300px] sm:w-[500px] xs:w-[440px] w-[300px] h-full md:px-6 px-3' id="blog">
+                    
+                    {/* Blog Title */}
+                    <h1 className="font-rsemibold xl:text-[40px] lg:text-[45px] md:text-[34px] xs:text-[28px] text-[22px] text-primary">Blogs</h1>
 
-                {/* Blog Swiper */}
-                <div className="flex lg:flex-row flex-col justify-center items-center w-full xl:gap-16 lg:gap-10 gap-6 lg:mb-0 mb-8 mt-8">
-                    <Swiper
-                    breakpoints={{
-                        320: {
-                        slidesPerView: 2, // 1 slide on small screens
-                        spaceBetween: 10,
-                        },
-                        640: {
-                        slidesPerView: 2, // 2 slides on medium screens
-                        spaceBetween: 15,
-                        },
-                        1024: {
-                        slidesPerView: 3, // 3 slides on larger screens
-                        spaceBetween: 20,
-                        },
-                        1280: {
-                        slidesPerView: 4, // 4 slides on extra-large screens
-                        spaceBetween: 25,
-                        },
-                        1536: {
-                        slidesPerView: 5, // 5 slides on 4k screens
-                        spaceBetween: 30,
-                        },
-                    }}
-                    centeredSlides={false} // Center active slide if needed
-                    pagination={{
-                        clickable: true, // Enable pagination dots
-                    }}
-                    modules={[Pagination]}
-                    className="custom-swiper w-full"
-                    >
-                    {blogs.map((blog) => (
-                        <SwiperSlide key={blog.id} className="w-full max-w-xs pb-14 z-0">
-                            <div
-                            key={blog.id}
-                            className="flex flex-col bg-white rounded-3xl hover:shadow cursor-pointer transition-all duration-300 ease-in-out"
-                            >
-                                {/* Blog Content */}
+                    {/* Blog Swiper */}
+                    <div className="w-full">
+                        <Swiper
+                            breakpoints={{
+                            320: { slidesPerView: 2, spaceBetween: 10 },
+                            640: { slidesPerView: 2, spaceBetween: 15 },
+                            1024: { slidesPerView: 3, spaceBetween: 20 },
+                            1280: { slidesPerView: 4, spaceBetween: 25 },
+                            1536: { slidesPerView: 5, spaceBetween: 30 },
+                            }}
+                            centeredSlides={false}
+                            pagination={{
+                            clickable: true, // Enable clicking on pagination
+                            }}
+                            modules={[Pagination]}
+                            className="w-full custom-swiper"
+                        >
+                            {blogs.map((blog) => (
+                            <SwiperSlide key={blog.id} className="w-full">
                                 <div
-                                    className="lg:p-5 p-4 lg:h-[30vh] h-[18vh]"
-                                    style={{
-                                    overflow: "hidden",
-                                    }}
+                                key={blog.id}
+                                className="text-left flex flex-col items-start justify-between xl:p-4 md:p-2 xs:p-2 p-1 lg:h-[350px] md:h-[180px] xs:h-[150px] h-[110px] lg:w-[30vh] w-full bg-white rounded-[5px] hover:shadow cursor-pointer transition-all duration-300 ease-in-out"
                                 >
-                                    <h3 className="font-pmedium xl:text-base text-sm text-black">
+                                <div className="h-full overflow-hidden">
+                                    <h3 className="text-black font-rmedium xl:text-[16px] md:text-[17px] text-[13px]">
                                     {blog.title}
                                     </h3>
-                                    <p className="font-pregular text-gray-500 xl:text-sm text-[11px]">
+                                    <p className="font-rregular text-gray-500 xl:text-[14px] md:text-[14px] text-[10px]">
                                     {fomratDate(blog.date)}
                                     </p>
-                                    <p className="font-pregular pt-10 xl:text-sm text-[11px]">
-                                        {blog.description.split('\n').map((line, index) => (
-                                            <span key={index}>
-                                                {line}
-                                                <br />
-                                            </span>
-                                        ))}
+                                    <p className="md:pt-3 lg:pt-8 font-rregular xs:pt-0 pt-1 xl:text-[15px] lg:text-[12px] md:text-[14px] sm:text-[12px] xs:text-[11px] text-[10px]">
+                                    {blog.description.split('\n').map((line, index) => (
+                                        <span key={index}>
+                                        {line}
+                                        <br />
+                                        </span>
+                                    ))}
                                     </p>
                                 </div>
-                                {/* Expand Button */}
                                 <button
-                                className="flex items-center justify-start text-neutral-400 hover:text-neutral-600 lg:p-5 p-4 gap-2 hover:gap-6 hover:cursor transition-all duration-200 ease-in-out"
-                                onClick={() => toggleExpand(blog)}
+                                    className="flex items-center justify-start gap-2 mt-2 transition-all duration-200 ease-in-out text-neutral-400 hover:text-neutral-600 hover:gap-6 hover:cursor"
+                                    onClick={() => toggleExpand(blog)}
                                 >
-                                    <h1 className="font-pregular xl:text-base text-sm">Expand</h1>
+                                    <h1 className="text-sm font-pregular xl:text-base">Expand</h1>
                                     <ChevronRight />
                                 </button>
-                            </div>
-                        </SwiperSlide>
-                      
-                    ))}
-                    </Swiper>
+                                </div>
+                            </SwiperSlide>
+                            ))}
+                        </Swiper>
+
+                        {/* Pagination Fix: Make sure it has enough height & spacing */}
+                        <div className="mt-4 swiper-pagination"></div>
+                        </div>
+                    <div className="">
+                        <Button text="See More" Icon={ArrowRight} onClick={handleSeeMore} classstyle="ml-2 lg:w-6 lg:h-6 w-4 h-4"/>
+                    </div>
                 </div>
-                <div className="">
-                    <Button text="See More" Icon={ArrowRight} onClick={handleSeeMore} classstyle="ml-2 lg:w-6 lg:h-6 w-4 h-4"/>
-                </div>
-            </div>
+            </Element>
         </>
     )
 }
