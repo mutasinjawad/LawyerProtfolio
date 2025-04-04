@@ -4,7 +4,7 @@ import Footer from '../../Footer';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-const AdministrativeLaw = () => {
+const AlternativeDisputeResolution = () => {
 
     const navigate = useNavigate();
 
@@ -18,25 +18,18 @@ const AdministrativeLaw = () => {
                                 <span className='font-rbold md:text-[18px] xs:text-[15px] text-[13px]'>Back</span>
                     </button>
                     <div className="flex flex-col items-start w-full p-2 text-black bg-white shadow-sm lg:p-6 md:p-4 xs:p-3 rounded-xl">
-                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Administrative Law in Bangladesh</h1>
+                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Alternative Dispute Resolution</h1>
                         
                         <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
-                            The intention of administrative law is to provide a legal framework for regulating the powers, 
-                            procedures, and acts of public administration. All matters in this relation are referred to an 
-                            administrative tribunal with exclusive jurisdiction to determine applications made by persons in 
-                            the service of the republic regarding their terms and conditions of service.
+                            Alternative Dispute Resolution (ADR)—also known in some regions as external dispute resolution—refers to a range of processes that help individuals and organizations resolve disputes without going to court. It offers a practical alternative to formal litigation, often saving time and reducing costs while promoting mutually agreeable outcomes.
                         </p>
 
                         <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
-                            Rule of law eschews arbitrariness or decisions based on whim, promoting fairness and equality 
-                            as enshrined in Article 27 of the Constitution of Bangladesh. Governmental actions must be right, 
-                            just, and fair, avoiding arbitrary, fanciful, or oppressive practices.
+                            ADR methods include conciliation, arbitration, and mediation, each suited to different types of conflicts. For smaller or less complex matters, conciliation can be an efficient and straightforward approach. In consumer disputes, these methods are often supported by trade associations. If you're involved in such a matter, it may be helpful to check whether the other party is affiliated with a trade body offering ADR services.
                         </p>
 
                         <p className="leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
-                            Our lawyers have gained extensive experience in Administrative Law, representing prominent 
-                            corporations, disadvantaged individuals, and governmental agencies. Our expertise enables us 
-                            to assess and plan cases expeditiously and effectively, delivering exceptional advocacy.
+                            I have substantial experience in both domestic and international arbitration, as well as other forms of ADR like mediation and conciliation. Over the years, I’ve advised and represented a range of clients—including government entities and companies—in resolving disputes through alternative channels. With a focus on efficient and client-centered solutions, I am equipped to handle complex arbitration and ADR matters both in Bangladesh and abroad.
                         </p>
                     </div>
                 </div>
@@ -55,4 +48,4 @@ const AdministrativeLaw = () => {
     );
 };
 
-export default AdministrativeLaw;
+export default AlternativeDisputeResolution;

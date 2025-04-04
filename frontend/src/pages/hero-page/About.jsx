@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Element, Link } from "react-scroll";
 import Lawyer from '../../assets/images/lawyer.jpg';
 import SupremeCourt from '../../assets/images/supreme-court.png';
@@ -12,7 +13,15 @@ import { Facebook, Instagram, Linkedin, Send, Upload } from 'lucide-react';
 const About = () => {
 
     const [iconSize, setIconSize] = useState(24); // Icon size
+    const [loading, setLoading] = useState(false)
     const [currentImage, setCurrentImage] = useState(0); // Current image index
+    
+    // State to hold form data
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    
+    const navigate = useNavigate()
 
     const [images, setImages] = useState([
         SupremeCourt,
@@ -35,6 +44,57 @@ const About = () => {
         } else {
             // Extra small screens
             setIconSize(9);
+        }
+    };
+
+    const handleClick = () => {
+        navigate('/contact')
+    }
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Check if all fields are filled
+        if (!name || !email || !message) {
+            alert("Please fill in all the fields.");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        setLoading(false)
+
+        const contactData = {
+            name,
+            email,
+            message,
+        };
+
+        try {
+            // Send the form data to the backend
+            const response = await fetch('http://localhost:5000/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(contactData),
+            });
+
+            if (response.ok) {
+            alert('Message sent successfully!')
+            setName('');
+            setEmail('');
+            setMessage('');
+            } else {
+            alert('Failed to send message');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
         }
     };
 
@@ -61,11 +121,11 @@ return (
                 </div>
 
                 {/* Help */}
-                <form class="w-full xl:h-1/3 lg:h-2/5 md:h-1/3 h-[50%] bg-white rounded-[5px] xl:p-4 md:p-3 p-2">
+                <form onSubmit={handleSubmit} class="w-full xl:h-1/3 lg:h-2/5 md:h-1/3 h-[50%] bg-white rounded-[5px] xl:p-4 md:p-3 p-2">
                     <div className='flex items-center justify-between w-full md:pb-2'>
                         <h1 className='font-rsemibold xl:text-[20px] lg:text-[18px] md:text-[16px] sm:text-[14px] text-[12px] pb-2'>How Can We Help You?</h1>
                         <div className='flex gap-3 xs:gap-6'>
-                            <Button text="Upload" Icon={Upload} iconSize={iconSize}/>
+                            {/* <Button text="Upload" Icon={Upload} iconSize={iconSize}/> */}
                             <Button text='Send' Icon={Send} route='#' iconSize={iconSize} />
                         </div>
                     </div>
@@ -73,14 +133,18 @@ return (
                     <div className="flex flex-col w-full mb-1 md:flex-row gap-x-2 gap-y-1 md:mb-2">
                         <input
                             id="name"
+                            value={name}
                             type="text"
-                            placeholder="Your Name"
+                            placeholder="Your name"
+                            onChange={(e) => setName(e.target.value)}
                             className="w-full border-[1px] border-neutral-300 rounded-[5px] font-rregular xl:text-sm md:text-[13px] focus:border-[#404030] focus:outline-none xl:px-2 xl:py-2 md:px-2 md:py-2 px-2 py-1 text-[10px] xs:text-[12px]"
                         />
                         <input
                             id="email"
+                            value={email}
                             type="text"
                             placeholder="Your Email"
+                            onChange={(e) => setEmail(e.target.value)}
                             className="w-full border-[1px] border-neutral-300 rounded-[5px] font-rregular xl:text-sm md:text-[13px] focus:border-[#404030] focus:outline-none xl:px-2 xl:py-2 md:px-2 md:py-2 px-2 py-1 text-[10px] xs:text-[12px]"
                         />
                     </div>
@@ -89,7 +153,9 @@ return (
                     <div className="w-full mb-1">
                         <textarea 
                             id="message"
+                            value={message}
                             placeholder="Your Message"
+                            onChange={(e) => setMessage(e.target.value)}
                             className="w-full xl:h-[130px] lg:h-[170px] md:h-[100px] xs:h-[105px] h-[120px] resize-none border-[1px] border-neutral-300 rounded-[5px] font-rregular xl:text-sm md:text-[13px] focus:border-[#404030] focus:outline-none xl:px-2 xl:pt-2 md:px-2 md:py-2 px-2 py-1 text-[10px] xs:text-[12px]"
                         />
                     </div>
@@ -133,9 +199,7 @@ return (
                             </p>
                         </div>
                         <div className='flex items-center justify-between w-full gap-12'>
-                            <Link to='contact' smooth={true} offset={-200} duration={500}>
-                                <Button text='Contact Me' Icon={Send} route='#' iconSize={iconSize} />
-                            </Link>
+                            <Button text='Contact Me' Icon={Send} route='#' onClick={handleClick} iconSize={iconSize} />
                             <div className='flex items-center justify-center m-2 space-x-4'>
                                 <a href='https://www.facebook.com/muhtasin.jawad.1' target='_blank' rel='noopener noreferrer'><Facebook className="w-3 h-3 text-black duration-150 sm:w-4 sm:h-4 hover:text-secondary xl:w-5 xl:h-5" /></a>
                                 <a href='#' target='_blank' rel='noopener noreferrer'><Instagram className="w-3 h-3 text-black duration-150 sm:w-4 sm:h-4 hover:text-secondary xl:w-5 xl:h-5" /></a>

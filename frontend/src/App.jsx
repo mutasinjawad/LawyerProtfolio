@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route, useLocation, matchPath } from "react-router-dom";
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   GoogleAuthProvider,
   getAuth,
   onAuthStateChanged,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from "firebase/auth";
 import { app } from "../firebase";
@@ -15,6 +16,9 @@ import Hero from "./pages/hero-page/Hero";
 
 import Services from "./pages/Services";
 import AdministrativeLaw from "./pages/expandPage/services/AdministrativeLaw";
+import AdmiraltyAndShipping from "./pages/expandPage/services/AdmiraltyAndShipping";
+import AlternativeDisputeResolution from "./pages/expandPage/services/AlternativeDisputeResolution";
+import AviationMatters from "./pages/expandPage/services/AviationMatters";
 
 import Meeting from "./pages/Meeting";
 import Case from "./pages/Case";
@@ -24,6 +28,7 @@ import MeetingDetails from "./pages/expandPage/MeetingDetails";
 import BlogDetails from "./pages/expandPage/BlogDetails";
 import CaseDetails from "./pages/expandPage/CaseDetails";
 
+import Contact from "./pages/Contact";
 import Career from "./pages/Career";
 
 import Admin from "./pages/admin/Admin";
@@ -40,12 +45,7 @@ import { CreateLiveForm } from "./components/CreateForm/CreateLive";
 
 import PrivateRouter from "./private_router/PrivateRouter";
 
-// Create Auth Context
-const AuthContext = createContext();
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
+import AuthContext, { useAuth } from "./hooks/useAuth";
 
 export default function App() {
   const [isAdmin, setIsAdmin] = useState(null);
@@ -78,6 +78,7 @@ export default function App() {
   // Check if the user is logged in
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("currentUser", currentUser);
       setIsLoading(false);
       setIsAdmin(currentUser);
     });
@@ -98,6 +99,9 @@ export default function App() {
             <Route index element={<Hero />} />
             <Route path="services" element={<Services />} />
             <Route path="administrative-law" element={<AdministrativeLaw />} />
+            <Route path="admiralty-and-shipping" element={<AdmiraltyAndShipping />} />
+            <Route path="alternative-dispute-resolution" element={<AlternativeDisputeResolution />} />
+            <Route path="aviation-matters" element={<AviationMatters />} />
 
             <Route path="meetings" element={<Meeting />} />
             <Route path="meetings/:id" element={<MeetingDetails />} />
@@ -106,6 +110,7 @@ export default function App() {
             <Route path="blogs" element={<Blog />} />
             <Route path="blogs/:id" element={<BlogDetails />} />
 
+            <Route path="contact" element={<Contact />} />
             <Route path="career" element={<Career />} />
             <Route
               path="admin"
@@ -135,7 +140,7 @@ function ConditionalNavbar() {
   const location = useLocation();
 
   // Define routes where the Navbar should not be displayed
-  const includedRoutes = ["/","/services", "/meetings", "/meetings/:id", "/cases", "/cases/:id", "/blogs", "/blogs/:id", "/career"];
+  const includedRoutes = ["/","/services", "/meetings", "/meetings/:id", "/cases", "/cases/:id", "/blogs", "/blogs/:id", "/contact", "/career"];
 
   const shouldShowNavbar = includedRoutes.some((pattern) => matchPath(pattern, location.pathname));
 

@@ -4,7 +4,7 @@ import Footer from '../../Footer';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-const AdministrativeLaw = () => {
+const AviationMatters = () => {
 
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const AdministrativeLaw = () => {
                                 <span className='font-rbold md:text-[18px] xs:text-[15px] text-[13px]'>Back</span>
                     </button>
                     <div className="flex flex-col items-start w-full p-2 text-black bg-white shadow-sm lg:p-6 md:p-4 xs:p-3 rounded-xl">
-                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Administrative Law in Bangladesh</h1>
+                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Aviation Matters</h1>
                         
                         <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
                             The intention of administrative law is to provide a legal framework for regulating the powers, 
@@ -55,4 +55,4 @@ const AdministrativeLaw = () => {
     );
 };
 
-export default AdministrativeLaw;
+export default AviationMatters;

@@ -30,6 +30,7 @@ const HeroServices = () => {
     { name: 'Domestic and International Arbitration', path: '/domestic-and-international-arbitration' },
     { name: 'Family Matters and Child Custody', path: '/family-matters-and-child-custody' },
     ]
+  const sortedServices = services.sort((a, b) => a.name.localeCompare(b.name))
 
   const [iconSize, setIconSize] = useState(getSize());
 
@@ -63,11 +64,11 @@ const HeroServices = () => {
           Services
         </h1>
           <ul className='flex flex-col items-center justify-start flex-wrap xl:gap-4 gap-2 xl:h-[280px] md:h-[250px] xs:h-[300px] h-[300px]'>
-            {services.slice(0, 15).map((service, index) => (
+            {sortedServices.slice(0, 15).map((service, index) => (
               <button
                 // onClick={() => setActiveComponent(service.component)}
                 key={index}
-                className='flex items-center gap-2 sm:w-[240px] sm:h-[40px] xs:w-[170px] xs:h-[30px] w-[120px] h-[22px]'
+                className='flex items-center gap-2 sm:w-[240px] sm:h-[40px] xs:w-[170px] xs:h-[30px] w-[120px] h-[29px]'
               >
                 <Check size={iconSize}/>
                 <p className='flex items-center h-full duration-150 hover:text-secondary font-rlight 

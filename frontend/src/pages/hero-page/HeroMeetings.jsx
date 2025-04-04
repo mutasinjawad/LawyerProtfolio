@@ -113,7 +113,7 @@ const HeroMeetings = () => {
                 <div className="h-full" style={{
                   overflow:"hidden"
                 }}>
-                  <h3 className="text-black font-rmedium xl:text-[16px] md:text-[17px] text-[13px]">{meeting.title}</h3>
+                  <h3 className="text-black font-rmedium xl:text-[16px] lg:text-[15px] md:text-[16px] text-[12px]">{meeting.title}</h3>
                   <p className="font-rregular text-gray-500 xl:text-[14px] md:text-[14px] text-[10px]">{fomratDate(meeting.date)}</p>
                   <p className="font-rregular lg:pt-10 xs:pt-4 pt-1 xl:text-[15px] lg:text-[12px] md:text-[14px] sm:text-[12px] xs:text-[11px] text-[10px]">
                     {meeting.description.split('\n').map((line, index) => (
@@ -128,7 +128,7 @@ const HeroMeetings = () => {
                 <button className="flex items-center justify-start gap-2 mt-2 transition-all duration-200 ease-in-out text-neutral-400 hover:text-neutral-600 hover:gap-6 hover:cursor"
                 onClick={() => toggleExpand(meeting)}
                 >
-                  <h1 className="xs:text-sm text-[9px] font-rregular xl:text-base">Expand</h1>
+                  <h1 className="xs:text-[12px] text-[9px] font-rregular xl:text-base">Expand</h1>
                   <ChevronRight size={iconSize}/>
                 </button>
 

@@ -1,4 +1,4 @@
-import { useAuth } from "../App";
+import { useAuth } from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
 
 const PrivateRouter = ({ children }) => {
@@ -7,7 +7,7 @@ const PrivateRouter = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="flex text-3xl justify-center items-center h-screen">
+      <div className="flex items-center justify-center h-screen text-3xl">
         Loading...
       </div>
     );

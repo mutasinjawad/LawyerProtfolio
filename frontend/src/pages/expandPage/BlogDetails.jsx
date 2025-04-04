@@ -21,19 +21,19 @@ const BlogDetails = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center mt-24 lg:mx-8 mx-4 mb-4">
-      <div className="bg-white rounded-3xl xl:p-5 p-4 w-full">
+    <div className="flex items-center justify-center bg-[#eeeeee] px-6 md:pt-20 pt-14 lg:pt-24 pb-4 lg:px-12">
+      <div className="w-full h-full bg-white rounded-[5px] xl:p-4 md:p-2 xs:p-2 p-1">
         <div className="flex items-center justify-between">
-          <h2 className="font-pbold xl:text-xl lg:text-lg text-black">{blog.title}</h2>
+          <h2 className="text-black font-rmedium xl:text-[16px] lg:text-[15px] md:text-[16px] text-[12px]">{blog.title}</h2>
         </div>
-        <p className="font-pregular text-gray-600 xl:text-lg text-sm">
+        <p className="font-rregular text-gray-500 xl:text-[14px] md:text-[14px] text-[10px]">
           {new Date(blog.date).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: '2-digit',
           })}
         </p>
-        <div className="font-pregular text-gray-700 xl:text-base text-sm mt-4">
+        <div className="font-rregular lg:pt-10 xs:pt-4 pt-1 xl:text-[15px] lg:text-[12px] md:text-[14px] sm:text-[12px] xs:text-[11px] text-[10px]">
           {blog.description.split('\n').map((line, index) => (
             <span key={index}>
               {line}
