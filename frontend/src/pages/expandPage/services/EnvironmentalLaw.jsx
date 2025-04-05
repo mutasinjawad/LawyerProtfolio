@@ -4,7 +4,7 @@ import Footer from '../../Footer';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-const AviationMatters = () => {
+const EnvironmentalLaw = () => {
 
     const navigate = useNavigate();
 
@@ -18,9 +18,13 @@ const AviationMatters = () => {
                                 <span className='font-rbold md:text-[18px] xs:text-[15px] text-[13px]'>Back</span>
                     </button>
                     <div className="flex flex-col items-start w-full p-2 text-black bg-white shadow-sm lg:p-6 md:p-4 xs:p-3 rounded-xl">
-                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Aviation Matters</h1>
+                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Environmental Law</h1>
+                        
+                        <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
+                            Global warming, also known as climate change, refers to the observed century-scale rise in the Earth’s average temperature and its related impacts. As the need to protect the environment becomes increasingly urgent, the range of environmental law issues facing companies has expanded. These issues now encompass not only land development, waste management, and permitting, but also concerns like climate change, greenhouse gas emissions, and carbon footprints.
+                        </p>
                         <p className="leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
-                            Aviation is one of the fastest-growing industries in Bangladesh, especially since the government opened the sector to private airline operators. I have experience handling a wide range of legal matters related to aviation, including drafting documents on various aviation issues and addressing cross-border aircraft purchases, aircraft and parts mortgages, wet and dry leasing agreements, and financing arrangements for aircraft-related transactions. My goal is to provide clients with clear, reliable legal support in this dynamic and highly regulated sector.
+                            I offer comprehensive expertise and legal guidance to help clients navigate these complex environmental challenges. With a deep understanding of both national and international regulations, I provide effective strategies to ensure compliance and proactively manage evolving environmental concerns, keeping my clients a step ahead of changing laws and regulations.
                         </p>
                     </div>
                 </div>
@@ -39,4 +43,4 @@ const AviationMatters = () => {
     );
 };
 
-export default AviationMatters;
+export default EnvironmentalLaw;

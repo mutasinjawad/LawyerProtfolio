@@ -19,6 +19,16 @@ import AdministrativeLaw from "./pages/expandPage/services/AdministrativeLaw";
 import AdmiraltyAndShipping from "./pages/expandPage/services/AdmiraltyAndShipping";
 import AlternativeDisputeResolution from "./pages/expandPage/services/AlternativeDisputeResolution";
 import AviationMatters from "./pages/expandPage/services/AviationMatters";
+import BankingLitigation from "./pages/expandPage/services/BankingLitigation";
+import BusinessSetup from "./pages/expandPage/services/BusinessSetup";
+import CivilLitigation from "./pages/expandPage/services/CivilLitigation";
+import CommercialLitigation from "./pages/expandPage/services/CommercialLitigation";
+import CompanyFormationandRegistration from "./pages/expandPage/services/CompanyFormationandRegistration";
+import ConstitutionalLaw from "./pages/expandPage/services/ConstitutionalLaw";
+import Contracts from "./pages/expandPage/services/Contracts";
+import CriminalProsecutionandDefense from "./pages/expandPage/services/CriminalProsecutionandDefense";
+import DomesticandInternationalArbitration from "./pages/expandPage/services/DomesticandInternationalArbitration";
+import EnvironmentalLaw from "./pages/expandPage/services/EnvironmentalLaw";
 
 import Meeting from "./pages/Meeting";
 import Case from "./pages/Case";
@@ -102,6 +112,16 @@ export default function App() {
             <Route path="admiralty-and-shipping" element={<AdmiraltyAndShipping />} />
             <Route path="alternative-dispute-resolution" element={<AlternativeDisputeResolution />} />
             <Route path="aviation-matters" element={<AviationMatters />} />
+            <Route path="banking-litigation" element={<BankingLitigation />} />
+            <Route path="business-setup" element={<BusinessSetup />} />
+            <Route path="civil-litigation" element={<CivilLitigation />} />
+            <Route path="commercial-litigation" element={<CommercialLitigation />} />
+            <Route path="company-formation-and-registration" element={<CompanyFormationandRegistration />} />
+            <Route path="constitutional-law" element={<ConstitutionalLaw />} />
+            <Route path="contracts" element={<Contracts />} />
+            <Route path="criminal-prosecution-and-defense" element={<CriminalProsecutionandDefense />} />
+            <Route path="domestic-and-international-arbitration" element={<DomesticandInternationalArbitration />} />
+            <Route path="environmental-law" element={<EnvironmentalLaw />} />
 
             <Route path="meetings" element={<Meeting />} />
             <Route path="meetings/:id" element={<MeetingDetails />} />

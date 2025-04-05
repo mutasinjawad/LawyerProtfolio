@@ -4,7 +4,7 @@ import Footer from '../../Footer';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-const AviationMatters = () => {
+const CivilLitigation = () => {
 
     const navigate = useNavigate();
 
@@ -18,9 +18,14 @@ const AviationMatters = () => {
                                 <span className='font-rbold md:text-[18px] xs:text-[15px] text-[13px]'>Back</span>
                     </button>
                     <div className="flex flex-col items-start w-full p-2 text-black bg-white shadow-sm lg:p-6 md:p-4 xs:p-3 rounded-xl">
-                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Aviation Matters</h1>
+                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Civil Litigation in Bangladesh</h1>
+                        
+                        <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
+                            I offer specialist legal advisory, drafting, and advocacy services across a wide range of civil matters. My areas of practice include commercial and business law, property and trusts, landlord and tenant disputes, money suits and debt recovery, judicial reviews, regulatory and disciplinary matters, immigration, admiralty, and taxation (including VAT, tax, and customs issues).
+                        </p>
+
                         <p className="leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
-                            Aviation is one of the fastest-growing industries in Bangladesh, especially since the government opened the sector to private airline operators. I have experience handling a wide range of legal matters related to aviation, including drafting documents on various aviation issues and addressing cross-border aircraft purchases, aircraft and parts mortgages, wet and dry leasing agreements, and financing arrangements for aircraft-related transactions. My goal is to provide clients with clear, reliable legal support in this dynamic and highly regulated sector.
+                            With experience handling complex civil litigation, I assist clients at every stage—from initial legal advice to representation before courts and tribunals. Whether you're an individual or a business, my goal is to provide clear, strategic, and effective legal solutions tailored to your specific needs.
                         </p>
                     </div>
                 </div>
@@ -39,4 +44,4 @@ const AviationMatters = () => {
     );
 };
 
-export default AviationMatters;
+export default CivilLitigation;

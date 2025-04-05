@@ -4,7 +4,7 @@ import Footer from '../../Footer';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-const AviationMatters = () => {
+const FamilyMattersandChildCustody = () => {
 
     const navigate = useNavigate();
 
@@ -18,9 +18,22 @@ const AviationMatters = () => {
                                 <span className='font-rbold md:text-[18px] xs:text-[15px] text-[13px]'>Back</span>
                     </button>
                     <div className="flex flex-col items-start w-full p-2 text-black bg-white shadow-sm lg:p-6 md:p-4 xs:p-3 rounded-xl">
-                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Aviation Matters</h1>
+                        <h1 className="font-rbold mb-6 text-primary xl:text-[18px]">Family Matters and Child Custody</h1>
+                        
+                        <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
+                            I have extensive experience in family law matters, covering a wide range of disputes related to marriage, divorce, guardianship, child custody, residence, and all associated financial claims such as maintenance, property distribution, and lump sum settlements. My approach combines legal expertise with a compassionate understanding of family dynamics, ensuring that my clients feel supported during what can often be a difficult and emotional time.
+                        </p>
+
+                        <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
+                            Family disputes, particularly those involving divorce and guardianship, are on the rise in Bangladesh. These matters are often complicated by social pressures and the need for privacy and sensitivity. I am committed to helping clients navigate the complexities of conjugal status disputes and related issues, while understanding the social impact these cases can have.
+                        </p>
+
+                        <p className="mb-4 leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
+                            In response to increasing concerns about family violence, including dowry, torture, assault, rape, acid attacks, and more, various special Acts have been enacted to offer protection. While some of these offenses are addressed under the Penal Code, 1860, others are governed by specific laws.
+                        </p>
+
                         <p className="leading-relaxed xl:font-rlight font-rregular xl:text-[15px] lg:text-[12px] md:text-sm sm:text-[12px] xs:text-[11px] text-[10px]">
-                            Aviation is one of the fastest-growing industries in Bangladesh, especially since the government opened the sector to private airline operators. I have experience handling a wide range of legal matters related to aviation, including drafting documents on various aviation issues and addressing cross-border aircraft purchases, aircraft and parts mortgages, wet and dry leasing agreements, and financing arrangements for aircraft-related transactions. My goal is to provide clients with clear, reliable legal support in this dynamic and highly regulated sector.
+                            I pride myself on providing confidential, sensitive legal assistance in cases involving dower, divorce, maintenance, restitution of conjugal life, and child custody. I ensure the privacy of my clients is respected, understanding the potential social consequences such matters can have.
                         </p>
                     </div>
                 </div>
@@ -39,4 +52,4 @@ const AviationMatters = () => {
     );
 };
 
-export default AviationMatters;
+export default FamilyMattersandChildCustody;
