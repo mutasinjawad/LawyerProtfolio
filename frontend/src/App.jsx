@@ -29,6 +29,10 @@ import Contracts from "./pages/expandPage/services/Contracts";
 import CriminalProsecutionandDefense from "./pages/expandPage/services/CriminalProsecutionandDefense";
 import DomesticandInternationalArbitration from "./pages/expandPage/services/DomesticandInternationalArbitration";
 import EnvironmentalLaw from "./pages/expandPage/services/EnvironmentalLaw";
+import FamilyMattersandChildCustody from "./pages/expandPage/services/FamilyMattersandChildCustody";
+import GlobalInvestmentandCitizenship from "./pages/expandPage/services/GlobalInvestmentandCitizenship";
+import GovernmentContractsandLitigation from "./pages/expandPage/services/GovernmentContractsandLitigation";
+import IntellectualProperty from "./pages/expandPage/services/IntellectualProperty";
 
 import Meeting from "./pages/Meeting";
 import Case from "./pages/Case";
@@ -122,6 +126,10 @@ export default function App() {
             <Route path="criminal-prosecution-and-defense" element={<CriminalProsecutionandDefense />} />
             <Route path="domestic-and-international-arbitration" element={<DomesticandInternationalArbitration />} />
             <Route path="environmental-law" element={<EnvironmentalLaw />} />
+            <Route path="family-matters-and-child-custody" element={<FamilyMattersandChildCustody />} />
+            <Route path="global-investment-and-citizenship" element={<GlobalInvestmentandCitizenship />} />
+            <Route path="government-contracts-and-litigation" element={<GovernmentContractsandLitigation />} />
+            <Route path="intellectual-property" element={<IntellectualProperty />} />
 
             <Route path="meetings" element={<Meeting />} />
             <Route path="meetings/:id" element={<MeetingDetails />} />
