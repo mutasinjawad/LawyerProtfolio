@@ -21,7 +21,7 @@ admin.initializeApp({
   credential: admin.credential.cert(require("./service-account-key.json")),
 });
 
-const allowedEmail = process.env.ALLOWED_EMAIL;
+const allowedEmail = process.env.ALLOWED_EMAIL ? process.env.ALLOWED_EMAIL.split(",") : [];
 
 // Routes
 app.use('/api/admin', adminRoutes);
@@ -541,7 +541,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('Hello from backend2');
+    res.send('Hello from backend');
 });
 
 

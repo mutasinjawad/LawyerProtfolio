@@ -92,7 +92,6 @@ export default function App() {
   // Check if the user is logged in
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("currentUser", currentUser);
       setIsLoading(false);
       setIsAdmin(currentUser);
     });
